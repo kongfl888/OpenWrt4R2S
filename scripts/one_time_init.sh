@@ -91,6 +91,11 @@ if [ "$lite" = "1" ]; then
     opkg remove *ddns* --autoremove >/dev/null 2>&1
 fi
 
+# remove autoreboot
+DATE=`date +[%Y-%m-%d]%H:%M:%S`
+echo $DATE" One time init Script: remove ddns" >> /tmp/one_time_init.log
+opkg remove *autoreboot* >/dev/null 2>&1
+
 sleep 2
 
 # set ipaddr

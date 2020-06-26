@@ -78,6 +78,11 @@ jobs:
           git clone -b master https://github.com/jerrykuku/luci-theme-argon.git
           mv -f luci-theme-argon friendlywrt-rk3328/friendlywrt/package/lean/
 
+      - name: Add Luci-app-timedreboot
+        run: |
+          git clone -b master --single-branch https://github.com/kongfl888/luci-app-timedreboot.git
+          mv luci-app-timedreboot friendlywrt-rk3328/friendlywrt/package
+
       - name: Add Luci-app-r2sflasher
         run: |
           git clone -b master --single-branch https://github.com/kongfl888/luci-app-r2sflasher.git

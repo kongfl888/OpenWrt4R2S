@@ -1,6 +1,6 @@
 #!/bin/bash
 
-leanpack="friendlywrt-rk3328/friendlywrt/package/lean/"
+leanpack="friendlywrt-rk3328/friendlywrt/package/lean"
 
 mkdir -p $leanpack
 
@@ -36,4 +36,4 @@ git apply ../patches/enable_autocore_1907.patch
 cd ..
 cp -rf openwrt/package/lean/autocore/ $leanpack
 cp -rf openwrt/package/lean/coremark $leanpack 
-sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' package/lean/coremark/Makefile
+sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' $leanpack/coremark/Makefile

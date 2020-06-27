@@ -1,12 +1,13 @@
+From 52bd881da59a58cb6404ead472f47bb440044dc1 Mon Sep 17 00:00:00 2001
 From: kongfl888 <kongfl888@outlook.com>
-Date: Sat, 27 Jun 2020 03:26:30 +0800
+Date: Sun, 28 Jun 2020 07:53:39 +0800
 Subject: [PATCH] enable_autocore_1907
 
 ---
  package/lean/autocore/Makefile                | 2 +-
  package/lean/autocore/files/cpuinfo           | 4 ++--
- package/lean/autocore/files/rpcd_10_system.js | 3 ++-
- 3 files changed, 5 insertions(+), 4 deletions(-)
+ package/lean/autocore/files/rpcd_10_system.js | 5 +++--
+ 3 files changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/package/lean/autocore/Makefile b/package/lean/autocore/Makefile
 index efdba91..c783b83 100644
@@ -44,17 +45,22 @@ index 19ea5fb..60e7acd 100644
  }
  
 diff --git a/package/lean/autocore/files/rpcd_10_system.js b/package/lean/autocore/files/rpcd_10_system.js
-index 8c1e788..9d69c16 100644
+index 8c1e788..7d75044 100644
 --- a/package/lean/autocore/files/rpcd_10_system.js
 +++ b/package/lean/autocore/files/rpcd_10_system.js
-@@ -74,7 +74,8 @@ return L.Class.extend({
+@@ -72,9 +72,10 @@ return L.Class.extend({
+ 
+ 		var fields = [
  			_('Hostname'),         boardinfo.hostname,
- 			_('Model'),            boardinfo.model + cpubench.cpubench,
+-			_('Model'),            boardinfo.model + cpubench.cpubench,
++			_('Model'),            "Rockchip RK3328:4 Core 4 Thread " + cpubench.cpubench,
  			_('CPU Info'),         cpuinfo.cpuinfo,
 -			_('Firmware Version'), (L.isObject(boardinfo.release) ? boardinfo.release.description + ' / ' : '') + (luciversion || ''),
-+			_('Architecture'),     'ARMv8 / Cortex-A53,64-bit (Rockchip rk3328)',
++			_('Architecture'),     'ARMv8 / Cortex-A53,64-bit',
 +			_('Firmware Version'), (L.isObject(boardinfo.release) ? boardinfo.release.description + ' / ' : '') + (luciversion || '') + ' built by Mr.K',
  			_('Kernel Version'),   boardinfo.kernel,
  			_('Local Time'),       datestr,
  			_('Uptime'),           systeminfo.uptime ? '%t'.format(systeminfo.uptime) : null,
+-- 
+2.14.1.windows.1
 

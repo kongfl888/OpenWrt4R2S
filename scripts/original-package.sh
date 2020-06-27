@@ -24,6 +24,7 @@ cp -rf openwrt/package/lean/luci-app-ramfree/ $leanpack
 
 #get luci-app-vlmcsd
 rm -rf friendlywrt-rk3328/feeds/*/*/luci-app-vlmcsd/ >/dev/null 2>&1 || echo ""
+cp -rf openwrt/package/lean/vlmcsd/ $leanpack
 cp -rf openwrt/package/lean/luci-app-vlmcsd/ $leanpack
 
 #get luci-app-filetransfer

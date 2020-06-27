@@ -3,6 +3,7 @@
 # luci-lib-jsonc patch
 cd friendlywrt-rk3328
 git apply ../patches/use_json_object_new_int64.patch
+cd ..
 
 leanpack="friendlywrt-rk3328/friendlywrt/package/lean"
 

@@ -46,13 +46,17 @@ jobs:
           mkdir friendlywrt-rk3328
           cd friendlywrt-rk3328
           repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master-v19.07.1 -m rk3328.xml --repo-url=https://github.com/friendlyarm/repo  --no-clone-bundle
-
-      - name: Mods
-        run: |
           cd friendlywrt-rk3328
           #rm -f .repo/manifests/rk3328.xml
           #cp ../JUNK/rk3328.xml .repo/manifests/rk3328.xml
           repo sync -c  --no-clone-bundle
+
+      - name: Patch For R2S
+        run: |
+          . ./scripts/patch_for_r2s.sh
+
+      - name: Mods
+        run: |
           #. ../remove_unused_config.sh
           . ../patch_dosth.sh
           #sed -i 's/CONFIG_BPFILTER=y/CONFIG_BPFILTER=n/' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig

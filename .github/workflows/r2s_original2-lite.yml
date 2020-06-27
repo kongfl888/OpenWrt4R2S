@@ -5,8 +5,10 @@ on:
     branches: 
       - master
     paths: 
-      - 'JUNK/r2s.config.seed'
+      - 'JUNK/r2s_original2_base.seed'
       - '.github/workflows/r2s_original2-lite.yml'
+      - 'patch_dosth.sh'
+      - 'scripts/original-package.sh'
   schedule:
     - cron: '30 16 * * 6'
 

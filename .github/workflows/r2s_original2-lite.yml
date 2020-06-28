@@ -81,12 +81,13 @@ jobs:
       - name: Add Luci-theme
         run: |
           mkdir -p friendlywrt-rk3328/friendlywrt/package/lean/ || echo ""
+          mkdir -p friendlywrt-rk3328/friendlywrt/feeds/luci/themes
           rm -rf friendlywrt-rk3328/friendlywrt/*/*/luci-theme-Butterfly-dark || echo ""
           git clone -b master https://github.com/Leo-Jo-My/luci-theme-Butterfly-dark.git
-          mv -f luci-theme-Butterfly-dark friendlywrt-rk3328/feeds/luci/themes
+          mv -f luci-theme-Butterfly-dark friendlywrt-rk3328/friendlywrt/feeds/luci/themes
           rm -rf friendlywrt-rk3328/friendlywrt/*/*/luci-theme-Butterfly || echo ""
           git clone -b master https://github.com/Leo-Jo-My/luci-theme-Butterfly.git
-          mv -f luci-theme-Butterfly friendlywrt-rk3328/feeds/luci/themes
+          mv -f luci-theme-Butterfly friendlywrt-rk3328/friendlywrt/feeds/luci/themes
 
       - name: Add Luci-app-timedreboot
         run: |

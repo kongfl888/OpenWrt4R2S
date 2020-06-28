@@ -16,7 +16,7 @@ cd ..
 leanpack="friendlywrt-rk3328/friendlywrt/package/lean"
 lienolpack="friendlywrt-rk3328/friendlywrt/package/lienol"
 ctcgfwpack="friendlywrt-rk3328/friendlywrt/package/ctcgfw"
-themepack="friendlywrt-rk3328/feeds/luci/themes"
+themepack="friendlywrt-rk3328/friendlywrt/feeds/luci/themes"
 
 mkdir -p $leanpack
 

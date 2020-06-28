@@ -1,6 +1,5 @@
 
 CONFIG_LUCI_LANG_zh_Hans=y
-CONFIG_LUCI_LANG_zh_Hant=y
 
 CONFIG_PACKAGE_luci-theme-argon=y
 CONFIG_PACKAGE_luci-theme-argon-dark-mod=y

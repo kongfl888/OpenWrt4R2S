@@ -47,9 +47,9 @@ CONFIG_LUCI_LANG_en=y
 ' >> configs/config_rk3328
 
     if [ $zh_cntw - ne 0 ]; then
-        echo -e "\nCONFIG_LUCI_LANG_zh-cn=y\nCONFIG_LUCI_LANG_zh-tw=y" >>configs/config_rk3328
+        echo -e "\nCONFIG_LUCI_LANG_zh-cn=y" >>configs/config_rk3328
     else
-        echo -e "\nCONFIG_LUCI_LANG_zh_Hans=y\nCONFIG_LUCI_LANG_zh_Hant=y" >>configs/config_rk3328
+        echo -e "\nCONFIG_LUCI_LANG_zh_Hans=y" >>configs/config_rk3328
     fi
 fi
 

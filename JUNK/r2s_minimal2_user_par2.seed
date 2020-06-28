@@ -1,4 +1,6 @@
 
+CONFIG_LUCI_LANG_zh-tw=y
+
 CONFIG_PACKAGE_luci-app-netdata=y
 
 CONFIG_PACKAGE_iptvhelper=y

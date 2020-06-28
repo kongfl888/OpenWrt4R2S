@@ -1,0 +1,48 @@
+From a74ab9f716a1c6f197c95b2596b40287477df795 Mon Sep 17 00:00:00 2001
+From: kongfl888 <kongfl888@outlook.com>
+Date: Sun, 28 Jun 2020 11:29:55 +0800
+Subject: [PATCH] Patch for timezone and ip.
+
+---
+ package/base-files/files/bin/config_generate | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/package/base-files/files/bin/config_generate b/package/base-files/files/bin/config_generate
+index eedc869..a0541aa 100644
+--- a/package/base-files/files/bin/config_generate
++++ b/package/base-files/files/bin/config_generate
+@@ -60,7 +60,7 @@ generate_static_network() {
+ 	fi
+ }
+ 
+-addr_offset=2
++addr_offset=31
+ generate_network() {
+ 	local ifname macaddr protocol type ipaddr netmask
+ 
+@@ -100,7 +100,7 @@ generate_network() {
+ 		static)
+ 			local ipad
+ 			case "$1" in
+-				lan) ipad=${ipaddr:-"192.168.2.1"} ;;
++				lan) ipad=${ipaddr:-"192.168.31.1"} ;;
+ 				*) ipad=${ipaddr:-"192.168.$((addr_offset++)).1"} ;;
+ 			esac
+ 
+@@ -240,9 +240,11 @@ generate_switch() {
+ generate_static_system() {
+ 	uci -q batch <<-EOF
+ 		delete system.@system[0]
++		set luci.main.lang='zh_cn'
+ 		add system system
+-		set system.@system[-1].hostname='FriendlyWrt'
+-		set system.@system[-1].timezone='UTC'
++		set system.@system[-1].hostname='OpenWrt'
++		set system.@system[-1].timezone='CST-8'
++		set system.@system[-1].zonename='Asia/Shanghai'
+ 		set system.@system[-1].ttylogin='0'
+ 		set system.@system[-1].log_size='64'
+ 		set system.@system[-1].urandom_seed='0'
+-- 
+2.14.1.windows.1
+

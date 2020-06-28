@@ -52,3 +52,7 @@ CONFIG_LUCI_LANG_en=y
         echo -e "\nCONFIG_LUCI_LANG_zh_Hans=y\nCONFIG_LUCI_LANG_zh_Hant=y" >>configs/config_rk3328
     fi
 fi
+
+cd friendlywrt
+git apply ../patches/Patch-for-timezone-and-ip.patch
+cd ..

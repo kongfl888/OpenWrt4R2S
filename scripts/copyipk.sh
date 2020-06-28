@@ -35,12 +35,20 @@ if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*luci-app-autore
 	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*autorewan*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack autorewan ipk fail" >> ipklost.txt
 fi
 
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "luci-app-timedreboot*.ipk" | grep "luci-app-timedreboot" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/luci-app-timedreboot*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack luci-app-timedreboot ipk fail" >> ipklost.txt
+fi
+
 if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*smartdns*.ipk" | grep "smartdns" -c` -gt 0 ]; then
 	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*smartdns*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack smartdns ipk fail" >> ipklost.txt
 fi
 
 if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*koolproxyR*.ipk" | grep "koolproxyR" -c` -gt 0 ]; then
 	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*koolproxyR*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack koolproxyR ipk fail" >> ipklost.txt
+fi
+
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "luci-theme-*.ipk" | grep "luci-theme" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/luci-theme-*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack luci-theme ipk fail" >> ipklost.txt
 fi
 
 if [ `find ./r2srom/ipk/* -name "*.ipk" | grep ".ipk" -c` -eq 0 ]; then

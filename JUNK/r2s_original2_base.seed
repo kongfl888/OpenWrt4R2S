@@ -2,12 +2,7 @@
 CONFIG_LUCI_LANG_zh_Hans=y
 
 CONFIG_PACKAGE_luci-theme-argon=y
-CONFIG_PACKAGE_luci-theme-argon-dark-mod=y
-CONFIG_PACKAGE_luci-theme-argon-light-mod=y
 CONFIG_PACKAGE_luci-theme-bootstrap-mod=y
-CONFIG_PACKAGE_luci-theme-Butterfly-dark=y
-CONFIG_PACKAGE_luci-theme-Butterfly=y
-CONFIG_PACKAGE_luci-theme-openwrt=y
 
 CONFIG_BUSYBOX_DEFAULT_FUSER=y
 

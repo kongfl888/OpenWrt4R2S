@@ -116,7 +116,7 @@ if [ "$profile" = "1" ]; then
 DATE=`date +[%Y-%m-%d]%H:%M:%S`
 echo $DATE" One time init Script: set theme" >> /tmp/one_time_init.log
 uci set luci.main.lang='zh_cn'
-#uci set luci.main.mediaurlbase ='/luci-static/argon'
+uci set luci.main.mediaurlbase ='/luci-static/argon'
 uci set luci.diag.dns='baidu.com'
 uci set luci.diag.ping='baidu.com'
 uci set luci.diag.route='baidu.com'

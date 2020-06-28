@@ -82,12 +82,9 @@ jobs:
         run: |
           mkdir -p friendlywrt-rk3328/friendlywrt/package/lean/ || echo ""
           mkdir -p friendlywrt-rk3328/friendlywrt/feeds/luci/themes
-          rm -rf friendlywrt-rk3328/friendlywrt/*/*/luci-theme-Butterfly-dark || echo ""
-          git clone -b master https://github.com/Leo-Jo-My/luci-theme-Butterfly-dark.git
-          mv -f luci-theme-Butterfly-dark friendlywrt-rk3328/friendlywrt/feeds/luci/themes
-          rm -rf friendlywrt-rk3328/friendlywrt/*/*/luci-theme-Butterfly || echo ""
-          git clone -b master https://github.com/Leo-Jo-My/luci-theme-Butterfly.git
-          mv -f luci-theme-Butterfly friendlywrt-rk3328/friendlywrt/feeds/luci/themes
+          rm -rf friendlywrt-rk3328/friendlywrt/*/*/luci-theme-argon || echo ""
+          git clone -b luci-20.029 https://github.com/kongfl888/luci-theme-argon.git
+          mv -f luci-theme-argon friendlywrt-rk3328/friendlywrt/feeds/luci/themes
 
       - name: Add Luci-app-timedreboot
         run: |

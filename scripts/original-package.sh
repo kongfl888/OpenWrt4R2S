@@ -19,19 +19,14 @@ ctcgfwpack="friendlywrt-rk3328/friendlywrt/package/ctcgfw"
 themepack="friendlywrt-rk3328/friendlywrt/feeds/luci/themes"
 
 mkdir -p $leanpack
+mkdir -p $themepack
 
 #get theme
-rm -rf friendlywrt-rk3328/feeds/*/*/luci-theme-argon/ >/dev/null 2>&1 || echo ""
-cp -rf openwrt/package/ctcgfw/luci-theme-argon $themepack
+#rm -rf friendlywrt-rk3328/feeds/*/*/luci-theme-argon/ >/dev/null 2>&1 || echo ""
+#cp -rf openwrt/package/ctcgfw/luci-theme-argon $themepack
 
 rm -rf friendlywrt-rk3328/feeds/*/*/luci-theme-bootstrap-mod/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lienol/luci-theme-bootstrap-mod $themepack
-
-rm -rf friendlywrt-rk3328/feeds/*/*/luci-theme-argon-dark-mod/ >/dev/null 2>&1 || echo ""
-cp -rf openwrt-package/lienol/luci-theme-argon-dark-mod $themepack
-
-rm -rf friendlywrt-rk3328/feeds/*/*/luci-theme-argon-light-mod/ >/dev/null 2>&1 || echo ""
-cp -rf openwrt-package/lienol/luci-theme-argon-light-mod $themepack
 
 #get luci-app-accesscontrol
 rm -rf friendlywrt-rk3328/feeds/*/*/luci-app-accesscontrol/ >/dev/null 2>&1 || echo ""

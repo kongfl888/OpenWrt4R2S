@@ -54,5 +54,7 @@ CONFIG_LUCI_LANG_en=y
 fi
 
 cd friendlywrt
-git apply ../patches/Patch-for-timezone-and-ip.patch
+git apply ../../patches/Patch-for-timezone-and-ip.patch
+sed -i 's/-Os/-O3/g' include/target.mk
+sed -i 's/-O2/-O3/g' ./rules.mk
 cd ..

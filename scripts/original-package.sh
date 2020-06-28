@@ -60,6 +60,26 @@ cp -rf openwrt/package/lean/ddns-scripts_aliyun/ $leanpack
 rm -rf friendlywrt-rk3328/feeds/*/*/ddns-scripts_dnspod/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/ddns-scripts_dnspod/ $leanpack
 
+#get luci-app-mwan3helper
+rm -rf friendlywrt-rk3328/feeds/*/*/luci-app-mwan3helper/ >/dev/null 2>&1 || echo ""
+cp -rf openwrt/package/lean/luci-app-mwan3helper/ $leanpack
+
+# big
+if [ "$fullin" = "1" ]; then
+# get luci-app-flowoffload
+rm -rf friendlywrt-rk3328/feeds/*/*/luci-app-flowoffload/ >/dev/null 2>&1 || echo ""
+cp -rf openwrt/package/lean/luci-app-flowoffload/ $leanpack
+
+# get qbittorrent
+rm -rf friendlywrt-rk3328/feeds/*/*/qbittorrent/ >/dev/null 2>&1 || echo ""
+cp -rf openwrt/package/lean/qbittorrent/ $leanpack
+rm -rf friendlywrt-rk3328/feeds/*/*/rblibtorrent/ >/dev/null 2>&1 || echo ""
+cp -rf openwrt/package/lean/rblibtorrent/ $leanpack
+rm -rf friendlywrt-rk3328/feeds/*/*/luci-app-qbittorrent/ >/dev/null 2>&1 || echo ""
+cp -rf openwrt/package/lean/luci-app-qbittorrent/ $leanpack
+# big
+fi
+
 #autocore
 cd openwrt
 git apply ../patches/enable_autocore_1907.patch

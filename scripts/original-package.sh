@@ -54,6 +54,12 @@ cp -rf openwrt/package/lean/luci-app-zerotier/ $leanpack
 rm -rf friendlywrt-rk3328/feeds/*/*/luci-app-syncdial/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/luci-app-syncdial/ $leanpack
 
+#get ddns-scripts_aliyun/dnspod
+rm -rf friendlywrt-rk3328/feeds/*/*/ddns-scripts_aliyun/ >/dev/null 2>&1 || echo ""
+cp -rf openwrt/package/lean/ddns-scripts_aliyun/ $leanpack
+rm -rf friendlywrt-rk3328/feeds/*/*/ddns-scripts_dnspod/ >/dev/null 2>&1 || echo ""
+cp -rf openwrt/package/lean/ddns-scripts_dnspod/ $leanpack
+
 #autocore
 cd openwrt
 git apply ../patches/enable_autocore_1907.patch

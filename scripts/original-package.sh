@@ -8,9 +8,12 @@ fi
 
 git clone -b master --single-branch https://github.com/Lienol/openwrt-package.git
 
-# luci-lib-jsonc patch
+# patch feeds、package
 cd friendlywrt-rk3328/friendlywrt
-git apply ../patches/use_json_object_new_int64.patch
+# luci-lib-jsonc patch
+git apply ../../patches/use_json_object_new_int64.patch
+# luci-status
+git apply ../../patches/patch-feeds-luci-status-overiew.patch
 cd ../../
 
 leanpack="friendlywrt-rk3328/friendlywrt/package/lean"

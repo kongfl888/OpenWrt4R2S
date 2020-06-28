@@ -88,7 +88,7 @@ if [ "$lite" = "1" ]; then
     #lite2
     DATE=`date +[%Y-%m-%d]%H:%M:%S`
     echo $DATE" One time init Script: remove ddns" >> /tmp/one_time_init.log
-    opkg remove *ddns* --autoremove >/dev/null 2>&1
+    opkg remove *ddns* --force-depends >/dev/null 2>&1
 fi
 
 # remove autoreboot
@@ -116,12 +116,18 @@ if [ "$profile" = "1" ]; then
 DATE=`date +[%Y-%m-%d]%H:%M:%S`
 echo $DATE" One time init Script: set theme" >> /tmp/one_time_init.log
 uci set luci.main.lang='zh_cn'
-uci set luci.main.mediaurlbase ='/luci-static/argon'
+#uci set luci.main.mediaurlbase ='/luci-static/argon'
 uci set luci.diag.dns='baidu.com'
 uci set luci.diag.ping='baidu.com'
 uci set luci.diag.route='baidu.com'
 uci commit luci
 fi
+
+#uhttpd don't use https
+uci set uhttpd.main.redirect_https="0"
+uci set uhttpd.defaults.country="CN"
+uci set uhttpd.defaults.location="Beijing"
+uci commit uhttpd
 
 # set ntp time
 if [ "$profile" = "1" ]; then

@@ -11,7 +11,6 @@ if [ -e "configs/config_rk3328" ]; then
     sed -i '/CONFIG_DISPLAY_SUPPOR/d' configs/config_rk3328
     sed -i '/CONFIG_PACKAGE_ar3k-firmware/d' configs/config_rk3328
     sed -i '/adblock/d' configs/config_rk3328
-    sed -i '/cgi-io/d' configs/config_rk3328
     sed -i '/samba/d' configs/config_rk3328
     sed -i '/CONFIG_LUCI_LANG_/d' configs/config_rk3328
     sed -i '/CONFIG_PACKAGE_luci-i18n-.*-bg=/d' configs/config_rk3328

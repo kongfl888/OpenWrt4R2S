@@ -1,5 +1,11 @@
 #!/bin/bash
 
+fullin=0
+
+if [ "${1}" == "1" ];then
+fullin=1
+fi
+
 # luci-lib-jsonc patch
 cd friendlywrt-rk3328
 git apply ../patches/use_json_object_new_int64.patch
@@ -43,6 +49,10 @@ cp -rf openwrt/package/lean/luci-app-filetransfer/ $leanpack
 #get luci-app-zerotier
 rm -rf friendlywrt-rk3328/feeds/*/*/luci-app-zerotier/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/luci-app-zerotier/ $leanpack
+
+#get luci-app-syncdial
+rm -rf friendlywrt-rk3328/feeds/*/*/luci-app-syncdial/ >/dev/null 2>&1 || echo ""
+cp -rf openwrt/package/lean/luci-app-syncdial/ $leanpack
 
 #autocore
 cd openwrt

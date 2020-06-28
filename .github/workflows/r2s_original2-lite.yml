@@ -9,6 +9,7 @@ on:
       - '.github/workflows/r2s_original2-lite.yml'
       - 'patch_dosth.sh'
       - 'scripts/original-package.sh'
+      - 'scripts/copyipk.sh'
   schedule:
     - cron: '30 16 * * 6'
 

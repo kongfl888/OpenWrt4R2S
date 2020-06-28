@@ -6,14 +6,32 @@ if [ "${1}" == "1" ];then
 fullin=1
 fi
 
+git clone -b master --single-branch https://github.com/Lienol/openwrt-package.git
+
 # luci-lib-jsonc patch
 cd friendlywrt-rk3328
 git apply ../patches/use_json_object_new_int64.patch
 cd ..
 
 leanpack="friendlywrt-rk3328/friendlywrt/package/lean"
+lienolpack="friendlywrt-rk3328/friendlywrt/package/lienol"
+ctcgfwpack="friendlywrt-rk3328/friendlywrt/package/ctcgfw"
+themepack="friendlywrt-rk3328/feeds/luci/themes"
 
 mkdir -p $leanpack
+
+#get theme
+rm -rf friendlywrt-rk3328/feeds/*/*/luci-theme-argon/ >/dev/null 2>&1 || echo ""
+cp -rf openwrt/package/ctcgfw/luci-theme-argon $themepack
+
+rm -rf friendlywrt-rk3328/feeds/*/*/luci-theme-bootstrap-mod/ >/dev/null 2>&1 || echo ""
+cp -rf openwrt/package/lienol/luci-theme-bootstrap-mod $themepack
+
+rm -rf friendlywrt-rk3328/feeds/*/*/luci-theme-argon-dark-mod/ >/dev/null 2>&1 || echo ""
+cp -rf openwrt-package/lienol/luci-theme-argon-dark-mod $themepack
+
+rm -rf friendlywrt-rk3328/feeds/*/*/luci-theme-argon-light-mod/ >/dev/null 2>&1 || echo ""
+cp -rf openwrt-package/lienol/luci-theme-argon-light-mod $themepack
 
 #get luci-app-accesscontrol
 rm -rf friendlywrt-rk3328/feeds/*/*/luci-app-accesscontrol/ >/dev/null 2>&1 || echo ""

@@ -78,12 +78,15 @@ jobs:
           cd friendlywrt-rk3328/friendlywrt
           ./scripts/feeds clean -a
 
-      - name: Add Luci-theme-argon
+      - name: Add Luci-theme
         run: |
           mkdir -p friendlywrt-rk3328/friendlywrt/package/lean/ || echo ""
-          rm -rf friendlywrt-rk3328/friendlywrt/package/lean/luci-theme-argon || echo ""
-          git clone -b master https://github.com/jerrykuku/luci-theme-argon.git
-          mv -f luci-theme-argon friendlywrt-rk3328/friendlywrt/package/lean/
+          rm -rf friendlywrt-rk3328/friendlywrt/*/*/luci-theme-Butterfly-dark || echo ""
+          git clone -b master https://github.com/Leo-Jo-My/luci-theme-Butterfly-dark.git
+          mv -f luci-theme-Butterfly-dark friendlywrt-rk3328/feeds/luci/themes
+          rm -rf friendlywrt-rk3328/friendlywrt/*/*/luci-theme-Butterfly || echo ""
+          git clone -b master https://github.com/Leo-Jo-My/luci-theme-Butterfly.git
+          mv -f luci-theme-Butterfly friendlywrt-rk3328/feeds/luci/themes
 
       - name: Add Luci-app-timedreboot
         run: |

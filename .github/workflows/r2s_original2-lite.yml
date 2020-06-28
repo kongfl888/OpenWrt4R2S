@@ -195,7 +195,7 @@ jobs:
           cd ../../
           cp ./README.txt ./r2srom/
           zip -r artifact.zip ./r2srom/
-          release_tag="R2S-Original2-$(date +%Y-%m-%d-%H)"
+          release_tag="R2S-Original2-lite-$(date +%Y-%m-%d-%H)"
           echo "##[set-output name=release_tag;]$release_tag"
       - name: Create Release
         id: create_release

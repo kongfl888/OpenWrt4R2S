@@ -4,7 +4,10 @@ if [ `grep -c "CONFIG_BRIDGE_NETFILTER=y" kernel/arch/arm64/configs/nanopi-r2_li
     echo "CONFIG_BRIDGE_NETFILTER=m" >> kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
 fi
 
+zh_cntw=0
+
 if [ -e "configs/config_rk3328" ]; then
+    [ `grep -c "LUCI_LANG_zh-cn" configs/config_rk3328` -ne 0 ] && zh_cntw=1 || zh_cntw=0
     sed -i '/CONFIG_DISPLAY_SUPPOR/d' configs/config_rk3328
     sed -i '/CONFIG_PACKAGE_ar3k-firmware/d' configs/config_rk3328
     sed -i '/adblock/d' configs/config_rk3328
@@ -42,8 +45,11 @@ echo '
 CONFIG_KERNEL_BUILD_DOMAIN="https://github.com/kongfl888"
 CONFIG_KERNEL_BUILD_USER="kongfl888"
 CONFIG_LUCI_LANG_en=y
-CONFIG_LUCI_LANG_zh-cn=y
-CONFIG_LUCI_LANG_zh-tw=y
 ' >> configs/config_rk3328
 
+    if [ $zh_cntw - ne 0 ]; then
+        echo -e "\nCONFIG_LUCI_LANG_zh-cn=y\nCONFIG_LUCI_LANG_zh-tw=y" >>configs/config_rk3328
+    else
+        echo -e "\nCONFIG_LUCI_LANG_zh_Hans=y\nCONFIG_LUCI_LANG_zh_Hant=y" >>configs/config_rk3328
+    fi
 fi

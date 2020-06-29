@@ -10,8 +10,13 @@ CONFIG_UnblockNeteaseMusic_NodeJS=y
 CONFIG_PACKAGE_node=y
 CONFIG_NODEJS_ICU_NONE=y
 
-CONFIG_PACKAGE_qbittorrent=y
-CONFIG_PACKAGE_rblibtorrent=y
+CONFIG_PACKAGE_qt5-core=y
+CONFIG_PACKAGE_qt5-network=y
+CONFIG_PACKAGE_qt5-xml=y
+CONFIG_PACKAGE_libtorrent-rasterbar=y
+CONFIG_PACKAGE_python3=y
+CONFIG_PACKAGE_boost-system=y
+CONFIG_PACKAGE_qBittorrent-Enhanced-Edition=y
 CONFIG_PACKAGE_luci-app-qbittorrent=y
 
 CONFIG_PACKAGE_luci-app-flowoffload=y

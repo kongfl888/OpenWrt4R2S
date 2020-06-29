@@ -94,10 +94,14 @@ cp -rf openwrt/package/lean/luci-app-flowoffload/ $leanpack
 # get qbittorrent
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/qbittorrent*/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/qBittorrent-Enhanced-Edition/ $leanpack
-rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/rblibtorrent/ >/dev/null 2>&1 || echo ""
-cp -rf openwrt/package/lean/rblibtorrent/ $leanpack
+rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/libtorrent-rasterbar/ >/dev/null 2>&1 || echo ""
+cp -rf openwrt/package/lean/libtorrent-rasterbar/ $leanpack
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-qbittorrent/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/luci-app-qbittorrent/ $leanpack
+
+# get qt5
+rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/qt5/ >/dev/null 2>&1 || echo ""
+cp -rf openwrt/package/lean/qt5/ $leanpack
 
 # get unblockmusic
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-unblockmusic/ >/dev/null 2>&1 || echo ""
@@ -126,8 +130,6 @@ rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/microsocks/ >/dev/null 2>&1 || e
 cp -rf openwrt/package/lean/microsocks/ $leanpack
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/proxychains-ng/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/proxychains-ng/ $leanpack
-rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/shadowsocks-libev/ >/dev/null 2>&1 || echo ""
-cp -rf openwrt/package/lean/shadowsocks-libev/ $leanpack
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/tcpping/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/tcpping/ $leanpack
 git clone -b master --single-branch https://github.com/aa65535/openwrt-simple-obfs  $leanpack/simple-obfs

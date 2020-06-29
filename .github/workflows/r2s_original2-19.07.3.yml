@@ -95,6 +95,11 @@ jobs:
           git clone -b luci-20.029 --single-branch https://github.com/kongfl888/luci-theme-argon.git
           mv -f luci-theme-argon friendlywrt-rk3328/friendlywrt/package
 
+      - name: Add Luci-i18n-sqm-zh-cn
+        run: |
+          git clone -b master --single-branch https://github.com/kongfl888/luci-i18n-sqm-zh-cn.git
+          mv luci-i18n-sqm-zh-cn friendlywrt-rk3328/friendlywrt/package
+
       - name: Add Luci-app-timedreboot
         run: |
           git clone -b master --single-branch https://github.com/kongfl888/luci-app-timedreboot.git

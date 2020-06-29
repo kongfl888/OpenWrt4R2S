@@ -3,7 +3,7 @@
 # built
 # mv ../../scripts/one_time_init.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/one_time_init.sh &' package/base-files/files/etc/rc.local
 # https://github.com/kongfl888/OpenWrt4R2S
-# ** 1st: 1 normal, 2 lite; 2nd: 1 original, 2 lite2
+# ** 1st: 1 normal, 2 lite; 2nd: 1 original, 2 lean
 
 lite=0
 profile=0

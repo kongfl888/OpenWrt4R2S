@@ -47,6 +47,10 @@ if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*koolproxyR*.ipk
 	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*koolproxyR*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack koolproxyR ipk fail" >> ipklost.txt
 fi
 
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*sqm*.ipk" | grep "koolproxyR" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*sqm*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack koolproxyR ipk fail" >> ipklost.txt
+fi
+
 if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "luci-theme-*.ipk" | grep "luci-theme" -c` -gt 0 ]; then
 	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/luci-theme-*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack luci-theme ipk fail" >> ipklost.txt
 fi

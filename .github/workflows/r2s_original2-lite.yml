@@ -11,7 +11,7 @@ on:
       - 'scripts/original-package.sh'
       - 'scripts/copyipk.sh'
   schedule:
-    - cron: '30 16 * * 6'
+    - cron: '30 16 * * 2'
 
 jobs:
 

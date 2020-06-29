@@ -92,10 +92,11 @@ if [ "$lite" = "1" ]; then
 fi
 
 # remove autoreboot
-DATE=`date +[%Y-%m-%d]%H:%M:%S`
-echo $DATE" One time init Script: remove ddns" >> /tmp/one_time_init.log
-opkg remove *autoreboot* >/dev/null 2>&1
-
+if [ -e "/etc/init.d/autoreboot" ]; then
+    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+    echo $DATE" One time init Script: remove autoreboot" >> /tmp/one_time_init.log
+    opkg remove *autoreboot* >/dev/null 2>&1
+fi
 sleep 2
 
 # set ipaddr
@@ -106,24 +107,26 @@ uci commit network
 
 # close ipv6
 if [ "$profile" = "1" -o "$lite" = "1" ]; then
-uci set network.wan.ipv6="0"
-uci delete network.lan.ip6assign
-uci commit network
+    uci set network.wan.ipv6="0"
+    uci delete network.lan.ip6assign
+    uci commit network
 fi
 
 # set theme
 if [ "$profile" = "1" ]; then
-DATE=`date +[%Y-%m-%d]%H:%M:%S`
-echo $DATE" One time init Script: set theme" >> /tmp/one_time_init.log
-uci set luci.main.lang='zh_cn'
-uci set luci.main.mediaurlbase ='/luci-static/argon'
-uci set luci.diag.dns='baidu.com'
-uci set luci.diag.ping='baidu.com'
-uci set luci.diag.route='baidu.com'
-uci commit luci
+    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+    echo $DATE" One time init Script: set theme" >> /tmp/one_time_init.log
+    uci set luci.main.lang='zh_cn'
+    uci set luci.main.mediaurlbase ='/luci-static/argon'
+    uci set luci.diag.dns='baidu.com'
+    uci set luci.diag.ping='baidu.com'
+    uci set luci.diag.route='baidu.com'
+    uci commit luci
 fi
 
 #uhttpd don't use https
+DATE=`date +[%Y-%m-%d]%H:%M:%S`
+echo $DATE" One time init Script: uhttpd don't use https" >> /tmp/one_time_init.log
 uci set uhttpd.main.redirect_https="0"
 uci set uhttpd.defaults.country="CN"
 uci set uhttpd.defaults.location="Beijing"
@@ -131,24 +134,32 @@ uci commit uhttpd
 
 # set ntp time
 if [ "$profile" = "1" ]; then
-DATE=`date +[%Y-%m-%d]%H:%M:%S`
-echo $DATE" One time init Script: set ntp time" >> /tmp/one_time_init.log
-sed -i 's/0.openwrt.pool.ntp.org/ntp1.aliyun.com/g' /etc/config/system
-sed -i 's/1.openwrt.pool.ntp.org/ntp2.aliyun.com/g' /etc/config/system
-sed -i 's/2.openwrt.pool.ntp.org/0.openwrt.pool.ntp.org/g' /etc/config/system
-sed -i 's/3.openwrt.pool.ntp.org/1.openwrt.pool.ntp.org/g' /etc/config/system
-uci set system.@system[0].timezone="CST-8"
-uci set system.@system[0].zonename="Asia/Shanghai"
-uci commit system
+    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+    echo $DATE" One time init Script: set ntp time" >> /tmp/one_time_init.log
+    sed -i 's/0.openwrt.pool.ntp.org/ntp1.aliyun.com/g' /etc/config/system
+    sed -i 's/1.openwrt.pool.ntp.org/ntp2.aliyun.com/g' /etc/config/system
+    sed -i 's/2.openwrt.pool.ntp.org/0.openwrt.pool.ntp.org/g' /etc/config/system
+    sed -i 's/3.openwrt.pool.ntp.org/1.openwrt.pool.ntp.org/g' /etc/config/system
+    uci set system.@system[0].timezone="CST-8"
+    uci set system.@system[0].zonename="Asia/Shanghai"
+    uci commit system
 fi
 
-sleep 3
+sleep 5
+# restart uhttpd
+DATE=`date +[%Y-%m-%d]%H:%M:%S`
+echo $DATE" One time init Script: uhttpd restarting." >> /tmp/one_time_init.log
+rm -rf /tmp/luci-modulecache/ >/dev/null 2>&1 || echo ""
+rm -f /tmp/luci-indexcache >/dev/null 2>&1 || echo ""
+/etc/init.d/uhttpd restart >/dev/null 2>&1
+
+sleep 2
 # restart network
 DATE=`date +[%Y-%m-%d]%H:%M:%S`
 echo $DATE" One time init Script: network restarting." >> /tmp/one_time_init.log
 /etc/init.d/network restart >/dev/null 2>&1
 
-sleep 5
+sleep 10
 DATE=`date +[%Y-%m-%d]%H:%M:%S`
 echo $DATE" One time init Script: -- Init finish --" >> /tmp/one_time_init.log
 if [ -e "/usr/bin/one_time_init.sh" ]; then

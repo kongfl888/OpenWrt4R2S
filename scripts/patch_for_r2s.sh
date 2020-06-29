@@ -11,3 +11,17 @@ git apply --check add-board-nanopi-r2s.patch && git apply add-board-nanopi-r2s.p
 
 wget https://github.com/armbian/build/raw/master/patch/kernel/rockchip64-dev/add-rk3328-usb3-phy-driver.patch
 git apply --check add-rk3328-usb3-phy-driver.patch && git apply add-rk3328-usb3-phy-driver.patch || echo ""
+
+cd ..
+#cd friendlywrt
+##Patch FireWall 以增添fullcone功能 
+#mkdir package/network/config/firewall/patches
+#wget -P package/network/config/firewall/patches/ https://github.com/LGA1150/fullconenat-fw3-patch/raw/master/fullconenat.patch
+# Patch LuCI 以增添fullcone开关
+#pushd feeds/luci
+#wget -O- https://github.com/LGA1150/fullconenat-fw3-patch/raw/master/luci.patch | git apply
+#popd
+## Patch Kernel 以解决fullcone冲突
+#pushd target/linux/generic/hack-5.4
+#wget https://raw.githubusercontent.com/project-openwrt/openwrt/18.06-kernel5.4/target/linux/generic/hack-5.4/952-net-conntrack-events-support-multiple-registrant.patch
+#popd

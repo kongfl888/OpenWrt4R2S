@@ -12,6 +12,10 @@ if [ -e "configs/config_rk3328" ]; then
     sed -i '/CONFIG_PACKAGE_ar3k-firmware/d' configs/config_rk3328
     sed -i '/adblock/d' configs/config_rk3328
     sed -i '/samba/d' configs/config_rk3328
+    sed -i '/ddns/d' configs/config_rk3328
+    sed -i '/mwan3/d' configs/config_rk3328
+    sed -i '/CONFIG_TARGET_ROOTFS_PARTSIZE/d' configs/config_rk3328
+    sed -i '/CONFIG_VERSION_REPO/d' configs/config_rk3328
     sed -i '/CONFIG_LUCI_LANG_/d' configs/config_rk3328
     sed -i '/CONFIG_PACKAGE_luci-i18n-.*-bg=/d' configs/config_rk3328
     sed -i '/CONFIG_PACKAGE_luci-i18n-.*-ca=/d' configs/config_rk3328
@@ -44,6 +48,7 @@ echo '
 CONFIG_KERNEL_BUILD_DOMAIN="https://github.com/kongfl888"
 CONFIG_KERNEL_BUILD_USER="kongfl888"
 CONFIG_LUCI_LANG_en=y
+CONFIG_TARGET_ROOTFS_PARTSIZE=960
 ' >> configs/config_rk3328
 
     if [ $zh_cntw -ne 0 ]; then

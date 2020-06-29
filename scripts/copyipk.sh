@@ -1,5 +1,5 @@
 # [K] (C)2020
-# https://github.com/kongfl888/nanopi-openwrt
+# https://github.com/kongfl888/OpenWrt4R2S
 
 mkdir -p ./r2srom/ipk/
 

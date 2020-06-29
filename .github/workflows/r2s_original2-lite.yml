@@ -125,7 +125,7 @@ jobs:
         run: |
           git clone -b master --single-branch https://github.com/project-openwrt/luci-app-koolproxyR
           cd luci-app-koolproxyR
-          git apply ./patches/make-koolproxyR-default-to-arm.patch
+          git apply ../patches/make-koolproxyR-default-to-arm.patch
           cd ..
           mv luci-app-koolproxyR friendlywrt-rk3328/friendlywrt/package
 

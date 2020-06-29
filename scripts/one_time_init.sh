@@ -83,12 +83,19 @@ fi
 
 sleep 2s
 
-# remove ddns
-if [ "$lite" = "1" ]; then
-    #lite2
-    DATE=`date +[%Y-%m-%d]%H:%M:%S`
-    echo $DATE" One time init Script: remove ddns" >> /tmp/one_time_init.log
-    opkg remove *ddns* --force-depends >/dev/null 2>&1
+# remove or disable ddns
+if [ -e "/etc/init.d/ddns" ]; then
+    if [ "$lite" = "1" ]; then
+        #lite2
+        DATE=`date +[%Y-%m-%d]%H:%M:%S`
+        echo $DATE" One time init Script: remove ddns" >> /tmp/one_time_init.log
+        opkg remove *ddns* --force-depends >/dev/null 2>&1
+    else
+        DATE=`date +[%Y-%m-%d]%H:%M:%S`
+        echo $DATE" One time init Script: disable ddns" >> /tmp/one_time_init.log
+        /etc/init.d/ddns stop
+        /etc/init.d/ddns disable
+    fi
 fi
 
 # remove autoreboot
@@ -152,6 +159,12 @@ echo $DATE" One time init Script: uhttpd restarting." >> /tmp/one_time_init.log
 rm -rf /tmp/luci-modulecache/ >/dev/null 2>&1 || echo ""
 rm -f /tmp/luci-indexcache >/dev/null 2>&1 || echo ""
 /etc/init.d/uhttpd restart >/dev/null 2>&1
+
+sleep 2
+# restart dnsmasq
+DATE=`date +[%Y-%m-%d]%H:%M:%S`
+echo $DATE" One time init Script: dnsmasq restarting." >> /tmp/one_time_init.log
+/etc/init.d/dnsmasq restart >/dev/null 2>&1
 
 sleep 2
 # restart network

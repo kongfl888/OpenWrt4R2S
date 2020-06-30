@@ -25,3 +25,8 @@ cd ..
 #pushd target/linux/generic/hack-5.4
 #wget https://raw.githubusercontent.com/project-openwrt/openwrt/18.06-kernel5.4/target/linux/generic/hack-5.4/952-net-conntrack-events-support-multiple-registrant.patch
 #popd
+
+mkdir -p friendlywrt/staging_dir/host/bin/
+if [ ! -e "friendlywrt/staging_dir/host/bin/upx" ];then
+    ln -s /usr/bin/upx-ucl friendlywrt/staging_dir/host/bin/upx
+fi

@@ -53,7 +53,7 @@ index 8c1e788..7d75044 100644
  		var fields = [
  			_('Hostname'),         boardinfo.hostname,
 -			_('Model'),            boardinfo.model + cpubench.cpubench,
-+			_('Model'),            "Rockchip RK3328:4 Core 4 Thread " + cpubench.cpubench,
++			_('Model'),            "Rockchip RK3328 :4 Core 4 Thread " + cpubench.cpubench,
  			_('CPU Info'),         cpuinfo.cpuinfo,
 -			_('Firmware Version'), (L.isObject(boardinfo.release) ? boardinfo.release.description + ' / ' : '') + (luciversion || ''),
 +			_('Architecture'),     'ARMv8 / Cortex-A53,64-bit',

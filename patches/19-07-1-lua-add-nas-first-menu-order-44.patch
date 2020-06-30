@@ -1,0 +1,30 @@
+From b05ebc1f4bdc448ee583f1aa3f280b6fbd579bdc Mon Sep 17 00:00:00 2001
+From: kongfl888 <kongfl888@outlook.com>
+Date: Tue, 30 Jun 2020 15:10:54 +0800
+Subject: [PATCH] 19-07-1 add nas first menu order 44
+
+---
+ feeds/luci/modules/luci-base/luasrc/controller/admin/index.lua | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/feeds/luci/modules/luci-base/luasrc/controller/admin/index.lua b/feeds/luci/modules/luci-base/luasrc/controller/admin/index.lua
+index 0cebfa4..1c0124f 100644
+--- a/feeds/luci/modules/luci-base/luasrc/controller/admin/index.lua
++++ b/feeds/luci/modules/luci-base/luasrc/controller/admin/index.lua
+@@ -64,6 +64,13 @@ function index()
+ 	page.index = true
+ 	toplevel_page(page, false, false)
+ 
++	-- Only used if applications add items
++	page = node("admin", "nas")
++	page.title = _("NAS")
++	page.order = 44
++	page.index = true
++	toplevel_page(page, false, false)
++
+ 	-- Even for mod-admin-full network just uses first submenu item as landing
+ 	page = node("admin", "network")
+ 	page.title = _("Network")
+-- 
+2.14.1.windows.1
+

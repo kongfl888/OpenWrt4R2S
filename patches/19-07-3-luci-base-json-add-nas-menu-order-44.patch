@@ -1,0 +1,32 @@
+From 5ad606889e589d597a2abd3766c1283bac2af022 Mon Sep 17 00:00:00 2001
+From: kongfl888 <kongfl888@outlook.com>
+Date: Tue, 30 Jun 2020 15:20:23 +0800
+Subject: [PATCH] 19-07-3 luci base json add nas menu order 44
+
+---
+ .../modules/luci-base/root/usr/share/luci/menu.d/luci-base.json  | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/feeds/luci/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json b/feeds/luci/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json
+index 3b9e2fd..91888f3 100644
+--- a/feeds/luci/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json
++++ b/feeds/luci/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json
+@@ -50,6 +50,15 @@
+ 		}
+ 	},
+ 
++	"admin/nas": {
++		"title": "NAS",
++		"order": 44,
++		"action": {
++			"type": "firstchild",
++			"recurse": true
++		}
++	},
++
+ 	"admin/network": {
+ 		"title": "Network",
+ 		"order": 50,
+-- 
+2.14.1.windows.1
+

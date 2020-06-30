@@ -14,6 +14,14 @@ cd friendlywrt-rk3328/friendlywrt
 git apply ../../patches/use_json_object_new_int64.patch
 # luci-status
 git apply ../../patches/patch-feeds-luci-status-overiew.patch
+# add nas menu
+if [ -e "feeds/luci/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json" ]; then
+    git apply ../../patches/19-07-3-luci-base-json-add-nas-menu-order-44.patch
+else
+    git apply ../../patches/19-07-1-lua-add-nas-first-menu-order-44.patch
+fi
+#patch nas sw
+sh ../../scripts/patch_for_nas_software.sh
 cd ../../
 
 leanpack="friendlywrt-rk3328/friendlywrt/package/lean"

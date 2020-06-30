@@ -55,16 +55,19 @@ sed -i '/<%:Architecture%>/d' /usr/lib/lua/luci/view/admin_status/index.htm >/de
 sed -i '/<%:CPU Info%><\/td>/i\\t\t<tr><td width="33%"><%:Architecture%></td><td>ARMv8 / Cortex-A53,64-bit (Rockchip rk3328)</td></tr>' /usr/lib/lua/luci/view/admin_status/index.htm
 
 #disable some boot items
-DATE=`date +[%Y-%m-%d]%H:%M:%S`
-echo $DATE" One time init Script: disable some boot items" >> /tmp/one_time_init.log
+#DATE=`date +[%Y-%m-%d]%H:%M:%S`
+#echo $DATE" One time init Script: disable some boot items" >> /tmp/one_time_init.log
 sleep 1s
-
 if [ -e "/etc/init.d/iptvhelper" ]; then
+    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+    echo $DATE" One time init Script: disable iptvhelper boot" >> /tmp/one_time_init.log
     /etc/init.d/iptvhelper stop
     /etc/init.d/iptvhelper disable
 fi
 
 if [ -e "/etc/init.d/mwan3" ]; then
+    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+    echo $DATE" One time init Script: disable mwan3 boot" >> /tmp/one_time_init.log
     /etc/init.d/mwan3helper stop
     /etc/init.d/mwan3 stop
     /etc/init.d/mwan3 disable
@@ -124,7 +127,7 @@ if [ "$profile" = "1" ]; then
     DATE=`date +[%Y-%m-%d]%H:%M:%S`
     echo $DATE" One time init Script: set theme" >> /tmp/one_time_init.log
     uci set luci.main.lang='zh_cn'
-    uci set luci.main.mediaurlbase ='/luci-static/argon'
+    uci set luci.main.mediaurlbase='/luci-static/argon'
     uci set luci.diag.dns='baidu.com'
     uci set luci.diag.ping='baidu.com'
     uci set luci.diag.route='baidu.com'
@@ -151,6 +154,12 @@ if [ "$profile" = "1" ]; then
     uci set system.@system[0].zonename="Asia/Shanghai"
     uci commit system
 fi
+
+# creat /usr/share/mywdog/
+DATE=`date +[%Y-%m-%d]%H:%M:%S`
+echo $DATE" One time init Script: creat /usr/share/mywdog/" >> /tmp/one_time_init.log
+mkdir -p /usr/share/mywdog/
+chmod 755 /usr/share/mywdog/
 
 sleep 5
 # restart uhttpd

@@ -167,6 +167,7 @@ jobs:
 
       - name: Update package
         run: |
+          cp -f ./resources/zh_Hans/base.po friendlywrt-rk3328/friendlywrt/feeds/luci/modules/luci-base/po/zh_Hans/base.po || echo ""
           git clone -b openwrt-19.07 --single-branch https://github.com/project-openwrt/openwrt.git
           . ./scripts/original-package.sh
 
@@ -187,9 +188,6 @@ jobs:
           mv friendlywrt-rk3328/out/*img* ./r2srom/
           cp friendlywrt-rk3328/friendlywrt/.config ./r2srom/
           cp friendlywrt-rk3328/friendlywrt/rules.mk ./r2srom/ || echo ""
-          cp friendlywrt-rk3328/friendlywrt/kernel.mk ./r2srom/ || echo ""
-          cp friendlywrt-rk3328/friendlywrt/package.mk ./r2srom/ || echo ""
-          cp friendlywrt-rk3328/friendlywrt/.current_config.mk ./r2srom/ || echo ""
           cd ./r2srom/
           sha256sum *img* > sha256sum.txt
           cd ..

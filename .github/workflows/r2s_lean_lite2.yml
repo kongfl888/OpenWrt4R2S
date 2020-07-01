@@ -1,0 +1,208 @@
+name: r2s Lean lite2
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - '.github/workflows/r2s_lean_lite2.yml'
+      - 'base_rk3328.seed'
+      - 'JUNK/r2s_minimal2_user_par1.seed'
+  schedule:
+    - cron: '10 4 * * 5'
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    if: github.repository == 'kongfl888/OpenWrt4R2S'
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@master
+        with:
+          ref: master
+
+      - name: Initialization Environment
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo rm -rf /etc/apt/sources.list.d
+          sudo apt-get update
+          sudo apt-get -y --no-install-recommends install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs gcc-multilib g++-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler
+          curl https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh  | sed '/#/d' | sed 's/\\//g' | sed 's/exit 0//g' | sed 's/sudo apt -y install//g' | sed 's/sudo apt-get -y install//g' | sed 's/:i386//g' | xargs sudo apt-get -y --no-install-recommends install
+          docker rmi `docker images -q`
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android/sdk /usr/local/share/boost /opt/ghc
+
+      - name: Install Repo
+        run: |
+          git clone https://github.com/friendlyarm/repo
+          sudo cp repo/repo /usr/bin/
+
+      - name: Init Source
+        run: |
+          mkdir friendlywrt-rk3328
+          cd friendlywrt-rk3328
+          repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master-v19.07.1 -m rk3328.xml --repo-url=https://github.com/friendlyarm/repo --no-clone-bundle --depth=1
+          repo sync -c --no-tags --no-clone-bundle -j8
+          cd friendlywrt/ && git fetch --unshallow
+
+      - name: Patch Kernel
+        run: |
+          . patch_kernel_5.4.sh
+
+      - name: Mods
+        run: |
+          cd friendlywrt-rk3328
+          . ../remove_unused_config.sh
+          . ../patch_dosth.sh
+          cat configs/config_rk3328 | grep "TARGET" >> ../base_rk3328.seed
+          cat ../base_rk3328.seed > configs/config_rk3328
+          #sed -i '/ddns/d' configs/config_rk3328 && echo ""
+          cat ../JUNK/r2s_minimal2_user_par1.seed >> configs/config_rk3328
+          cd friendlywrt
+          git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
+          git remote add upstream https://github.com/coolsnowwolf/lede && git fetch upstream
+          git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto upstream/master -X theirs
+          #rm -rf package/kernel/mt76/Makefile package/network/services/hostapd package/kernel/mac80211
+          #git checkout 0a395d6fd6c38c554709197ae3cd6315f143cd7a -- package/kernel/mt76/Makefile package/network/services/hostapd package/kernel/mac80211
+          rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch
+          rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-add-support-for-rgmii-internal-delay-mo.patch
+          sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
+          git checkout upstream/master -- feeds.conf.default
+          sed -i '5s/#src-git/src-git/g' feeds.conf.default
+          cd package/lean/
+          #git clone https://github.com/jerrykuku/lua-maxminddb.git
+          #git clone https://github.com/jerrykuku/luci-app-vssr.git
+          #cd luci-app-vssr/root/etc/
+          #echo 'china_ssr.txt
+          #config/black.list
+          #config/white.list
+          #dnsmasq.oversea/oversea_list.conf
+          #dnsmasq.ssr/ad.conf
+          #dnsmasq.ssr/gfw_base.conf' | xargs rm
+          #cd ../../../
+          rm -rf luci-theme-argon
+          git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
+          cd ../../
+          git apply ../../enable_autocore.diff
+          #git apply ../../fix_cpufreq.diff
+          sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon"' package/lean/default-settings/files/zzz-default-settings
+          sed -i '/exit/i\chown -R root:root /usr/share/netdata/web' package/lean/default-settings/files/zzz-default-settings
+          sed -i '/exit/i\find /etc/rc.d/ -name *docker* -delete' package/lean/default-settings/files/zzz-default-settings
+          sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
+          sed -i '/8.8.8.8/d' package/base-files/files/root/setup.sh
+          sed -i 's/192.168.2.1/192.168.31.3/g' package/base-files/files/root/setup.sh
+          sed -i 's/addr_offset=2/addr_offset=31/g' package/base-files/files/bin/config_generate
+          sed -i 's/ipad=${ipaddr:-"192.168.$((addr_offset++)).1"}/ipad=${ipaddr:-"192.168.$((addr_offset++)).3"}/g' package/base-files/files/bin/config_generate
+          sed -i 's/ipaddr:-"192.168.1.1"/ipaddr:-"192.168.31.3"/g' package/base-files/files/bin/config_generate
+          mv ../../scripts/one_time_init.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/one_time_init.sh 22 &' package/base-files/files/etc/rc.local
+          #mv ../../scripts/autoupdate2.sh package/base-files/files/root/au.sh && chmod +x package/base-files/files/root/au.sh
+          mv ../../scripts/flash_rom.sh package/base-files/files/root/flash_rom.sh && chmod +x package/base-files/files/root/flash_rom.sh
+          echo -e '\nMr.K Build\n' >> package/base-files/files/etc/banner
+
+      - name: Add AdGuardHome
+        run: |
+          git clone -b master --single-branch https://github.com/rufengsuixing/luci-app-adguardhome
+          mv luci-app-adguardhome friendlywrt-rk3328/friendlywrt/package
+          mkdir -p friendlywrt-rk3328/friendlywrt/package/adguardhome && cd friendlywrt-rk3328/friendlywrt/package/adguardhome
+          wget https://raw.githubusercontent.com/Lienol/openwrt/dev-19.07/package/diy/adguardhome/Makefile
+
+      - name: Add luci-app-koolproxyR
+        run: |
+          git clone -b master --single-branch https://github.com/project-openwrt/luci-app-koolproxyR
+          cd luci-app-koolproxyR
+          git apply ../patches/make-koolproxyR-default-to-arm.patch
+          cd ..
+          mv luci-app-koolproxyR friendlywrt-rk3328/friendlywrt/package
+
+      - name: Add Luci-app-autorewan
+        run: |
+          git clone -b master --single-branch https://github.com/kongfl888/luci-app-autorewan.git
+          mv luci-app-autorewan friendlywrt-rk3328/friendlywrt/package
+
+      - name: Add Luci-app-timedreboot
+        run: |
+          git clone -b master --single-branch https://github.com/kongfl888/luci-app-timedreboot.git
+          mv luci-app-timedreboot friendlywrt-rk3328/friendlywrt/package
+
+      - name: Add Luci-i18n-sqm-zh-cn
+        run: |
+          git clone -b master --single-branch https://github.com/kongfl888/luci-i18n-sqm-zh-cn.git
+          mv luci-i18n-sqm-zh-cn friendlywrt-rk3328/friendlywrt/package
+
+      - name: Add check-network
+        run: |
+          git clone -b master --single-branch https://github.com/kongfl888/check-network.git
+          mv check-network friendlywrt-rk3328/friendlywrt/package
+
+      - name: Add smartdns
+        run: |
+          git clone -b master --single-branch https://github.com/pymumu/openwrt-smartdns.git
+          git clone -b lede --single-branch https://github.com/pymumu/luci-app-smartdns.git
+          mv luci-app-smartdns friendlywrt-rk3328/friendlywrt/package
+          mkdir -p friendlywrt-rk3328/friendlywrt/package/net/smartdns
+          mv openwrt-smartdns/* friendlywrt-rk3328/friendlywrt/package/net/smartdns
+
+      - name: Add Luci-app-r2sflasher
+        run: |
+          git clone -b master --single-branch https://github.com/kongfl888/luci-app-r2sflasher.git
+          mv luci-app-r2sflasher friendlywrt-rk3328/friendlywrt/package
+
+      - name: Update Feeds
+        run: |
+          cd friendlywrt-rk3328/friendlywrt
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+
+      - name: Build FriendlyWrt
+        run: |
+          cd friendlywrt-rk3328
+          sed -i 's/set -eu/set -u/' scripts/mk-friendlywrt.sh
+          ./build.sh nanopi_r2s.mk
+
+      - name: Zip Files
+        run: |
+          gzip friendlywrt-rk3328/out/*.img
+      - name: Assemble Artifact
+        id: assemble_artifact
+        run: |
+          rm -rf ./r2srom/
+          mkdir -p ./r2srom/
+          mv friendlywrt-rk3328/out/*img* ./r2srom/
+          cp friendlywrt-rk3328/friendlywrt/.config ./r2srom/
+          cp friendlywrt-rk3328/friendlywrt/.current_config.mk ./r2srom/ || echo ""
+          cd ./r2srom/
+          sha256sum *img* > sha256sum.txt
+          cd ..
+          mkdir -p ./r2srom/ipk/
+          . ./scripts/copyipk.sh
+          cd ./r2srom/ipk/
+          sha256sum *ipk > packages.sha256
+          cd ../../
+          cp ./README.txt ./r2srom/
+          zip -r artifact.zip ./r2srom/
+          release_tag="R2S-Lean-lite2-$(date +%Y-%m-%d-%H)"
+          echo "##[set-output name=release_tag;]$release_tag"
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.sec_token }}
+        with:
+          tag_name: ${{ steps.assemble_artifact.outputs.release_tag }}
+          release_name: ${{ steps.assemble_artifact.outputs.release_tag }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.sec_token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./artifact.zip
+          asset_name: ${{ steps.assemble_artifact.outputs.release_tag }}-ROM.zip
+          asset_content_type: application/zip

@@ -122,12 +122,22 @@ if [ "$profile" = "1" -o "$lite" = "1" ]; then
     uci commit network
 fi
 
+# init argon
+if [ -e "/etc/uci-defaults/30_luci-theme-argon" ];then
+    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+    echo $DATE" One time init Script: init luci-theme-argon" >> /tmp/one_time_init.log
+    chmod +x /etc/uci-defaults/30_luci-theme-argon
+    /etc/uci-defaults/30_luci-theme-argon && rm -f /etc/uci-defaults/30_luci-theme-argon || \
+    echo $DATE" One time init Script: init luci-theme-argon failed." >> /tmp/one_time_init.log
+fi
+
 # set theme
 if [ "$profile" = "1" ]; then
     DATE=`date +[%Y-%m-%d]%H:%M:%S`
     echo $DATE" One time init Script: set theme" >> /tmp/one_time_init.log
     uci set luci.main.lang='zh_cn'
-    uci set luci.main.mediaurlbase='/luci-static/argon'
+    [ -d "/www/luci-static/argon/" ] && uci set luci.themes.Argon='/luci-static/argon'
+    [ -d "/www/luci-static/argon/" ] && uci set luci.main.mediaurlbase='/luci-static/argon'
     uci set luci.diag.dns='baidu.com'
     uci set luci.diag.ping='baidu.com'
     uci set luci.diag.route='baidu.com'

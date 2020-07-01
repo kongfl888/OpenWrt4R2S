@@ -10,6 +10,7 @@ on:
       - 'patch_dosth.sh'
       - 'scripts/original-package.sh'
       - 'scripts/copyipk.sh'
+      - 'scripts/patch_for_r2s.sh'
   schedule:
     - cron: '30 2 * * 6'
 
@@ -80,11 +81,7 @@ jobs:
 
       - name: Add Luci-theme
         run: |
-          mkdir -p friendlywrt-rk3328/friendlywrt/package/lean/ || echo ""
-          mkdir -p friendlywrt-rk3328/friendlywrt/feeds/luci/themes
-          rm -rf friendlywrt-rk3328/friendlywrt/*/*/luci-theme-argon || echo ""
-          git clone -b luci-20.029 --single-branch https://github.com/kongfl888/luci-theme-argon.git
-          mv -f luci-theme-argon friendlywrt-rk3328/friendlywrt/package
+          . ./scripts/add-theme-argon.sh
 
       - name: Add Luci-i18n-sqm-zh-cn
         run: |

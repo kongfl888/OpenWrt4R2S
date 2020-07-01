@@ -6,6 +6,8 @@ if [ "${1}" == "1" ];then
 fullin=1
 fi
 
+cp -f ./resources/zh_Hans/base.po friendlywrt-rk3328/friendlywrt/feeds/luci/modules/luci-base/po/zh_Hans/base.po || echo ""
+
 git clone -b master --single-branch https://github.com/Lienol/openwrt-package.git
 
 # patch feeds、package

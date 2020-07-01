@@ -177,7 +177,6 @@ jobs:
 
       - name: Update package
         run: |
-          cp -f ./resources/zh_Hans/base.po friendlywrt-rk3328/friendlywrt/feeds/luci/modules/luci-base/po/zh_Hans/base.po || echo ""
           git clone -b openwrt-19.07 --single-branch https://github.com/project-openwrt/openwrt.git
           . ./scripts/original-package.sh 1
 

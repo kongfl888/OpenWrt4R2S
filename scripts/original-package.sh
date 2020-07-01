@@ -122,8 +122,8 @@ rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/UnblockNeteaseMusic/ >/dev/null 
 cp -rf openwrt/package/lean/UnblockNeteaseMusic/ $leanpack
 
 # get luci-app-flowoffload
-rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-flowoffload/ >/dev/null 2>&1 || echo ""
-cp -rf openwrt/package/lean/luci-app-flowoffload/ $leanpack
+#rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-flowoffload/ >/dev/null 2>&1 || echo ""
+#cp -rf openwrt/package/lean/luci-app-flowoffload/ $leanpack
 
 # get luci-app-ssrserver-python
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-ssrserver-python/ >/dev/null 2>&1 || echo ""

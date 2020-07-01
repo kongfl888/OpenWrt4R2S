@@ -131,6 +131,12 @@ if [ -e "/etc/uci-defaults/30_luci-theme-argon" ];then
     echo $DATE" One time init Script: init luci-theme-argon failed." >> /tmp/one_time_init.log
 fi
 
+# disable ttyd
+if [ -e"/etc/config/ttyd" ]; then
+    uci set ttyd.@ttyd[0].enable="0"
+    uci commit ttyd
+fi
+
 # set theme
 if [ "$profile" = "1" ]; then
     DATE=`date +[%Y-%m-%d]%H:%M:%S`

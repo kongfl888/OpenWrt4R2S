@@ -3,7 +3,7 @@
 # built
 # mv ../../scripts/one_time_init.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/one_time_init.sh &' package/base-files/files/etc/rc.local
 # https://github.com/kongfl888/OpenWrt4R2S
-# ** 1st: 1 normal, 2 lite; 2nd: 1 original, 2 lean
+# ** 1st: 1 normal, 2 lite; 2nd: 1 19.07.1, 2 lean, 3 19.07.3
 
 lite=0
 profile=0
@@ -16,6 +16,9 @@ if [ ! -z "${1}" ];then
         ;;
     2)
         profile=2
+        ;;
+    3)
+        profile=3
         ;;
     *)
         profile=0
@@ -48,7 +51,7 @@ sed -i '/one_time_init.sh/d' /etc/rc.local >/dev/null 2>&1
 # set arch
 DATE=`date +[%Y-%m-%d]%H:%M:%S`
 echo $DATE" One time init Script: set arch." >> /tmp/one_time_init.log
-if [ "$profile" = "1" ]; then
+if [ "$profile" != "2" ]; then
 sed -i "s#),boardinfo.system#),'ARMv8 / Cortex-A53,64-bit (Rockchip rk3328)'#g" /www/luci-static/resources/view/status/include/10_system.js
 fi
 sed -i '/<%:Architecture%>/d' /usr/lib/lua/luci/view/admin_status/index.htm >/dev/null 2>&1
@@ -116,7 +119,7 @@ uci set network.lan.ipaddr=192.168.31.3
 uci commit network
 
 # close ipv6
-if [ "$profile" = "1" -o "$lite" = "1" ]; then
+if [ "$profile" != "2" -o "$lite" = "1" ]; then
     uci set network.wan.ipv6="0"
     uci delete network.lan.ip6assign
     uci commit network
@@ -138,7 +141,7 @@ if [ -e"/etc/config/ttyd" ]; then
 fi
 
 # set theme
-if [ "$profile" = "1" ]; then
+if [ "$profile" != "2" ]; then
     DATE=`date +[%Y-%m-%d]%H:%M:%S`
     echo $DATE" One time init Script: set theme" >> /tmp/one_time_init.log
     uci set luci.main.lang='zh_cn'
@@ -150,16 +153,22 @@ if [ "$profile" = "1" ]; then
     uci commit luci
 fi
 
-#uhttpd don't use https
+#uhttpd set p1
+if [ "$profile" != "3" ]; then
 DATE=`date +[%Y-%m-%d]%H:%M:%S`
 echo $DATE" One time init Script: uhttpd don't use https" >> /tmp/one_time_init.log
 uci set uhttpd.main.redirect_https="0"
+uci commit uhttpd
+fi
+#uhttpd set p2
+DATE=`date +[%Y-%m-%d]%H:%M:%S`
+echo $DATE" One time init Script: uhttpd set country" >> /tmp/one_time_init.log
 uci set uhttpd.defaults.country="CN"
 uci set uhttpd.defaults.location="Beijing"
 uci commit uhttpd
 
 # set ntp time
-if [ "$profile" = "1" ]; then
+if [ "$profile" != "2" ]; then
     DATE=`date +[%Y-%m-%d]%H:%M:%S`
     echo $DATE" One time init Script: set ntp time" >> /tmp/one_time_init.log
     sed -i 's/0.openwrt.pool.ntp.org/ntp1.aliyun.com/g' /etc/config/system

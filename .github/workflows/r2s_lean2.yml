@@ -52,6 +52,19 @@ jobs:
         run: |
           . patch_kernel_5.4.sh
 
+      - name: Patch from Lean
+        run: |
+          cd friendlywrt-rk3328/friendlywrt
+          git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
+          git remote add upstream https://github.com/coolsnowwolf/lede && git fetch upstream
+          git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto upstream/master -X theirs
+          #rm -rf package/kernel/mt76/Makefile package/network/services/hostapd package/kernel/mac80211
+          #git checkout 0a395d6fd6c38c554709197ae3cd6315f143cd7a -- package/kernel/mt76/Makefile package/network/services/hostapd package/kernel/mac80211
+          rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch
+          rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-add-support-for-rgmii-internal-delay-mo.patch
+          git checkout upstream/master -- feeds.conf.default
+          sed -i '5s/#src-git/src-git/g' feeds.conf.default
+
       - name: Mods
         run: |
           cd friendlywrt-rk3328
@@ -62,16 +75,7 @@ jobs:
           cat ../JUNK/r2s_minimal2_user_par1.seed >> configs/config_rk3328
           cat ../JUNK/r2s_minimal2_user_par2.seed >> configs/config_rk3328
           cd friendlywrt
-          git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
-          git remote add upstream https://github.com/coolsnowwolf/lede && git fetch upstream
-          git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto upstream/master -X theirs
-          #rm -rf package/kernel/mt76/Makefile package/network/services/hostapd package/kernel/mac80211
-          #git checkout 0a395d6fd6c38c554709197ae3cd6315f143cd7a -- package/kernel/mt76/Makefile package/network/services/hostapd package/kernel/mac80211
-          rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch
-          rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-add-support-for-rgmii-internal-delay-mo.patch
-          sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
-          git checkout upstream/master -- feeds.conf.default
-          sed -i '5s/#src-git/src-git/g' feeds.conf.default
+          #sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
           cd package/lean/
           #git clone https://github.com/jerrykuku/lua-maxminddb.git
           #git clone https://github.com/jerrykuku/luci-app-vssr.git

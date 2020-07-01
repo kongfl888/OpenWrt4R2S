@@ -1,0 +1,224 @@
+name: r2s-original-19073-lite
+
+on:
+  push:
+    branches: 
+      - master
+    paths: 
+      - 'JUNK/r2s_original2_base.seed'
+      - '.github/workflows/r2s_original2-19.07.3-lite.yml'
+      - 'patch_dosth.sh'
+      - 'scripts/original-package.sh'
+      - 'scripts/copyipk.sh'
+      - 'scripts/patch_for_r2s.sh'
+
+jobs:
+
+  build:
+    
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    
+    steps:
+      
+      - name: Checkout
+        uses: actions/checkout@master
+        with:
+          ref: master
+
+      - name: Initialization Environment
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo rm -rf /etc/apt/sources.list.d
+          sudo apt-get update
+          sudo apt-get -y install bc build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler
+          wget -O - https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh | bash
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android/sdk
+          git config --global user.name "kongfl888"
+          git config --global user.email "kongfl888@outlook.com"
+          
+      - name: Install Repo
+        run: |
+          git clone https://github.com/friendlyarm/repo
+          sudo cp repo/repo /usr/bin/
+          
+      - name: Init Source
+        run: |
+          mkdir friendlywrt-rk3328
+          cd friendlywrt-rk3328
+          repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master-v19.07.1 -m rk3328.xml --repo-url=https://github.com/friendlyarm/repo  --no-clone-bundle --depth=1
+          repo sync -c --no-tags --no-clone-bundle -j8
+          cd friendlywrt/ && git fetch --unshallow
+
+      - name: Openwrt 19.07.3
+        run: |
+          cd friendlywrt-rk3328/friendlywrt
+          git remote add upstream https://github.com/openwrt/openwrt.git && git fetch upstream
+          git branch v19073 v19.07.3
+          git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto v19073 -X theirs
+          rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch
+          rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-add-support-for-rgmii-internal-delay-mo.patch
+          git checkout v19073 -- feeds.conf.default
+
+      - name: Patch For R2S
+        run: |
+          . ./scripts/patch_for_r2s.sh
+
+      - name: Mods
+        run: |
+          cd friendlywrt-rk3328
+          #. ../remove_unused_config.sh
+          . ../patch_dosth.sh
+          #sed -i 's/CONFIG_BPFILTER=y/CONFIG_BPFILTER=n/' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+          sed -i 's/dnsmasq /dnsmasq-full /' friendlywrt/include/target.mk
+          #cp ../JUNK/r2s.config.seed configs/config_rk3328
+          [ -f configs/config_rk3328 ] && sed -i '/adblock/d;/docker/d;/DOCKER/d;/mwan3/d;/OPENVPN/d;/openvpn/d;' configs/config_rk3328
+          cat ../JUNK/r2s_original2_base.seed >> configs/config_rk3328
+          cd friendlywrt
+          mv ../../scripts/one_time_init.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/one_time_init.sh 23 &' package/base-files/files/etc/rc.local
+          mv ../../scripts/flash_rom.sh package/base-files/files/root/flash_rom.sh && chmod +x package/base-files/files/root/flash_rom.sh
+          echo -e '\nMr.K Build\n' >> package/base-files/files/etc/banner
+          rm -f ./feeds.conf.default && wget -O ./feeds.conf.default https://raw.githubusercontent.com/openwrt/openwrt/v19.07.3/feeds.conf.default
+
+      - name: Clean Feeds
+        run: |
+          cd friendlywrt-rk3328/friendlywrt
+          ./scripts/feeds clean -a
+
+      - name: Add Luci-theme
+        run: |
+          . ./scripts/add-theme-argon.sh 1
+
+      - name: Add Luci-i18n-sqm-zh-cn
+        run: |
+          git clone -b master --single-branch https://github.com/kongfl888/luci-i18n-sqm-zh-cn.git
+          mv luci-i18n-sqm-zh-cn friendlywrt-rk3328/friendlywrt/package
+
+      - name: Add Luci-app-timedreboot
+        run: |
+          git clone -b master --single-branch https://github.com/kongfl888/luci-app-timedreboot.git
+          mv luci-app-timedreboot friendlywrt-rk3328/friendlywrt/package
+
+      - name: Add Luci-app-r2sflasher
+        run: |
+          git clone -b master --single-branch https://github.com/kongfl888/luci-app-r2sflasher.git
+          mv luci-app-r2sflasher friendlywrt-rk3328/friendlywrt/package
+
+      - name: Add Luci-app-autorewan
+        run: |
+          git clone -b master --single-branch https://github.com/kongfl888/luci-app-autorewan.git
+          mv luci-app-autorewan friendlywrt-rk3328/friendlywrt/package
+
+      - name: Add check-network
+        run: |
+          git clone -b master --single-branch https://github.com/kongfl888/check-network.git
+          mv check-network friendlywrt-rk3328/friendlywrt/package
+
+      - name: Add AdGuardHome
+        run: |
+          git clone -b master --single-branch https://github.com/rufengsuixing/luci-app-adguardhome
+          mv luci-app-adguardhome friendlywrt-rk3328/friendlywrt/package
+          mkdir -p friendlywrt-rk3328/friendlywrt/package/adguardhome && cd friendlywrt-rk3328/friendlywrt/package/adguardhome
+          wget https://raw.githubusercontent.com/Lienol/openwrt/dev-19.07/package/diy/adguardhome/Makefile
+
+      - name: Add smartdns
+        run: |
+          git clone -b master --single-branch https://github.com/pymumu/openwrt-smartdns.git
+          git clone -b lede --single-branch https://github.com/pymumu/luci-app-smartdns.git
+          mv luci-app-smartdns friendlywrt-rk3328/friendlywrt/package
+          mkdir -p friendlywrt-rk3328/friendlywrt/package/net/smartdns
+          mv openwrt-smartdns/* friendlywrt-rk3328/friendlywrt/package/net/smartdns
+
+      - name: Add luci-app-koolproxyR
+        run: |
+          git clone -b master --single-branch https://github.com/project-openwrt/luci-app-koolproxyR
+          cd luci-app-koolproxyR
+          git apply ../patches/make-koolproxyR-default-to-arm.patch
+          cd ..
+          mv luci-app-koolproxyR friendlywrt-rk3328/friendlywrt/package
+
+      - name: Add OpenClash
+        run: |
+          git clone -b master https://github.com/vernesong/OpenClash.git 
+          mv OpenClash/luci-app-openclash friendlywrt-rk3328/friendlywrt/package
+          cd friendlywrt-rk3328/friendlywrt/package/base-files/files
+          mkdir -p etc/openclash/core && cd etc/openclash/core
+          curl -L https://github.com/vernesong/OpenClash/releases/download/Clash/clash-linux-armv8.tar.gz | tar zxf -
+          chmod +x clash
+
+      - name: Add Passwall
+        run: |
+          cd friendlywrt-rk3328/friendlywrt
+          echo -e '\nsrc-git lienol https://github.com/SuLingGG/openwrt-package' >> feeds.conf.default
+          ./scripts/feeds update -a
+          rm -rf feeds/lienol/lienol/ipt2socks
+          rm -rf feeds/lienol/lienol/shadowsocksr-libev
+          rm -rf feeds/lienol/lienol/pdnsd-alt
+          rm -rf feeds/lienol/package/verysync
+          rm -rf feeds/lienol/lienol/luci-app-verysync
+          rm -rf package/lean/luci-app-kodexplorer
+          rm -rf package/lean/luci-app-pppoe-relay
+          rm -rf package/lean/luci-app-pptp-server
+          rm -rf package/lean/luci-app-v2ray-server
+          ./scripts/feeds install -a
+
+      - name: Update Feeds
+        run: |
+          cd friendlywrt-rk3328/friendlywrt
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+
+      - name: Update package
+        run: |
+          git clone -b openwrt-19.07 --single-branch https://github.com/project-openwrt/openwrt.git
+          . ./scripts/original-package.sh
+
+      - name: Build FriendlyWrt
+        run: |
+          cd friendlywrt-rk3328
+          sed -i 's/set -eu/set -u/' scripts/mk-friendlywrt.sh
+          ./build.sh nanopi_r2s.mk
+
+      - name: Zip Files
+        run: |
+          gzip friendlywrt-rk3328/out/*.img
+      - name: Assemble Artifact
+        id: assemble_artifact
+        run: |
+          rm -rf ./r2srom/
+          mkdir -p ./r2srom/
+          mv friendlywrt-rk3328/out/*img* ./r2srom/
+          cp friendlywrt-rk3328/friendlywrt/.config ./r2srom/
+          cd ./r2srom/
+          sha256sum *img* > sha256sum.txt
+          cd ..
+          mkdir -p ./r2srom/ipk/
+          . ./scripts/copyipk.sh
+          cd ./r2srom/ipk/
+          sha256sum *ipk > packages.sha256
+          cd ../../
+          cp ./README.txt ./r2srom/
+          zip -r artifact.zip ./r2srom/
+          release_tag="R2S-Original-lite-19.07.3-$(date +%Y-%m-%d-%H)"
+          echo "##[set-output name=release_tag;]$release_tag"
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.sec_token }}
+        with:
+          tag_name: ${{ steps.assemble_artifact.outputs.release_tag }}
+          release_name: ${{ steps.assemble_artifact.outputs.release_tag }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.sec_token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./artifact.zip
+          asset_name: ${{ steps.assemble_artifact.outputs.release_tag }}-ROM.zip
+          asset_content_type: application/zip

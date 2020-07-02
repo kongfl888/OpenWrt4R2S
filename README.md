@@ -3,11 +3,11 @@
 
 ### 固件说明
 
-适用于 NanoPi R2S 的OpenWrt固件
+适用于 NanoPi R2S 的OpenWrt固件 ![smile](./assets/smile.png)
 
 Original版的意思就是使用原生的OpenWrt。发行版本是stable 19.07.1和19.07.3，以后可能会有snapshots，但如果只是需要稳定使用的那推荐你用stable的。
 
-一般用户原生LITE版推荐。
+*一般用户原生LITE版推荐。*
 
 所有的版本都带了NAS四件套: 网络共享(samba)、下载工具和硬盘休眠，以及家庭网络必备的minidlna。再挂个QOS留用。 去广告都有，含adbyby、adguardhome和koolproxyR。
 
@@ -31,9 +31,9 @@ usb-wifi驱动都有，网上常见的芯片，👇
 
 [网盘分流](https://github.com/kongfl888/OpenWrt4R2S/blob/r2s/README.txt)
 
-因为编译的时候使用的是优化性能，所以文件有些大(压缩后相差个10M那样)。在文件大小和系统性能上的取舍，我选择了后者。
+因为编译的时候使用的是优化性能，所以文件有些大(压缩后大概相差个10M那样)。在文件大小和系统性能上的取舍，我选择了后者。
 
-（注意：IMG才是最终的固件格式）
+*（注意：IMG才是最终的固件格式）*
 
 ### 一些软件包
 
@@ -47,16 +47,16 @@ usb-wifi驱动都有，网上常见的芯片，👇
 
 你可以有三种方法
 
-- 一、打开WEB页面
-	
+> 一、打开WEB页面
+
 使用 [R2S刷机](https://github.com/kongfl888/luci-app-r2sflasher/releases)
 
-- 二、打开SSH
+> 二、打开SSH
 
 ``cd /tmp && wget https://raw.githubusercontent.com/kongfl888/OpenWrt4R2S/r2s/scripts/flash_rom.sh
 flash_rom /tmp/rom.img.gz /dev/mmcblk0 gz``
 
-- 三、PC端刷卡
+> 三、PC端刷卡
 
 1、Ubuntu下（其中/dev/sdX为TF卡的真实路径）
 
@@ -80,11 +80,11 @@ flash_rom /tmp/rom.img.gz /dev/mmcblk0 gz``
 
 ### 三外设说明
 
-tf卡直接影响系统启动速度。建议使用C10+卡，卡容量大小至少4GB，推荐8G以上。
++ tf卡直接影响系统启动速度。建议使用C10+卡，卡容量大小至少4GB，推荐8G以上。
 
-电流不稳或波动大直接影响板子的正常运行
++ 电流不稳或波动大直接影响板子的正常运行
 
-USB可能会导致IO冲突，因为有一个千兆网口就是USB3转过来的
++ USB可能会导致IO冲突，因为有一个千兆网口就是USB3转过来的
 
 ### 菜单预览
 

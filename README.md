@@ -13,7 +13,7 @@ Original版的意思就是使用原生的OpenWrt。发行版本是stable 19.07.1
 
 至于其他的包括不可说应用，只有不带lite版的多带了些（下边预览图）
 
-而Lean版就是使用Lean大的opnwrt/lede做的固件。
+而Lean版就是使用Lean大的openwrt/lede做的固件。
 
 ### USB WIFI
 
@@ -22,8 +22,6 @@ usb-wifi驱动都有，网上常见的芯片，👇
 ![支持列表](./assets/R2swrt-usbwifi-08.jpg)
 
 建议不要对它抱有太大的期望。👆
-
-就算是5G的无线网卡但只有65M的速度也不要太惊讶。 个别现象。
 
 ### 发布地址
 
@@ -95,6 +93,7 @@ flash_rom /tmp/rom.img.gz /dev/mmcblk0 gz``
 ### 致谢
 
 - [openwrt/openwrt](https://github.com/openwrt/openwrt)
+- [project-openwrt](https://github.com/project-openwrt/openwrt)
 - [friendlyarm/friendlywrt](https://github.com/friendlyarm/friendlywrt)
 - [coolsnowwolf/lede](https://github.com/coolsnowwolf/lede)
 - [friendlyarm.com](http://wiki.friendlyarm.com/wiki/index.php/How_to_Build_FriendlyWrt/zh)

@@ -23,7 +23,7 @@ usb-wifi驱动都有，网上常见的芯片，👇
 
 建议不要对它抱有太大的期望。👆
 
-就算是5G的无线网卡但只有65M的速度也不要太惊讶。
+就算是5G的无线网卡但只有65M的速度也不要太惊讶。 个别现象。
 
 ### 发布地址
 
@@ -70,7 +70,7 @@ flash_rom /tmp/rom.img.gz /dev/mmcblk0 gz``
 
 ### 登录
 
-路由器登陆页面： http://openwrt/ 或 http://friendlywrt/，http://IP地址(自己找)。
+路由器登陆页面： http://openwrt/ 或 http://friendlywrt/  或 http://IP地址(自己找，推荐使用IP)。 有的是HTTPS。
 
 默认用户名是``root``, 密码是 ``空密码`` 或 ``password`` 。
 

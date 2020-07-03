@@ -7,6 +7,9 @@ CONFIG_PACKAGE_luci-theme-bootstrap-mod=y
 
 CONFIG_BUSYBOX_DEFAULT_FUSER=y
 
+CONFIG_PACKAGE_kmod-nft-nat=y
+CONFIG_PACKAGE_kmod-nft-offload=y
+
 CONFIG_PACKAGE_kmod-rtl8xxxu=y
 CONFIG_PACKAGE_kmod-macvlan=y
 CONFIG_PACKAGE_kmod-fs-ext3=y
@@ -22,6 +25,12 @@ CONFIG_PACKAGE_kmod-usb-storage-extras=y
 CONFIG_PACKAGE_kmod-usb-storage-uas=y
 CONFIG_PACKAGE_kmod-usb2=y
 CONFIG_PACKAGE_kmod-usb3=y
+
+CONFIG_PACKAGE_ubus=y
+CONFIG_PACKAGE_ubusd=y
+CONFIG_PACKAGE_libubus=y
+CONFIG_PACKAGE_libubus-lua=y
+CONFIG_PACKAGE_uhttpd-mod-ubus=y
 
 CONFIG_PACKAGE_libpam=y
 CONFIG_PACKAGE_libtirpc=y
@@ -105,6 +114,7 @@ CONFIG_PACKAGE_luci-app-adguardhome=y
 
 CONFIG_PACKAGE_smartdns=y
 CONFIG_PACKAGE_luci-app-smartdns=y
+CONFIG_PACKAGE_luci-i18n-smartdns-zh-cn=y
 
 CONFIG_PACKAGE_dnsmasq-full=y
 
@@ -163,3 +173,4 @@ CONFIG_PACKAGE_luci-app-passwall_INCLUDE_v2ray-plugin=y
 # CONFIG_PACKAGE_luci-i18n-samba-zh-tw is not set
 # CONFIG_PACKAGE_mwan3 is not set
 # CONFIG_PACKAGE_luci-app-mwan3 is not set
+# CONFIG_PACKAGE_kmod-video-core is not set

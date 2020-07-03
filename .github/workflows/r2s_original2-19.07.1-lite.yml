@@ -1,4 +1,4 @@
-name: r2s-original2-lite
+name: r2s-19071-lite
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
     paths: 
       - 'JUNK/r2s_original2_base.seed'
-      - '.github/workflows/r2s_original2-lite.yml'
+      - '.github/workflows/r2s_original2-19.07.1-lite.yml'
       - 'patch_dosth.sh'
       - 'scripts/original-package.sh'
       - 'scripts/copyipk.sh'
@@ -193,7 +193,7 @@ jobs:
           cd ../../
           cp ./README.txt ./r2srom/
           zip -r artifact.zip ./r2srom/
-          release_tag="R2S-Original2-lite-$(date +%Y-%m-%d-%H)"
+          release_tag="R2S-Original-lite-19.07.1-$(date +%Y-%m-%d-%H)"
           echo "##[set-output name=release_tag;]$release_tag"
       - name: Create Release
         id: create_release

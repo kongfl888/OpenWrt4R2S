@@ -125,6 +125,15 @@ if [ "$profile" != "2" -o "$lite" = "1" ]; then
     uci commit network
 fi
 
+# set address pool
+if [ -e "/etc/config/dhcp" ]; then
+    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+    echo $DATE" One time init Script: set address pool" >> /tmp/one_time_init.log
+    uci set dhcp.lan.start="90"
+    uci set dhcp.lan.limit="250"
+    uci commit dhcp
+fi
+
 # init argon
 if [ -e "/etc/uci-defaults/30_luci-theme-argon" ];then
     DATE=`date +[%Y-%m-%d]%H:%M:%S`
@@ -135,7 +144,7 @@ if [ -e "/etc/uci-defaults/30_luci-theme-argon" ];then
 fi
 
 # disable ttyd
-if [ -e"/etc/config/ttyd" ]; then
+if [ -e "/etc/config/ttyd" ]; then
     uci set ttyd.@ttyd[0].enable="0"
     uci commit ttyd
 fi
@@ -180,6 +189,23 @@ if [ "$profile" != "2" ]; then
     uci commit system
 fi
 
+# set anon_mount
+if [ -e "/etc/config/fstab" ]; then
+    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+    echo $DATE" One time init Script: set anon_mount" >> /tmp/one_time_init.log
+    uci set fstab.@global[0].anon_mount=1
+    uci commit fstab
+fi
+
+# set 53 dns firewall
+if [ -e "/etc/firewall.user" ]; then
+    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+    echo $DATE" One time init Script: set 53 dns firewall" >> /tmp/one_time_init.log
+    sed -i '/REDIRECT --to-ports 53/d' /etc/firewall.user
+    echo "iptables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 53" >> /etc/firewall.user
+    echo "iptables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53" >> /etc/firewall.user
+fi
+
 # creat /usr/share/mywdog/
 DATE=`date +[%Y-%m-%d]%H:%M:%S`
 echo $DATE" One time init Script: creat /usr/share/mywdog/" >> /tmp/one_time_init.log
@@ -200,7 +226,13 @@ DATE=`date +[%Y-%m-%d]%H:%M:%S`
 echo $DATE" One time init Script: dnsmasq restarting." >> /tmp/one_time_init.log
 /etc/init.d/dnsmasq restart >/dev/null 2>&1
 
-sleep 2
+sleep 5
+# reload firewall
+DATE=`date +[%Y-%m-%d]%H:%M:%S`
+echo $DATE" One time init Script: firewall reloading." >> /tmp/one_time_init.log
+/etc/init.d/firewall reload >/dev/null 2>&1 &
+
+sleep 10
 # restart network
 DATE=`date +[%Y-%m-%d]%H:%M:%S`
 echo $DATE" One time init Script: network restarting." >> /tmp/one_time_init.log

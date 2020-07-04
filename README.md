@@ -88,7 +88,7 @@ flash_rom /tmp/rom.img.gz /dev/mmcblk0 gz``
 
 **Original**  ----- **LITE**
 
-![original.gif](./assets/1907-n.gif) .  -  . ![Lite.gif](./assets/lite2.gif)
+![original.gif](./assets/1907-n.gif) .  -  . ![Lite.gif](./assets/1907-lite.gif)
 
 ### 致谢
 

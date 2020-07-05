@@ -24,21 +24,29 @@ fi
 #minidlna
 if [ -e "feeds/luci/applications/luci-app-minidlna/root/usr/share/luci/menu.d/luci-app-minidlna.json" ]; then
     sed -i 's/admin\/services\/minidlna/admin\/nas\/minidlna/g' feeds/luci/applications/luci-app-minidlna/root/usr/share/luci/menu.d/luci-app-minidlna.json
+    sed -i 's/admin\/services\/minidlna/admin\/nas\/minidlna/g' feeds/luci/applications/luci-app-minidlna/luasrc/view/minidlna_status.htm
 elif [ -e "feeds/luci/applications/luci-app-minidlna/luasrc/controller/minidlna.lua" ]; then
     sed -i 's/\"services\",/\"nas\",/g' feeds/luci/applications/luci-app-minidlna/luasrc/controller/minidlna.lua
+    sed -i 's/admin\/services\/minidlna/admin\/nas\/minidlna/g' feeds/luci/applications/luci-app-minidlna/luasrc/view/minidlna_status.htm
 fi
 
 #aria2
 if [ -e "feeds/luci/applications/luci-app-aria2/root/usr/share/luci/menu.d/luci-app-aria2.json" ];then
     sed -i 's/admin\/services\/aria2/admin\/nas\/aria2/g' feeds/luci/applications/luci-app-aria2/root/usr/share/luci/menu.d/luci-app-aria2.json
+    sed -i 's/admin\/services\/aria2/admin\/nas\/aria2/g' feeds/luci/applications/luci-app-aria2/luasrc/view/aria2/log_template.htm
+    sed -i 's/admin\/services\/aria2/admin\/nas\/aria2/g' feeds/luci/applications/luci-app-aria2/luasrc/view/aria2/settings_header.htm
 elif [ -e "feeds/luci/applications/luci-app-aria2/luasrc/controller/aria2.lua" ]; then
     sed -i 's/\"services\",/\"nas\",/g' feeds/luci/applications/luci-app-aria2/luasrc/controller/aria2.lua
+    sed -i 's/admin\/services\/aria2/admin\/nas\/aria2/g' feeds/luci/applications/luci-app-aria2/luasrc/view/aria2/log_template.htm
+    sed -i 's/admin\/services\/aria2/admin\/nas\/aria2/g' feeds/luci/applications/luci-app-aria2/luasrc/view/aria2/settings_header.htm
 fi
 
 #qbittorrent
-if [ -e "feeds/luci/applications/luci-app-qbittorrent/root/usr/share/luci/menu.d/luci-app-qbittorrent.json" ];then
-    sed -i 's/admin\/services\/qbittorrent/admin\/nas\/qbittorrent/g' feeds/luci/applications/luci-app-qbittorrent/root/usr/share/luci/menu.d/luci-app-qbittorrent.json
-elif [ -e "feeds/luci/applications/luci-app-qbittorrent/luasrc/controller/qbittorrent.lua" ]; then
-    sed -i 's/\"services\",/\"nas\",/g' feeds/luci/applications/luci-app-qbittorrent/luasrc/controller/qbittorrent.lua
+if [ -e "package/lean/luci-app-qbittorrent/root/usr/share/luci/menu.d/luci-app-qbittorrent.json" ];then
+    sed -i 's/admin\/services\/qbittorrent/admin\/nas\/qbittorrent/g' package/lean/luci-app-qbittorrent/root/usr/share/luci/menu.d/luci-app-qbittorrent.json
+    sed -i 's/admin\/services\/qBittorrent/admin\/nas\/qBittorrent/g' package/lean/luci-app-qbittorrent/luasrc/view/qbittorrent/qbittorrent_status.htm
+elif [ -e "package/lean/luci-app-qbittorrent/luasrc/controller/qbittorrent.lua" ]; then
+    sed -i 's/\"services\",/\"nas\",/g' package/lean/luci-app-qbittorrent/luasrc/controller/qbittorrent.lua
+    sed -i 's/admin\/services\/qBittorrent/admin\/nas\/qBittorrent/g' package/lean/luci-app-qbittorrent/luasrc/view/qbittorrent/qbittorrent_status.htm
 fi
 

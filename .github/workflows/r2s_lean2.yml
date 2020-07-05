@@ -148,6 +148,11 @@ jobs:
           mv luci-app-smartdns friendlywrt-rk3328/friendlywrt/package
           mkdir -p friendlywrt-rk3328/friendlywrt/package/net/smartdns
           mv openwrt-smartdns/* friendlywrt-rk3328/friendlywrt/package/net/smartdns
+          cd friendlywrt-rk3328/friendlywrt/package/
+          sed -i 's/\"services\"/\"network\"/g' luci-app-smartdns/luasrc/controller/smartdns.lua
+          sed -i 's/admin\/services\/smartdns/admin\/network\/smartdns/g' luci-app-smartdns/luasrc/model/cbi/smartdns/smartdns.lua
+          sed -i 's/admin\/services\/smartdns/admin\/network\/smartdns/g' luci-app-smartdns/luasrc/model/cbi/smartdns/upstream.lua
+          sed -i 's/\"services\"/\"network\"/g' luci-app-smartdns/luasrc/view/smartdns/smartdns_status.htm
 
       - name: Add IPTV Helper
         run: |

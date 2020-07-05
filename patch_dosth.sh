@@ -14,6 +14,7 @@ if [ -e "configs/config_rk3328" ]; then
     sed -i '/samba/d' configs/config_rk3328
     sed -i '/ddns/d' configs/config_rk3328
     sed -i '/mwan3/d' configs/config_rk3328
+    sed -i '/watchcat/d' configs/config_rk3328
     sed -i '/CONFIG_TARGET_ROOTFS_PARTSIZE/d' configs/config_rk3328
     sed -i '/CONFIG_VERSION_REPO/d' configs/config_rk3328
     sed -i '/CONFIG_LUCI_LANG_/d' configs/config_rk3328

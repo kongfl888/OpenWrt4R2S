@@ -14,7 +14,7 @@ unzip rom.zip
 sh /root/flash_rom.sh /tmp/rom具体取名.img.gz /dev/mmcblk0 gz
 
 刷机工具：http://www.ksite.xyz/contents/balena-etcher.html
-
+.
 刷机后初始化时段请耐心等待。
 
 正确的重启网络的姿势：定时重拨--马上执行--等待。路由器能上网，你也能上路由器，那说明你手机等设备可能需要关网重连，或者多等等也行。

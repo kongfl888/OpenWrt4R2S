@@ -206,6 +206,45 @@ if [ -e "/etc/firewall.user" ]; then
     echo "iptables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-ports 53" >> /etc/firewall.user
 fi
 
+# set samba
+if [ -e "/etc/init.d/samba" ];then
+    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+    echo $DATE" One time init Script: set samba" >> /tmp/one_time_init.log
+    uci set samba.@samba[0].name='OPENWRT'
+    uci set samba.@samba[0].workgroup='WORKGROUP'
+    uci set samba.@samba[0].description='Samba on OpenWrt'
+    uci set samba.@samba[0].homes='1'
+    uci commit samba
+fi
+
+# set samba4
+if [ -e "/etc/init.d/samba4" ];then
+    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+    echo $DATE" One time init Script: set samba4" >> /tmp/one_time_init.log
+    uci set samba4.@samba[0].name='OPENWRT'
+    uci set samba4.@samba[0].workgroup='WORKGROUP'
+    uci set samba4.@samba[0].description='Samba on OpenWrt'
+    uci set samba4.@samba[0].macos='1'
+    uci set samba4.@samba[0].interface='lan'
+    uci set samba4.@samba[0].charset='UTF-8'
+    uci set samba4.@samba[0].allow_legacy_protocols='1'
+    if [ ! -d "/mnt/mmcblk0p2/sharing" ];  then
+        mkdir /mnt/mmcblk0p2/sharing
+    else
+        chmod 777 /mnt/mmcblk0p2/sharing
+    fi
+    uci add samba4 sambashare
+    uci set samba4.@sambashare[-1].name="sharing"
+    uci set samba4.@sambashare[-1].browseable="yes"
+    uci set samba4.@sambashare[-1].path="/mnt/mmcblk0p2/sharing"
+    uci set samba4.@sambashare[-1].read_only="no"
+    uci set samba4.@sambashare[-1].guest_ok="yes"
+    uci set samba4.@sambashare[-1].create_mask="0666"
+    uci set samba4.@sambashare[-1].dir_mask="0777"
+    uci set samba4.@sambashare[-1].force_root="1"
+    uci commit samba4
+fi
+
 # creat /usr/share/mywdog/
 DATE=`date +[%Y-%m-%d]%H:%M:%S`
 echo $DATE" One time init Script: creat /usr/share/mywdog/" >> /tmp/one_time_init.log

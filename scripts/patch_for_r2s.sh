@@ -12,6 +12,9 @@ git apply --check add-board-nanopi-r2s.patch && git apply add-board-nanopi-r2s.p
 wget https://github.com/armbian/build/raw/master/patch/kernel/rockchip64-dev/add-rk3328-usb3-phy-driver.patch
 git apply --check add-rk3328-usb3-phy-driver.patch && git apply add-rk3328-usb3-phy-driver.patch || echo ""
 
+# patch for defconfig
+git apply --check ../../patches/0001-Patch-for-nanopi-r2s_linux_defconfig.patch && git apply ../../patches/0001-Patch-for-nanopi-r2s_linux_defconfig.patch
+
 cd ..
 #cd friendlywrt
 ##Patch FireWall 以增添fullcone功能 

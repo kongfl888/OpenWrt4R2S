@@ -48,19 +48,8 @@ jobs:
         run: |
           mkdir friendlywrt-rk3328
           cd friendlywrt-rk3328
-          repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master-v19.07.1 -m rk3328.xml --repo-url=https://github.com/friendlyarm/repo  --no-clone-bundle --depth=1
+          repo init -u https://github.com/kongfl888/friendlywrt_manifests -b master-v19.07.3 -m rk3328.xml --repo-url=https://github.com/friendlyarm/repo  --no-clone-bundle --depth=1
           repo sync -c --no-tags --no-clone-bundle -j8
-          cd friendlywrt/ && git fetch --unshallow
-
-      - name: Openwrt 19.07.3
-        run: |
-          cd friendlywrt-rk3328/friendlywrt
-          git remote add upstream https://github.com/openwrt/openwrt.git && git fetch upstream
-          git branch v19073 v19.07.3
-          git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto v19073 -X theirs
-          rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch
-          rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-add-support-for-rgmii-internal-delay-mo.patch
-          git checkout v19073 -- feeds.conf.default
 
       - name: Patch For R2S
         run: |

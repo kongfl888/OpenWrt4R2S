@@ -1,4 +1,4 @@
-name: r2s-19071-lite
+name: r2s-original-lite
 
 on:
   push:
@@ -6,11 +6,14 @@ on:
       - master
     paths: 
       - 'JUNK/r2s_original2_base.seed'
-      - '.github/workflows/r2s_original2-19.07.1-lite.yml'
+      - '.github/workflows/r2s_original-lite.yml'
       - 'patch_dosth.sh'
       - 'scripts/original-package.sh'
       - 'scripts/copyipk.sh'
       - 'scripts/patch_for_r2s.sh'
+  schedule:
+    - cron: '30 2 * * 6'
+
 jobs:
 
   build:
@@ -46,7 +49,7 @@ jobs:
         run: |
           mkdir friendlywrt-rk3328
           cd friendlywrt-rk3328
-          repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master-v19.07.1 -m rk3328.xml --repo-url=https://github.com/friendlyarm/repo  --no-clone-bundle
+          repo init -u https://github.com/kongfl888/friendlywrt_manifests -b master -m rk3328.xml --repo-url=https://github.com/friendlyarm/repo  --no-clone-bundle
           #rm -f .repo/manifests/rk3328.xml
           #cp ../JUNK/rk3328.xml .repo/manifests/rk3328.xml
           repo sync -c  --no-clone-bundle
@@ -69,7 +72,7 @@ jobs:
           mv ../../scripts/one_time_init.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/one_time_init.sh 21 &' package/base-files/files/etc/rc.local
           mv ../../scripts/flash_rom.sh package/base-files/files/root/flash_rom.sh && chmod +x package/base-files/files/root/flash_rom.sh
           echo -e '\nMr.K Build\n' >> package/base-files/files/etc/banner
-          rm -f ./feeds.conf.default && wget -O ./feeds.conf.default https://raw.githubusercontent.com/openwrt/openwrt/v19.07.1/feeds.conf.default
+          rm -f ./feeds.conf.default && wget -O ./feeds.conf.default https://raw.githubusercontent.com/openwrt/openwrt/master/feeds.conf.default
 
       - name: Clean Feeds
         run: |
@@ -133,6 +136,7 @@ jobs:
           cd ..
           mv luci-app-koolproxyR friendlywrt-rk3328/friendlywrt/package
 
+
       - name: Add OpenClash
         run: |
           git clone -b master https://github.com/vernesong/OpenClash.git 
@@ -146,6 +150,7 @@ jobs:
           mkdir -p etc/openclash/core && cd etc/openclash/core
           curl -L https://github.com/vernesong/OpenClash/releases/download/Clash/clash-linux-armv8.tar.gz | tar zxf -
           chmod +x clash
+
 
       - name: Add Passwall
         run: |
@@ -200,7 +205,7 @@ jobs:
           cd ../../
           cp ./README.txt ./r2srom/
           zip -r artifact.zip ./r2srom/
-          release_tag="R2S-Original-lite-19.07.1-$(date +%Y-%m-%d-%H)"
+          release_tag="R2S-Original-lite$(date +%Y-%m-%d-%H)"
           echo "##[set-output name=release_tag;]$release_tag"
       - name: Create Release
         id: create_release

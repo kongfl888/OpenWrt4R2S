@@ -97,10 +97,6 @@ cp -rf openwrt/package/lean/ddns-scripts_dnspod/ $leanpack
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-mwan3helper/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/luci-app-mwan3helper/ $leanpack
 
-# get luci-app-flowoffload
-rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-flowoffload/ >/dev/null 2>&1 || echo ""
-cp -rf openwrt/package/lean/luci-app-flowoffload/ $leanpack
-
 # get qbittorrent
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/qbittorrent*/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/qBittorrent-Enhanced-Edition/ $leanpack

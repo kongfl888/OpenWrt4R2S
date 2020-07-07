@@ -1,9 +1,13 @@
 #!/bin/bash
+# 1 fullin, 2 only a little included
 
 fullin=0
+little=0
 
 if [ "${1}" == "1" ];then
 fullin=1
+elif [ "${1}" == "2" ];then
+little=1
 fi
 
 cp -f ./resources/zh_Hans/base.po friendlywrt-rk3328/friendlywrt/feeds/luci/modules/luci-base/po/zh_Hans/base.po || echo ""
@@ -76,7 +80,7 @@ cp -rf openwrt/package/lean/luci-app-filetransfer/ $leanpack
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-zerotier/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/luci-app-zerotier/ $leanpack
 
-# big
+##### big ####
 if [ "$fullin" = "1" ]; then
 
 #get luci-app-syncdial
@@ -121,6 +125,14 @@ cp -rf openwrt/package/lean/UnblockNeteaseMusic/ $leanpack
 #rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-flowoffload/ >/dev/null 2>&1 || echo ""
 #cp -rf openwrt/package/lean/luci-app-flowoffload/ $leanpack
 
+#get luci-app-vssr
+git clone -b master --single-branch https://github.com/jerrykuku/lua-maxminddb.git  $leanpack/lua-maxminddb
+git clone -b master --single-branch https://github.com/jerrykuku/luci-app-vssr.git  $leanpack/luci-app-vssr
+# big
+fi
+
+#### little or big ####
+if [ "$little" = "1" -o "$fullin" = "1" ]; then
 # get luci-app-ssrserver-python
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-ssrserver-python/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/luci-app-ssrserver-python/ $leanpack
@@ -140,10 +152,7 @@ rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/tcpping/ >/dev/null 2>&1 || echo
 cp -rf openwrt/package/lean/tcpping/ $leanpack
 git clone -b master --single-branch https://github.com/aa65535/openwrt-simple-obfs  $leanpack/simple-obfs
 git clone -b master --single-branch https://github.com/kongfl888/redsocks2.git $leanpack/redsocks2
-#get luci-app-vssr
-git clone -b master --single-branch https://github.com/jerrykuku/lua-maxminddb.git  $leanpack/lua-maxminddb
-git clone -b master --single-branch https://github.com/jerrykuku/luci-app-vssr.git  $leanpack/luci-app-vssr
-# big
+# little or big
 fi
 
 #autocore

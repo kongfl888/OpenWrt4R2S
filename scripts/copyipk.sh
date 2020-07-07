@@ -55,6 +55,34 @@ if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "luci-theme-*.ipk
 	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/luci-theme-*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack luci-theme ipk fail" >> ipklost.txt
 fi
 
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "shadowsocksr*.ipk" | grep "shadowsocksr" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/shadowsocksr*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack shadowsocksr ipk fail" >> ipklost.txt
+fi
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "srelay*.ipk" | grep "srelay" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/srelay*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack srelay ipk fail" >> ipklost.txt
+fi
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "microsocks*.ipk" | grep "microsocks" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/microsocks*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack microsocks ipk fail" >> ipklost.txt
+fi
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "proxychains-ng*.ipk" | grep "proxychains-ng" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/proxychains-ng*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack proxychains-ng ipk fail" >> ipklost.txt
+fi
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "tcpping*.ipk" | grep "tcpping" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/tcpping*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack tcpping ipk fail" >> ipklost.txt
+fi
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "simple-obfs*.ipk" | grep "simple-obfs" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/simple-obfs*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack simple-obfs ipk fail" >> ipklost.txt
+fi
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "redsocks2*.ipk" | grep "redsocks2" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/redsocks2*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack redsocks2 ipk fail" >> ipklost.txt
+fi
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "kcptun*.ipk" | grep "kcptun" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/kcptun*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack kcptun ipk fail" >> ipklost.txt
+fi
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*ssr*.ipk" | grep "ssr" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*ssr*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack ssr ipk fail" >> ipklost.txt
+fi
+
 if [ `find ./r2srom/ipk/* -name "*.ipk" | grep ".ipk" -c` -eq 0 ]; then
     echo "1" > ./r2srom/ipk/noipk
 fi

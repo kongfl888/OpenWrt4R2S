@@ -172,14 +172,15 @@ jobs:
           git clone -b master https://github.com/vernesong/OpenClash.git 
           mv OpenClash/luci-app-openclash friendlywrt-rk3328/friendlywrt/package
           cd friendlywrt-rk3328/friendlywrt/package/base-files/files
+          mkdir -p etc/openclash/core && cd etc/openclash/core
+          curl -L https://github.com/vernesong/OpenClash/releases/download/Clash/clash-linux-armv8.tar.gz | tar zxf -
+          chmod +x clash
+          cd ../../luci-app-openclash/files
           sed -i 's/\"services\"/\"vpn\"/g' usr/lib/lua/luci/controller/openclash.lua
           grep -rl '\"services\",' usr/lib/lua/luci/model/cbi/openclash | xargs sed -i 's/\"services\",/\"vpn\",/g'
           grep -rl 'admin\/services\/' usr/lib/lua/luci/model/cbi/openclash | xargs sed -i 's/admin\/services\//admin\/vpn\//g'
           grep -rl '\"services\",' usr/lib/lua/luci/view/openclash | xargs sed -i 's/\"services\",/\"vpn\",/g'
           grep -rl 'admin\/services\/' usr/lib/lua/luci/view/openclash | xargs sed -i 's/admin\/services\//admin\/vpn\//g'
-          mkdir -p etc/openclash/core && cd etc/openclash/core
-          curl -L https://github.com/vernesong/OpenClash/releases/download/Clash/clash-linux-armv8.tar.gz | tar zxf -
-          chmod +x clash
 
       - name: Add Passwall
         run: |

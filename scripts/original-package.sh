@@ -158,9 +158,6 @@ git clone -b master --single-branch https://github.com/kongfl888/redsocks2.git $
 fi
 
 #autocore
-cd openwrt
-git apply ../patches/enable_autocore_1907.patch -X theirs
-cd ..
-cp -rf openwrt/package/lean/autocore/ $leanpack
+git clone -b r2s --single-branch https://github.com/kongfl888/autocore.git $leanpack/autocore
 cp -rf openwrt/package/lean/coremark $leanpack 
 sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' $leanpack/coremark/Makefile

@@ -82,7 +82,7 @@ jobs:
 
       - name: Add Luci-theme
         run: |
-          . ./scripts/add-theme-argon.sh
+          . ./scripts/add-theme-argon.sh 1
 
       - name: Add Luci-i18n-sqm-zh-cn
         run: |

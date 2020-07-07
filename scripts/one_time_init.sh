@@ -3,7 +3,7 @@
 # built
 # mv ../../scripts/one_time_init.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/one_time_init.sh &' package/base-files/files/etc/rc.local
 # https://github.com/kongfl888/OpenWrt4R2S
-# ** 1st: 1 normal, 2 lite; 2nd: 1 19.07.1, 2 lean, 3 19.07.3
+# ** 1st: 1 normal, 2 lite; 2nd: 1 19.07.1, 2 lean, 3 19.07.3, 4 snapshot
 
 lite=0
 profile=0
@@ -20,8 +20,11 @@ if [ ! -z "${1}" ];then
     3)
         profile=3
         ;;
+    4)
+        profile=4
+        ;;
     *)
-        profile=0
+        profile=1
         ;;
     esac
     let lt=${1}/10

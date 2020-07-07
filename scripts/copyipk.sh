@@ -83,6 +83,18 @@ if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*ssr*.ipk" | gre
 	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*ssr*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack ssr ipk fail" >> ipklost.txt
 fi
 
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*accesscontrol*.ipk" | grep "accesscontrol" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*accesscontrol*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack accesscontrol ipk fail" >> ipklost.txt
+fi
+
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*wifi*.ipk" | grep "wifi" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*wifi*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack wifi ipk fail" >> ipklost.txt
+fi
+
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*ttyd*.ipk" | grep "ttyd" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*ttyd*.ipk ./r2srom/ipk/ >/dev/null 2>&1 || echo "pack ttyd ipk fail" >> ipklost.txt
+fi
+
 if [ `find ./r2srom/ipk/* -name "*.ipk" | grep ".ipk" -c` -eq 0 ]; then
     echo "1" > ./r2srom/ipk/noipk
 fi

@@ -54,6 +54,10 @@ jobs:
         run: |
           . ./scripts/patch_for_r2s.sh
 
+      - name: Patch For kernel 5.4
+        run: |
+          . ./scripts/patch_for_r2s_5.4.sh
+
       - name: Mods
         run: |
           cd friendlywrt-rk3328

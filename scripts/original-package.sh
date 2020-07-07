@@ -80,6 +80,10 @@ cp -rf openwrt/package/lean/luci-app-filetransfer/ $leanpack
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-zerotier/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/luci-app-zerotier/ $leanpack
 
+#get kcptun
+rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/kcptun/ >/dev/null 2>&1 || echo ""
+cp -rf openwrt/package/lean/kcptun/ $leanpack
+
 ##### big ####
 if [ "$fullin" = "1" ]; then
 
@@ -140,8 +144,6 @@ cp -rf openwrt/package/lean/luci-app-ssrserver-python/ $leanpack
 #get ssr
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/shadowsocksr-libev/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/shadowsocksr-libev/ $leanpack
-rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/kcptun/ >/dev/null 2>&1 || echo ""
-cp -rf openwrt/package/lean/kcptun/ $leanpack
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/srelay/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/srelay/ $leanpack
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/microsocks/ >/dev/null 2>&1 || echo ""

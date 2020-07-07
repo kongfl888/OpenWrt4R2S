@@ -197,6 +197,7 @@ jobs:
       - name: Build FriendlyWrt
         run: |
           cd friendlywrt-rk3328
+          . ../scripts/rename_sdimg.sh 13 || echo ""
           sed -i 's/set -eu/set -u/' scripts/mk-friendlywrt.sh
           ./build.sh nanopi_r2s.mk
 

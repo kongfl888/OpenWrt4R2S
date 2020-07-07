@@ -159,7 +159,7 @@ fi
 
 #autocore
 cd openwrt
-git apply ../patches/enable_autocore_1907.patch
+git apply ../patches/enable_autocore_1907.patch -X theirs
 cd ..
 cp -rf openwrt/package/lean/autocore/ $leanpack
 cp -rf openwrt/package/lean/coremark $leanpack 

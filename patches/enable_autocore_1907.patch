@@ -1,6 +1,6 @@
-From 52bd881da59a58cb6404ead472f47bb440044dc1 Mon Sep 17 00:00:00 2001
+From 82ab3ede725238e6b1bbf544b334a0d7e4391f5c Mon Sep 17 00:00:00 2001
 From: kongfl888 <kongfl888@outlook.com>
-Date: Sun, 28 Jun 2020 07:53:39 +0800
+Date: Wed, 8 Jul 2020 01:59:57 +0800
 Subject: [PATCH] enable_autocore_1907
 
 ---
@@ -10,7 +10,7 @@ Subject: [PATCH] enable_autocore_1907
  3 files changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/package/lean/autocore/Makefile b/package/lean/autocore/Makefile
-index efdba91..c783b83 100644
+index 22b986d..d6acbe4 100644
 --- a/package/lean/autocore/Makefile
 +++ b/package/lean/autocore/Makefile
 @@ -17,7 +17,7 @@ include $(INCLUDE_DIR)/package.mk
@@ -18,34 +18,24 @@ index efdba91..c783b83 100644
    TITLE:=x86/x64 auto core loadbalance script.
    MAINTAINER:=Lean
 -  DEPENDS:=@TARGET_x86 +bc +lm-sensors +ethtool
-+  DEPENDS:=+bc +lm-sensors +ethtool
++  DEPENDS:=bc +lm-sensors +ethtool
  endef
  
  define Package/autocore/description
 diff --git a/package/lean/autocore/files/cpuinfo b/package/lean/autocore/files/cpuinfo
-index 19ea5fb..60e7acd 100644
+index 8c0527f..6adabea 100644
 --- a/package/lean/autocore/files/cpuinfo
 +++ b/package/lean/autocore/files/cpuinfo
-@@ -2,7 +2,7 @@
+@@ -1,5 +1,5 @@
+ #!/bin/sh
  
- info()
- {
--	MHz=`grep 'MHz' /proc/cpuinfo | cut -c11- |sed -n '1p'`
-+	MHz=`echo "$(cat /sys/devices/system/cpu/cpu[04]/cpufreq/cpuinfo_cur_freq)/1000" | bc`
- 	#获取CPU工作频率
- 
- 	sensors >/dev/null
-@@ -12,7 +12,7 @@ info()
- 		#获取CPU核心1温度
- 
- 	else
--		a=""
-+		a=`echo "scale=2; $(cat /sys/class/thermal/thermal_zone0/temp)/1000" | bc`°
- 	fi
- }
- 
+-MHz=`grep 'MHz' /proc/cpuinfo | cut -c11- |sed -n '1p'`
+-TEMP=`sensors 2>/dev/null | grep 'Core 0' | cut -c12-`
++MHz=`echo "$(cat /sys/devices/system/cpu/cpu[04]/cpufreq/cpuinfo_cur_freq)/1000" | bc`
++TEMP=`echo "scale=2; $(cat /sys/class/thermal/thermal_zone0/temp)/1000" | bc`°
+ echo "$MHz MHz $TEMP "
 diff --git a/package/lean/autocore/files/rpcd_10_system.js b/package/lean/autocore/files/rpcd_10_system.js
-index 8c1e788..7d75044 100644
+index 8c1e788..c805e9f 100644
 --- a/package/lean/autocore/files/rpcd_10_system.js
 +++ b/package/lean/autocore/files/rpcd_10_system.js
 @@ -72,9 +72,10 @@ return L.Class.extend({

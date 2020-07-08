@@ -6,6 +6,11 @@ CONFIG_OPENSSL_WITH_SRP=y
 CONFIG_OPENSSL_WITH_CMS=y
 
 CONFIG_PACKAGE_kcptun-client=y
+CONFIG_PACKAGE_srelay=y
+CONFIG_PACKAGE_proxychains-ng=y
+CONFIG_PACKAGE_tcpping=y
+CONFIG_PACKAGE_simple-obfs=y
+CONFIG_PACKAGE_redsocks2=y
 CONFIG_PACKAGE_luci-app-ssr-plus=y
 CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_DNS2SOCKS=y
 CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Redsocks2=y

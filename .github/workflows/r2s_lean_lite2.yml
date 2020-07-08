@@ -187,13 +187,14 @@ jobs:
           cd ./r2srom/
           sha256sum *img* > sha256sum.txt
           cd ..
-          mkdir -p ./r2srom/ipk/
+          mkdir -p ./ipks/
           . ./scripts/copyipk.sh
-          cd ./r2srom/ipk/
+          cd ./ipks/
           sha256sum *ipk > packages.sha256
-          cd ../../
+          cd ..
           cp ./README.txt ./r2srom/
           zip -r artifact.zip ./r2srom/
+          zip -r ipks.zip ./ipks/
           release_tag="R2S-Lean-lite2-$(date +%Y-%m-%d-%H)"
           echo "##[set-output name=release_tag;]$release_tag"
       - name: Create Release
@@ -215,4 +216,14 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
           asset_path: ./artifact.zip
           asset_name: ${{ steps.assemble_artifact.outputs.release_tag }}-ROM.zip
+          asset_content_type: application/zip
+      - name: Upload Release Asset Ipk
+        id: upload-release-asset-ipk
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.sec_token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./ipks.zip
+          asset_name: ${{ steps.assemble_artifact.outputs.release_tag }}-ipk.zip
           asset_content_type: application/zip

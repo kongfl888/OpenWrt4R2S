@@ -7,7 +7,7 @@ on:
     paths:
       - '.github/workflows/r2s_lean_lite2.yml'
       - 'base_rk3328.seed'
-      - 'JUNK/r2s_minimal2_user_par1.seed'
+      - 'JUNK/r2s_lean2_user_part1.seed'
   schedule:
     - cron: '10 4 * * 5'
 
@@ -74,7 +74,7 @@ jobs:
           cat configs/config_rk3328 | grep "TARGET" >> ../base_rk3328.seed
           cat ../base_rk3328.seed > configs/config_rk3328
           #sed -i '/ddns/d' configs/config_rk3328 && echo ""
-          cat ../JUNK/r2s_minimal2_user_par1.seed >> configs/config_rk3328
+          cat ../JUNK/r2s_lean2_user_part1.seed >> configs/config_rk3328
           cd friendlywrt
           #sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
           cd package/lean/

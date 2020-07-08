@@ -54,7 +54,7 @@ fi
 if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "luci-theme-*.ipk" | grep "luci-theme" -c` -gt 0 ]; then
 	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/luci-theme-*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack luci-theme ipk fail" >> ipklost.txt
 fi
-
+# ssr-start
 if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "shadowsocksr*.ipk" | grep "shadowsocksr" -c` -gt 0 ]; then
 	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/shadowsocksr*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack shadowsocksr ipk fail" >> ipklost.txt
 fi
@@ -82,13 +82,16 @@ fi
 if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*ssr*.ipk" | grep "ssr" -c` -gt 0 ]; then
 	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*ssr*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack ssr ipk fail" >> ipklost.txt
 fi
-
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "lua-maxminddb*.ipk" | grep "lua-maxminddb" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/lua-maxminddb*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack lua-maxminddb ipk fail" >> ipklost.txt
+fi
+# ssr-end
 if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*accesscontrol*.ipk" | grep "accesscontrol" -c` -gt 0 ]; then
 	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*accesscontrol*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack accesscontrol ipk fail" >> ipklost.txt
 fi
 
-if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*wifi*.ipk" | grep "wifi" -c` -gt 0 ]; then
-	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*wifi*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack wifi ipk fail" >> ipklost.txt
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*wifischedule*.ipk" | grep "wifischedule" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*wifischedule*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack wifischedule ipk fail" >> ipklost.txt
 fi
 
 if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*ttyd*.ipk" | grep "ttyd" -c` -gt 0 ]; then

@@ -73,7 +73,7 @@ jobs:
           cd friendlywrt
           mv ../../scripts/one_time_init.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/one_time_init.sh 13 &' package/base-files/files/etc/rc.local
           mv ../../scripts/flash_rom.sh package/base-files/files/root/flash_rom.sh && chmod +x package/base-files/files/root/flash_rom.sh
-          echo -e '\nMr.K Build\n' >> package/base-files/files/etc/banner
+          . ../../scripts/buildtime.sh
           rm -f ./feeds.conf.default && wget -O ./feeds.conf.default https://raw.githubusercontent.com/openwrt/openwrt/v19.07.3/feeds.conf.default
 
       - name: Clean Feeds

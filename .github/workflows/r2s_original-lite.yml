@@ -68,7 +68,7 @@ jobs:
           #cp ../JUNK/r2s.config.seed configs/config_rk3328
           [ -f configs/config_rk3328 ] && sed -i '/adblock/d;/docker/d;/DOCKER/d;/mwan3/d;/OPENVPN/d;/openvpn/d;' configs/config_rk3328
           cat ../JUNK/r2s_original2_base.seed >> configs/config_rk3328
-          cat ../JUNK/r2s_original2_user_little.seed >> configs/config_rk3328
+          #cat ../JUNK/r2s_original2_user_little.seed >> configs/config_rk3328
           cd friendlywrt
           mv ../../scripts/one_time_init.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/one_time_init.sh 24 &' package/base-files/files/etc/rc.local
           mv ../../scripts/flash_rom.sh package/base-files/files/root/flash_rom.sh && chmod +x package/base-files/files/root/flash_rom.sh
@@ -184,7 +184,7 @@ jobs:
       - name: Update package
         run: |
           git clone -b openwrt-19.07 --single-branch https://github.com/project-openwrt/openwrt.git
-          . ./scripts/original-package.sh 2
+          . ./scripts/original-package.sh
 
       - name: Build FriendlyWrt
         run: |

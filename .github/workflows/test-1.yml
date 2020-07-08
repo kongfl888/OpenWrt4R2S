@@ -70,7 +70,7 @@ jobs:
           . ../../scripts/buildtime.sh
           rm -f ./feeds.conf.default && wget -O ./feeds.conf.default https://raw.githubusercontent.com/openwrt/openwrt/master/feeds.conf.default
           # for temporary,TRY to fix libexpat complie error
-          sed -i '/src-git packages/d' ./feeds.conf.default && echo "src-git packages https://github.com/kongfl888/packages.git" >> ./feeds.conf.default
+          #sed -i '/src-git packages/d' ./feeds.conf.default && echo "src-git packages https://github.com/kongfl888/packages.git" >> ./feeds.conf.default
 
       - name: Clean Feeds
         run: |

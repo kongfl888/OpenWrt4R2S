@@ -74,6 +74,8 @@ jobs:
           mv ../../scripts/flash_rom.sh package/base-files/files/root/flash_rom.sh && chmod +x package/base-files/files/root/flash_rom.sh
           . ../../scripts/buildtime.sh
           rm -f ./feeds.conf.default && wget -O ./feeds.conf.default https://raw.githubusercontent.com/openwrt/openwrt/master/feeds.conf.default
+          # for temporary,to avoid libexpat complie error
+          sed -i '/src-git packages/d' ./feeds.conf.default && echo "src-git packages https://git.openwrt.org/feed/packages.git^95b6f2f8cec333bbeb775828f8ce6b0a3c154443" >> ./feeds.conf.default
 
       - name: Clean Feeds
         run: |

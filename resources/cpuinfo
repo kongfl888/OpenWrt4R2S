@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# [K] (c)2020
+#
+MHz=`grep 'MHz' /proc/cpuinfo | cut -c11- |sed -n '1p'`
+[ -z "$MHz" ] && MHz=`echo "$(cat /sys/devices/system/cpu/cpu[04]/cpufreq/cpuinfo_cur_freq)/1000" | bc`
+TEMP=`echo "scale=2; $(cat /sys/class/thermal/thermal_zone0/temp)/1000" | bc`
+[ -z "$TEMP" ] && TEMP=`sensors 2>/dev/null | grep 'Core 0' | cut -c12-` || TEMP="$TEMP""°"
+echo "$MHz MHz $TEMP "

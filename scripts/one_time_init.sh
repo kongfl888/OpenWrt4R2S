@@ -90,6 +90,20 @@ if [ -e "/etc/init.d/autorewan" ]; then
     /etc/init.d/autorewan restart >/dev/null 2>&1
 fi
 
+# set cpuinfo
+if [ -e "/usr/bin/cpuinfo" ]; then
+    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+    echo $DATE" One time init Script: set ethinfo" >> /tmp/one_time_init.log
+    chmod +x /usr/bin/cpuinfo
+fi
+
+# set ethinfo
+if [ -e "/usr/bin/ethinfo" ]; then
+    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+    echo $DATE" One time init Script: set cpuinfo" >> /tmp/one_time_init.log
+    chmod +x /usr/bin/ethinfo
+fi
+
 sleep 2s
 
 # remove or disable ddns

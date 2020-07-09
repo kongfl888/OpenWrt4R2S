@@ -248,6 +248,36 @@ if [ -e "/etc/init.d/samba4" ];then
     uci commit samba4
 fi
 
+# set rps for r2s
+DATE=`date +[%Y-%m-%d]%H:%M:%S`
+echo $DATE" One time init Script: set rps for r2s" >> /tmp/one_time_init.log
+sysctl -w net.core.rps_sock_flow_entries=32768
+for fileRps in $(ls /sys/class/net/eth*/queues/rx-*/rps_cpus)
+do
+    echo ff > $fileRps
+done
+
+for fileRfc in $(ls /sys/class/net/eth*/queues/rx-*/rps_flow_cnt)
+do
+    echo 32768 > $fileRfc
+done
+
+# open eth features
+ethx=$(ip address | grep ^[0-9] | awk -F: '{print $2}' | sed "s/ //g" | grep '^[e]' | grep -v "@" | grep -v "\.")
+ethc=$(echo "$ethx" | wc -l)
+for i in $(seq 1 $ethc)
+do
+    x=$(echo "$ethx" | sed -n ${i}p)
+    ethtool -K $x rx-checksum on >/dev/null 2>&1
+    ethtool -K $x tx-checksum-ip-generic on >/dev/null 2>&1 || (
+    ethtool -K $x tx-checksum-ipv4 on >/dev/null 2>&1
+    ethtool -K $x tx-checksum-ipv6 on >/dev/null 2>&1)
+    ethtool -K $x tx-scatter-gather on >/dev/null 2>&1
+    ethtool -K $x gso on >/dev/null 2>&1
+    ethtool -K $x tso on >/dev/null 2>&1
+    ethtool -K $x ufo on >/dev/null 2>&1
+done
+
 # creat /usr/share/mywdog/
 DATE=`date +[%Y-%m-%d]%H:%M:%S`
 echo $DATE" One time init Script: creat /usr/share/mywdog/" >> /tmp/one_time_init.log

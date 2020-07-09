@@ -303,6 +303,38 @@ do
     ethtool -K $x ufo on >/dev/null 2>&1
 done
 
+# set opkg feeds
+if [ -e "/etc/opkg/distfeeds.conf" ];then
+DATE=`date +[%Y-%m-%d]%H:%M:%S`
+echo $DATE" One time init Script: set opkg feeds" >> /tmp/one_time_init.log
+sed -i '/openwrt_packages/d' /etc/opkg/distfeeds.conf
+case $profile in
+1)
+    sed -i 's/releases\/.*\/package/releases\/19.07.1\/package/g' /etc/opkg/distfeeds.conf
+    sed -i 's/snapshots\/package/releases\/19.07.1\/package/g' /etc/opkg/distfeeds.conf
+    echo "src/gz openwrt_packages https://downloads.openwrt.org/releases/19.07.1/packages/aarch64_cortex-a53/packages" >> /etc/opkg/distfeeds.conf
+    ;;
+2)
+    sed -i 's/releases\/.*\/package/releases\/18.06.8\/package/g' /etc/opkg/distfeeds.conf
+    sed -i 's/snapshots\/package/releases\/18.06.8\/package/g' /etc/opkg/distfeeds.conf
+    echo "src/gz openwrt_packages https://downloads.openwrt.org/releases/18.06.8/packages/aarch64_cortex-a53/packages" >> /etc/opkg/distfeeds.conf
+    ;;
+3)
+    sed -i 's/releases\/.*\/package/releases\/19.07.3\/package/g' /etc/opkg/distfeeds.conf
+    sed -i 's/snapshots\/package/releases\/19.07.3\/package/g' /etc/opkg/distfeeds.conf
+    echo "src/gz openwrt_packages https://downloads.openwrt.org/releases/19.07.3/packages/aarch64_cortex-a53/packages" >> /etc/opkg/distfeeds.conf
+    ;;
+4)
+    sed -i 's/releases\/.*\/package/snapshots\/package/g' /etc/opkg/distfeeds.conf
+    echo "src/gz openwrt_packages https://downloads.openwrt.org/snapshots/packages/aarch64_cortex-a53/packages" >> /etc/opkg/distfeeds.conf
+    ;;
+*)
+    ;;
+esac
+sed -i 's/http:/https:/g' /etc/opkg/distfeeds.conf
+#sed - 's/downloads.openwrt.org/openwrt.proxy.ustclug.org/g' /etc/opkg/distfeeds.conf
+fi
+
 # set coremark
 if [ -e "/etc/coremark.sh" ];then
     DATE=`date +[%Y-%m-%d]%H:%M:%S`

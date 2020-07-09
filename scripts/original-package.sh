@@ -59,15 +59,19 @@ git apply ../../patches/use_json_object_new_int64.patch
 case $profile in
 1)
     git apply ../../patches/patch-for-19.07.1-cpu-info.patch
+    git apply ../../patches/path-for-19.07.1-ethinfo.patch
     ;;
 3)
     git apply ../../patches/patch-for-19.07.3-cpu-info.patch
+    git apply ../../patches/path-for-19.07.1-ethinfo.patch
     ;;
 4)
     git apply ../../patches/patch-for-snapshot-cpu-info.patch
+    git apply ../../patches/path-for-snapshot-ethinfo.patch
     ;;
 *)
     git apply ../../patches/patch-feeds-luci-status-overiew.patch
+    git apply ../../patches/path-for-19.07.1-ethinfo.patch
     ;;
 esac
 

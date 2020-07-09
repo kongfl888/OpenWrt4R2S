@@ -119,17 +119,6 @@ jobs:
           mkdir -p friendlywrt-rk3328/friendlywrt/package/adguardhome && cd friendlywrt-rk3328/friendlywrt/package/adguardhome
           wget https://raw.githubusercontent.com/Lienol/openwrt/dev-19.07/package/diy/adguardhome/Makefile
 
-      - name: Add smartdns
-        run: |
-          git clone -b master --single-branch https://github.com/pymumu/openwrt-smartdns.git
-          git clone -b master --single-branch https://github.com/pymumu/luci-app-smartdns.git
-          mv luci-app-smartdns friendlywrt-rk3328/friendlywrt/package
-          mkdir -p friendlywrt-rk3328/friendlywrt/package/net/smartdns
-          rm -rf friendlywrt-rk3328/friendlywrt/package/net/smartdns/*
-          mv openwrt-smartdns/* friendlywrt-rk3328/friendlywrt/package/net/smartdns
-          cd friendlywrt-rk3328/friendlywrt/package/luci-app-smartdns
-          sed -i 's/admin\/services/admin\/network/g' root/usr/share/luci/menu.d/luci-app-smartdns.json
-
       - name: Add luci-app-koolproxyR
         run: |
           git clone -b master --single-branch https://github.com/project-openwrt/luci-app-koolproxyR

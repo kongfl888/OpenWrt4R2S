@@ -98,6 +98,10 @@ if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*ttyd*.ipk" | gr
 	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*ttyd*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack ttyd ipk fail" >> ipklost.txt
 fi
 
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*core*.ipk" | grep "core" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*core*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack autocore or coremark ipk fail" >> ipklost.txt
+fi
+
 if [ `find ./ipks/* -name "*.ipk" | grep ".ipk" -c` -eq 0 ]; then
     echo "1" > ./ipks/noipk
 fi

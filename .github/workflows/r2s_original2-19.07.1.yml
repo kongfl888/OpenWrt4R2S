@@ -192,7 +192,7 @@ jobs:
       - name: Update package
         run: |
           git clone -b openwrt-19.07 --single-branch https://github.com/project-openwrt/openwrt.git
-          . ./scripts/original-package.sh 1
+          . ./scripts/original-package.sh 11
 
       - name: Build FriendlyWrt
         run: |

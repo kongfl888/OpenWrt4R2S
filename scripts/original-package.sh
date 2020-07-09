@@ -110,18 +110,17 @@ cp -rf openwrt/package/lean/adbyby/ $leanpack
 cp -rf openwrt/package/lean/luci-app-adbyby-plus/ $leanpack
 
 # get smartdns
-rm -rf friendlywrt-rk3328/friendlywrt/feeds/package/*/smartdns/ >/dev/null 2>&1 || echo ""
-rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-smartdns/ >/dev/null 2>&1 || echo ""
-git clone -b master --single-branch https://github.com/pymumu/openwrt-smartdns.git
-mkdir -p friendlywrt-rk3328/friendlywrt/package/net/smartdns
-rm -rf friendlywrt-rk3328/friendlywrt/package/net/smartdns/*
-mv -f openwrt-smartdns/* friendlywrt-rk3328/friendlywrt/package/net/smartdns
+if [ "$profile" != "4" ]; then
+    rm -rf friendlywrt-rk3328/friendlywrt/feeds/package/*/smartdns/ >/dev/null 2>&1 || echo ""
+    git clone -b master --single-branch https://github.com/pymumu/openwrt-smartdns.git
+    mkdir -p friendlywrt-rk3328/friendlywrt/package/net/smartdns
+    rm -rf friendlywrt-rk3328/friendlywrt/package/net/smartdns/*
+    mv -f openwrt-smartdns/* friendlywrt-rk3328/friendlywrt/package/net/smartdns
+fi
 if [ "$profile" == "4" ];then
-    git clone -b master --single-branch https://github.com/pymumu/luci-app-smartdns.git
-    cd luci-app-smartdns
-    sed -i 's/admin\/services/admin\/network/g' root/usr/share/luci/menu.d/luci-app-smartdns.json
-    cd ..
+    sed -i 's/admin\/services/admin\/network/g' friendlywrt-rk3328/friendlywrt/feeds/luci/*/luci-app-smartdns/root/usr/share/luci/menu.d/luci-app-smartdns.json || echo ""
 else
+    rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-smartdns/ >/dev/null 2>&1 || echo ""
     git clone -b lede --single-branch https://github.com/pymumu/luci-app-smartdns.git
     cd luci-app-smartdns
     sed -i 's/\"services\"/\"network\"/g' luci-app-smartdns/luasrc/controller/smartdns.lua
@@ -129,8 +128,8 @@ else
     sed -i 's/admin\/services\/smartdns/admin\/network\/smartdns/g' luci-app-smartdns/luasrc/model/cbi/smartdns/upstream.lua
     sed -i 's/\"services\"/\"network\"/g' luci-app-smartdns/luasrc/view/smartdns/smartdns_status.htm
     cd ..
+    cp -rf luci-app-smartdns friendlywrt-rk3328/friendlywrt/package
 fi
-cp -rf luci-app-smartdns friendlywrt-rk3328/friendlywrt/package
 
 #get luci-app-arpbind
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-arpbind/ >/dev/null 2>&1 || echo ""

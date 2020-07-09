@@ -78,8 +78,12 @@ CONFIG_PACKAGE_jsonfilter=y
 CONFIG_PACKAGE_uboot-envtools=y
 CONFIG_PACKAGE_frpc=y
 
-CONFIG_PACKAGE_coremark=y
 CONFIG_PACKAGE_autocore=y
+CONFIG_PACKAGE_bc=y
+CONFIG_PACKAGE_lm-sensors=y
+CONFIG_PACKAGE_lm-sensors-detect=y
+CONFIG_PACKAGE_coremark=y
+CONFIG_PACKAGE_ethtool=y
 
 CONFIG_PACKAGE_luci-compat=y
 CONFIG_PACKAGE_luci-mod-admin-full=y

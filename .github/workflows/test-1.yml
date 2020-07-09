@@ -70,7 +70,7 @@ jobs:
           . ../../scripts/buildtime.sh
           rm -f ./feeds.conf.default && wget -O ./feeds.conf.default https://raw.githubusercontent.com/openwrt/openwrt/master/feeds.conf.default
           # for temporary,TRY to fix libexpat complie error
-          #sed -i '/src-git packages/d' ./feeds.conf.default && echo "src-git packages https://github.com/kongfl888/packages.git" >> ./feeds.conf.default
+          sed -i '/src-git packages/d' ./feeds.conf.default && echo "src-git packages https://github.com/kongfl888/packages.git" >> ./feeds.conf.default
 
       - name: Clean Feeds
         run: |
@@ -100,11 +100,11 @@ jobs:
           mkdir -p ./r2srom/
           mv friendlywrt-rk3328/out/*img* ./r2srom/
           cp friendlywrt-rk3328/friendlywrt/.config ./r2srom/
-          cp friendlywrt-rk3328/friendlywrt/.config ./ipks/
           cd ./r2srom/
           sha256sum *img* > sha256sum.txt
           cd ..
           mkdir -p ./ipks/
+          cp friendlywrt-rk3328/friendlywrt/.config ./ipks/
           . ./scripts/copyipk.sh
           cd ./ipks/
           sha256sum *ipk > packages.sha256

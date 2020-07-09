@@ -193,6 +193,17 @@ uci set uhttpd.defaults.country="CN"
 uci set uhttpd.defaults.location="Beijing"
 uci commit uhttpd
 
+# set hostname
+DATE=`date +[%Y-%m-%d]%H:%M:%S`
+echo $DATE" One time init Script: set hostname" >> /tmp/one_time_init.log
+if [ "$profile" == "2" ]; then
+    uci set system.@system[0].hostname="LEDE"
+    uci commit system
+else
+    uci set system.@system[0].hostname="OpenWrt"
+    uci commit system
+fi
+
 # set ntp time
 if [ "$profile" != "2" ]; then
     DATE=`date +[%Y-%m-%d]%H:%M:%S`

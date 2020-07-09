@@ -1,0 +1,143 @@
+From 173273b3de7ef67a425ef463e06fc6817c2fbc10 Mon Sep 17 00:00:00 2001
+From: kongfl888 <kongfl888@outlook.com>
+Date: Thu, 9 Jul 2020 11:09:55 +0800
+Subject: [PATCH] patch for 19.07.1 cpu info.
+
+Signed-off-by: kongfl888 <kongfl888@outlook.com>
+---
+ .../modules/luci-base/root/usr/libexec/rpcd/luci   | 35 ++++++++++++++++++++++
+ .../root/usr/share/rpcd/acl.d/luci-base.json       |  2 +-
+ .../resources/view/status/include/10_system.js     | 30 +++++++++++++++----
+ 3 files changed, 61 insertions(+), 6 deletions(-)
+
+diff --git a/feeds/luci/modules/luci-base/root/usr/libexec/rpcd/luci b/feeds/luci/modules/luci-base/root/usr/libexec/rpcd/luci
+index c2be3e9..18fdb36 100644
+--- a/feeds/luci/modules/luci-base/root/usr/libexec/rpcd/luci
++++ b/feeds/luci/modules/luci-base/root/usr/libexec/rpcd/luci
+@@ -115,6 +115,41 @@ local methods = {
+ 		end
+ 	},
+ 
++	getCPUInfo = {
++		call = function()
++			local sys = require "luci.sys"
++			local cpuinfo = {}
++
++			cpuinfo.cpuinfo = sys.exec("/usr/bin/cpuinfo")
++
++			if (cpuinfo.cpuinfo == nil) or (cpuinfo.cpuinfo == "") then
++				cpuinfo.cpuinfo = "2.33 MHz +2.33 C"
++			end
++
++			return cpuinfo
++		end
++	},
++
++	getCPUUsage = {
++		call = function()
++			local sys = require "luci.sys"
++			local cpuusage = {}
++
++			cpuusage.cpuusage = (sys.exec("expr 100 - $(top -n 1 | grep 'CPU:' | awk -F '%' '{print$4}' | awk -F ' ' '{print$2}')") or "2.33") .. "%"
++			return cpuusage
++		end
++	},
++
++	getCPUBench = {
++		call = function()
++			local sys = require "luci.sys"
++			local cpubench = {}
++
++			cpubench.cpubench = sys.exec("cat /etc/bench.log 2>/dev/null")
++			return cpubench
++		end
++	},
++
+ 	getUSBDevices = {
+ 		call = function()
+ 			local fs     = require "nixio.fs"
+diff --git a/feeds/luci/modules/luci-base/root/usr/share/rpcd/acl.d/luci-base.json b/feeds/luci/modules/luci-base/root/usr/share/rpcd/acl.d/luci-base.json
+index 50ddc29..22bb20e 100644
+--- a/feeds/luci/modules/luci-base/root/usr/share/rpcd/acl.d/luci-base.json
++++ b/feeds/luci/modules/luci-base/root/usr/share/rpcd/acl.d/luci-base.json
+@@ -43,7 +43,7 @@
+ 			"ubus": {
+ 				"file": [ "list", "read", "stat" ],
+ 				"iwinfo": [ "assoclist", "freqlist", "txpowerlist", "countrylist" ],
+-				"luci": [ "getConntrackList", "getInitList", "getLocaltime", "getProcessList", "getRealtimeStats", "getTimezones", "getLEDs", "getUSBDevices", "getSwconfigFeatures", "getSwconfigPortState", "getBlockDevices", "getMountPoints" ],
++				"luci": [ "getConntrackList", "getInitList", "getLocaltime", "getProcessList", "getRealtimeStats", "getTimezones", "getLEDs", "getCPUBench", "getCPUUsage", "getCPUInfo", "getUSBDevices", "getSwconfigFeatures", "getSwconfigPortState", "getBlockDevices", "getMountPoints" ],
+ 				"luci-rpc": [ "getBoardJSON", "getDHCPLeases", "getDSLStatus", "getDUIDHints", "getHostHints", "getNetworkDevices", "getWirelessDevices" ],
+ 				"network.interface": [ "dump" ],
+ 				"network.rrdns": [ "lookup" ],
+diff --git a/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js b/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
+index 4a35175..a0736c1 100644
+--- a/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
++++ b/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
+@@ -12,6 +12,18 @@ var callSystemInfo = rpc.declare({
+ 	method: 'info'
+ });
+ 
++var callCPUBench = rpc.declare({
++	object: 'luci',
++	method: 'getCPUBench'
++});
++var callCPUInfo = rpc.declare({
++	object: 'luci',
++	method: 'getCPUInfo'
++});
++var callCPUUsage = rpc.declare({
++	object: 'luci',
++	method: 'getCPUUsage'
++});
+ return L.Class.extend({
+ 	title: _('System'),
+ 
+@@ -19,6 +31,9 @@ return L.Class.extend({
+ 		return Promise.all([
+ 			L.resolveDefault(callSystemBoard(), {}),
+ 			L.resolveDefault(callSystemInfo(), {}),
++			L.resolveDefault(callCPUBench(), {}),
++			L.resolveDefault(callCPUInfo(), {}),
++			L.resolveDefault(callCPUUsage(), {}),
+ 			fs.lines('/usr/lib/lua/luci/version.lua')
+ 		]);
+ 	},
+@@ -26,7 +41,10 @@ return L.Class.extend({
+ 	render: function(data) {
+ 		var boardinfo   = data[0],
+ 		    systeminfo  = data[1],
+-		    luciversion = data[2];
++		    cpubench    = data[2],
++		    cpuinfo     = data[3],
++		    cpuusage    = data[4],
++		    luciversion = data[5];
+ 
+ 		luciversion = luciversion.filter(function(l) {
+ 			return l.match(/^\s*(luciname|luciversion)\s*=/);
+@@ -51,9 +69,10 @@ return L.Class.extend({
+ 
+ 		var fields = [
+ 			_('Hostname'),         boardinfo.hostname,
+-			_('Model'),            boardinfo.model,
+-			_('Architecture'),     boardinfo.system,
+-			_('Firmware Version'), (L.isObject(boardinfo.release) ? boardinfo.release.description + ' / ' : '') + (luciversion || ''),
++			_('Model'),            "Rockchip RK3328: 4 Processors " + cpubench.cpubench,
++			_('CPU Info'),         cpuinfo.cpuinfo,
++			_('Architecture'),     'ARMv8 / Cortex-A53,64-bit',
++			_('Firmware Version'), (L.isObject(boardinfo.release) ? boardinfo.release.description + ' / ' : '') + (luciversion || '') + ' built by Mr.K',
+ 			_('Kernel Version'),   boardinfo.kernel,
+ 			_('Local Time'),       datestr,
+ 			_('Uptime'),           systeminfo.uptime ? '%t'.format(systeminfo.uptime) : null,
+@@ -61,7 +80,8 @@ return L.Class.extend({
+ 				systeminfo.load[0] / 65535.0,
+ 				systeminfo.load[1] / 65535.0,
+ 				systeminfo.load[2] / 65535.0
+-			) : null
++			) : null,
++			_('CPU usage (%)'),    cpuusage.cpuusage
+ 		];
+ 
+ 		var table = E('div', { 'class': 'table' });
+-- 
+2.14.1.windows.1
+

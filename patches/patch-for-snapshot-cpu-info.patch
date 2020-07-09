@@ -1,0 +1,151 @@
+From e2d162575252d2dfef2b9212b75fb761dffee537 Mon Sep 17 00:00:00 2001
+From: kongfl888 <kongfl888@outlook.com>
+Date: Thu, 9 Jul 2020 11:09:55 +0800
+Subject: [PATCH] patch for snapshot cpu info.
+
+8c176999c9672adf0936f2b9233521e26813096b
+
+Signed-off-by: kongfl888 <kongfl888@outlook.com>
+---
+ .../modules/luci-base/root/usr/libexec/rpcd/luci   | 35 ++++++++++++++++++++++
+ .../resources/view/status/include/10_system.js     | 30 +++++++++++++++----
+ .../root/usr/share/rpcd/acl.d/luci-mod-status.json |  5 +++-
+ 3 files changed, 64 insertions(+), 6 deletions(-)
+
+diff --git a/feeds/luci/modules/luci-base/root/usr/libexec/rpcd/luci b/feeds/luci/modules/luci-base/root/usr/libexec/rpcd/luci
+index 7f0c0b2..d3d6a3e 100644
+--- a/feeds/luci/modules/luci-base/root/usr/libexec/rpcd/luci
++++ b/feeds/luci/modules/luci-base/root/usr/libexec/rpcd/luci
+@@ -115,6 +115,41 @@ local methods = {
+ 		end
+ 	},
+ 
++	getCPUInfo = {
++		call = function()
++			local sys = require "luci.sys"
++			local cpuinfo = {}
++
++			cpuinfo.cpuinfo = sys.exec("/usr/bin/cpuinfo")
++
++			if (cpuinfo.cpuinfo == nil) or (cpuinfo.cpuinfo == "") then
++				cpuinfo.cpuinfo = "2.33 MHz +2.33 C"
++			end
++
++			return cpuinfo
++		end
++	},
++
++	getCPUUsage = {
++		call = function()
++			local sys = require "luci.sys"
++			local cpuusage = {}
++
++			cpuusage.cpuusage = (sys.exec("expr 100 - $(top -n 1 | grep 'CPU:' | awk -F '%' '{print$4}' | awk -F ' ' '{print$2}')") or "2.33") .. "%"
++			return cpuusage
++		end
++	},
++
++	getCPUBench = {
++		call = function()
++			local sys = require "luci.sys"
++			local cpubench = {}
++
++			cpubench.cpubench = sys.exec("cat /etc/bench.log 2>/dev/null")
++			return cpubench
++		end
++	},
++
+ 	getUSBDevices = {
+ 		call = function()
+ 			local fs     = require "nixio.fs"
+diff --git a/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js b/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
+index 942b2dd..16aa1d2 100644
+--- a/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
++++ b/feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
+@@ -13,6 +13,18 @@ var callSystemInfo = rpc.declare({
+ 	method: 'info'
+ });
+ 
++var callCPUBench = rpc.declare({
++	object: 'luci',
++	method: 'getCPUBench'
++});
++var callCPUInfo = rpc.declare({
++	object: 'luci',
++	method: 'getCPUInfo'
++});
++var callCPUUsage = rpc.declare({
++	object: 'luci',
++	method: 'getCPUUsage'
++});
+ return baseclass.extend({
+ 	title: _('System'),
+ 
+@@ -20,6 +32,9 @@ return baseclass.extend({
+ 		return Promise.all([
+ 			L.resolveDefault(callSystemBoard(), {}),
+ 			L.resolveDefault(callSystemInfo(), {}),
++			L.resolveDefault(callCPUBench(), {}),
++			L.resolveDefault(callCPUInfo(), {}),
++			L.resolveDefault(callCPUUsage(), {}),
+ 			fs.lines('/usr/lib/lua/luci/version.lua')
+ 		]);
+ 	},
+@@ -27,7 +42,10 @@ return baseclass.extend({
+ 	render: function(data) {
+ 		var boardinfo   = data[0],
+ 		    systeminfo  = data[1],
+-		    luciversion = data[2];
++		    cpubench    = data[2],
++		    cpuinfo     = data[3],
++		    cpuusage    = data[4],
++		    luciversion = data[5];
+ 
+ 		luciversion = luciversion.filter(function(l) {
+ 			return l.match(/^\s*(luciname|luciversion)\s*=/);
+@@ -52,9 +70,10 @@ return baseclass.extend({
+ 
+ 		var fields = [
+ 			_('Hostname'),         boardinfo.hostname,
+-			_('Model'),            boardinfo.model,
+-			_('Architecture'),     boardinfo.system,
+-			_('Firmware Version'), (L.isObject(boardinfo.release) ? boardinfo.release.description + ' / ' : '') + (luciversion || ''),
++			_('Model'),            "Rockchip RK3328: 4 Processors " + cpubench.cpubench,
++			_('CPU Info'),         cpuinfo.cpuinfo,
++			_('Architecture'),     'ARMv8 / Cortex-A53,64-bit',
++			_('Firmware Version'), (L.isObject(boardinfo.release) ? boardinfo.release.description + ' / ' : '') + (luciversion || '') + ' built by Mr.K',
+ 			_('Kernel Version'),   boardinfo.kernel,
+ 			_('Local Time'),       datestr,
+ 			_('Uptime'),           systeminfo.uptime ? '%t'.format(systeminfo.uptime) : null,
+@@ -62,7 +81,8 @@ return baseclass.extend({
+ 				systeminfo.load[0] / 65535.0,
+ 				systeminfo.load[1] / 65535.0,
+ 				systeminfo.load[2] / 65535.0
+-			) : null
++			) : null,
++			_('CPU usage (%)'),    cpuusage.cpuusage
+ 		];
+ 
+ 		var table = E('div', { 'class': 'table' });
+diff --git a/feeds/luci/modules/luci-mod-status/root/usr/share/rpcd/acl.d/luci-mod-status.json b/feeds/luci/modules/luci-mod-status/root/usr/share/rpcd/acl.d/luci-mod-status.json
+index 05569d7..9ef1b77 100644
+--- a/feeds/luci/modules/luci-mod-status/root/usr/share/rpcd/acl.d/luci-mod-status.json
++++ b/feeds/luci/modules/luci-mod-status/root/usr/share/rpcd/acl.d/luci-mod-status.json
+@@ -89,10 +89,13 @@
+ 				"/proc/sys/net/netfilter/nf_conntrack_count": [ "read" ],
+ 				"/proc/sys/net/netfilter/nf_conntrack_max": [ "read" ],
+ 				"/usr/lib/lua/luci/version.lua": [ "read" ],
++				"/usr/bin/cpuinfo": [ "exec" ],
++				"/etc/bench.log": [ "read" ],
+ 				"/www/luci-static/resources/view/status/include": [ "list" ]
+ 			},
+ 			"ubus": {
+-				"file": [ "list", "read" ],
++				"file": [ "list", "read", "exec" ],
++				"luci": [ "getCPUBench", "getCPUUsage", "getCPUInfo" ],
+ 				"system": [ "board", "info" ]
+ 			}
+ 		}
+-- 
+2.14.1.windows.1
+

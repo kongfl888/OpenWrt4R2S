@@ -1,13 +1,49 @@
 #!/bin/bash
-# 1 fullin, 2 only a little included
+#
+# [K] (C)2020
+#
+# ** 1 fullin, 2 lite, 3 little included; 1 19071, 2 lean, 3 19073, 4 snapshot
 
 fullin=0
+lite=0
 little=0
+profile=0
 
-if [ "${1}" == "1" ];then
-fullin=1
-elif [ "${1}" == "2" ];then
-little=1
+
+if [ ! -z "${1}" ];then
+    let pf=${1}%10
+    case $pf in
+    1)
+        profile=1
+        ;;
+    2)
+        profile=2
+        ;;
+    3)
+        profile=3
+        ;;
+    4)
+        profile=4
+        ;;
+    *)
+        profile=1
+        ;;
+    esac
+    let lt=${1}/10
+    case $lt in
+    1)
+        fullin=1
+        ;;
+    2)
+        lite=1
+        ;;
+    3)
+        little=1
+        ;;
+    *)
+        lite=1
+        ;;
+    esac
 fi
 
 cp -f ./resources/zh_Hans/base.po friendlywrt-rk3328/friendlywrt/feeds/luci/modules/luci-base/po/zh_Hans/base.po || echo ""
@@ -18,8 +54,23 @@ git clone -b master --single-branch https://github.com/Lienol/openwrt-package.gi
 cd friendlywrt-rk3328/friendlywrt
 # luci-lib-jsonc patch
 git apply ../../patches/use_json_object_new_int64.patch
-# luci-status
-git apply ../../patches/patch-feeds-luci-status-overiew.patch
+
+# luci-status cpu info
+case $profile in
+1)
+    git apply ../../patches/patch-for-19.07.1-cpu-info.patch
+    ;;
+3)
+    git apply ../../patches/patch-for-19.07.3-cpu-info.patch
+    ;;
+4)
+    git apply ../../patches/patch-for-snapshot-cpu-info.patch
+    ;;
+*)
+    git apply ../../patches/patch-feeds-luci-status-overiew.patch
+    ;;
+esac
+
 # add nas menu
 if [ -e "feeds/luci/modules/luci-base/root/usr/share/luci/menu.d/luci-base.json" ]; then
     git apply ../../patches/19-07-3-luci-base-json-add-nas-menu-order-44.patch
@@ -157,7 +208,6 @@ git clone -b master --single-branch https://github.com/kongfl888/redsocks2.git $
 # little or big
 fi
 
-#autocore
-git clone -b r2s --single-branch https://github.com/kongfl888/autocore.git $leanpack/autocore
+#coremark
 cp -rf openwrt/package/lean/coremark $leanpack 
 sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' $leanpack/coremark/Makefile

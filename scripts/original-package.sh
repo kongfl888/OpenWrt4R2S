@@ -212,5 +212,7 @@ git clone -b master --single-branch https://github.com/kongfl888/redsocks2.git $
 fi
 
 #coremark
+rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/coremark/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/coremark $leanpack 
 sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' $leanpack/coremark/Makefile
+sed -i 's,\/etc\/coremark.sh\",\/etc\/coremark.sh \&\",g' $leanpack/coremark/Makefile

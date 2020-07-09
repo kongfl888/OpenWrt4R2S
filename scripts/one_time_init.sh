@@ -303,6 +303,17 @@ do
     ethtool -K $x ufo on >/dev/null 2>&1
 done
 
+# set coremark
+if [ -e "/etc/coremark.sh" ];then
+    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+    echo $DATE" One time init Script: set coremark" >> /tmp/one_time_init.log
+    chmod +x /etc/coremark.sh
+    if [ -e "/bin/coremark" ];then
+        chmod +x /bin/coremark
+        /etc/coremark.sh &
+    fi
+fi
+
 # creat /usr/share/mywdog/
 DATE=`date +[%Y-%m-%d]%H:%M:%S`
 echo $DATE" One time init Script: creat /usr/share/mywdog/" >> /tmp/one_time_init.log

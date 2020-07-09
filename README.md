@@ -5,7 +5,11 @@
 
 适用于 NanoPi R2S 的OpenWrt固件 ![smile](./assets/smile.png)
 
-Original版的意思就是使用原生的OpenWrt。发行版本是stable 19.07.1和19.07.3，以后可能会有snapshots，但如果只是需要稳定使用的那推荐你用stable的。
+Original版的意思就是使用原生的OpenWrt。发行版本是stable 19.07.1和19.07.3，~~以后可能会有snapshots~~，但如果只是需要稳定使用的那推荐你用stable的。
+
+Original不带数字后缀的就是最新的snapshots版，带新功能和最新的BUG修复，但同时也可能存在BUG。喜欢尝新的可以试下这个版本。
+
+snapshots版和19.07.3版本都带最新内核。不过还是有点区别的，前者使用的是编时最新，而后者使用的是新内核中的较稳定版本。
 
 *一般用户原生LITE版推荐。*
 

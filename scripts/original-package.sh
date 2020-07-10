@@ -84,10 +84,13 @@ fi
 sh ../../scripts/patch_for_nas_software.sh
 cd ../../
 
+wrtpackage="friendlywrt-rk3328/friendlywrt/package"
 leanpack="friendlywrt-rk3328/friendlywrt/package/lean"
 lienolpack="friendlywrt-rk3328/friendlywrt/package/lienol"
 ctcgfwpack="friendlywrt-rk3328/friendlywrt/package/ctcgfw"
 themepack="friendlywrt-rk3328/friendlywrt/feeds/luci/themes"
+feedspackages="friendlywrt-rk3328/friendlywrt/feeds/packages"
+luciapppack="friendlywrt-rk3328/friendlywrt/feeds/luci/applications"
 
 mkdir -p $leanpack
 mkdir -p $themepack
@@ -104,18 +107,18 @@ rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-accesscontrol/ >/dev/nu
 cp -rf openwrt/package/lean/luci-app-accesscontrol/ $leanpack
 
 # get adbyby
-rm -rf friendlywrt-rk3328/friendlywrt/feeds/package/*/adbyby/ >/dev/null 2>&1 || echo ""
+rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/adbyby/ >/dev/null 2>&1 || echo ""
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-adbyby-plus/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/adbyby/ $leanpack
 cp -rf openwrt/package/lean/luci-app-adbyby-plus/ $leanpack
 
 # get smartdns
 if [ "$profile" != "4" ]; then
-    rm -rf friendlywrt-rk3328/friendlywrt/feeds/package/*/smartdns/ >/dev/null 2>&1 || echo ""
+    rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/smartdns/ >/dev/null 2>&1 || echo ""
     git clone -b master --single-branch https://github.com/pymumu/openwrt-smartdns.git
-    mkdir -p friendlywrt-rk3328/friendlywrt/package/net/smartdns
-    rm -rf friendlywrt-rk3328/friendlywrt/package/net/smartdns/*
-    mv -f openwrt-smartdns/* friendlywrt-rk3328/friendlywrt/package/net/smartdns
+    mkdir -p $feedspackages/net/smartdns
+    rm -rf $feedspackages/net/smartdns/*
+    mv -f openwrt-smartdns/* $feedspackages/net/smartdns
 fi
 if [ "$profile" == "4" ];then
     sed -i 's/admin\/services/admin\/network/g' friendlywrt-rk3328/friendlywrt/feeds/luci/*/luci-app-smartdns/root/usr/share/luci/menu.d/luci-app-smartdns.json || echo ""
@@ -128,7 +131,7 @@ else
     sed -i 's/admin\/services\/smartdns/admin\/network\/smartdns/g' luci-app-smartdns/luasrc/model/cbi/smartdns/upstream.lua
     sed -i 's/\"services\"/\"network\"/g' luci-app-smartdns/luasrc/view/smartdns/smartdns_status.htm
     cd ..
-    cp -rf luci-app-smartdns friendlywrt-rk3328/friendlywrt/package
+    cp -rf luci-app-smartdns $luciapppack
 fi
 
 #get luci-app-arpbind
@@ -158,7 +161,7 @@ cp -rf openwrt/package/lean/luci-app-zerotier/ $leanpack
 
 #get kcptun
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/kcptun/ >/dev/null 2>&1 || echo ""
-cp -rf openwrt/package/lean/kcptun/ $leanpack
+cp -rf openwrt/package/lean/kcptun/ $feedspackages/net
 
 ##### big ####
 if [ "$fullin" = "1" ]; then
@@ -235,6 +238,6 @@ fi
 
 #coremark
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/coremark/ >/dev/null 2>&1 || echo ""
-cp -rf openwrt/package/lean/coremark $leanpack 
-sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' $leanpack/coremark/Makefile
-sed -i 's,\/etc\/coremark.sh\",\/etc\/coremark.sh \&\",g' $leanpack/coremark/Makefile
+cp -rf openwrt/package/lean/coremark $feedspackages/utils
+sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' $feedspackages/utils/coremark/Makefile
+sed -i 's,\/etc\/coremark.sh\",\/etc\/coremark.sh \&\",g' $feedspackages/utils/coremark/Makefile

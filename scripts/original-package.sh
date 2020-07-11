@@ -94,6 +94,7 @@ wrtpackage="friendlywrt-rk3328/friendlywrt/package"
 leanpack="friendlywrt-rk3328/friendlywrt/package/lean"
 lienolpack="friendlywrt-rk3328/friendlywrt/package/lienol"
 ctcgfwpack="friendlywrt-rk3328/friendlywrt/package/ctcgfw"
+
 themepack="friendlywrt-rk3328/friendlywrt/feeds/luci/themes"
 feedspackages="friendlywrt-rk3328/friendlywrt/feeds/packages"
 luciapppack="friendlywrt-rk3328/friendlywrt/feeds/luci/applications"
@@ -122,9 +123,9 @@ cp -rf openwrt/package/lean/luci-app-adbyby-plus/ $leanpack
 if [ "$profile" != "4" ]; then
     rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/smartdns/ >/dev/null 2>&1 || echo ""
     git clone -b master --single-branch https://github.com/pymumu/openwrt-smartdns.git
-    mkdir -p $feedspackages/net/smartdns
-    rm -rf $feedspackages/net/smartdns/*
-    mv -f openwrt-smartdns/* $feedspackages/net/smartdns
+    mkdir -p $wrtpackage/net/smartdns
+    rm -rf $wrtpackage/net/smartdns/*
+    mv -f openwrt-smartdns/* $wrtpackage/net/smartdns
 fi
 if [ "$profile" == "4" ];then
     sed -i 's/admin\/services/admin\/network/g' friendlywrt-rk3328/friendlywrt/feeds/luci/*/luci-app-smartdns/root/usr/share/luci/menu.d/luci-app-smartdns.json || echo ""
@@ -135,7 +136,7 @@ else
     sed -i 's/admin\/services\/smartdns/admin\/network\/smartdns/g' luci-app-smartdns/luasrc/model/cbi/smartdns/smartdns.lua
     sed -i 's/admin\/services\/smartdns/admin\/network\/smartdns/g' luci-app-smartdns/luasrc/model/cbi/smartdns/upstream.lua
     sed -i 's/\"services\"/\"network\"/g' luci-app-smartdns/luasrc/view/smartdns/smartdns_status.htm
-    cp -rf luci-app-smartdns $luciapppack
+    cp -rf luci-app-smartdns $wrtpackage/
 fi
 
 #get luci-app-arpbind
@@ -165,7 +166,7 @@ cp -rf openwrt/package/lean/luci-app-zerotier/ $leanpack
 
 #get kcptun
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/kcptun/ >/dev/null 2>&1 || echo ""
-cp -rf openwrt/package/lean/kcptun/ $feedspackages/net
+cp -rf openwrt/package/lean/kcptun/ $leanpack
 
 ##### big ####
 if [ "$fullin" = "1" ]; then
@@ -242,6 +243,6 @@ fi
 
 #coremark
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/coremark/ >/dev/null 2>&1 || echo ""
-cp -rf openwrt/package/lean/coremark $feedspackages/utils
-sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' $feedspackages/utils/coremark/Makefile
-sed -i 's,\/etc\/coremark.sh\",\/etc\/coremark.sh \&\",g' $feedspackages/utils/coremark/Makefile
+cp -rf openwrt/package/lean/coremark $leanpack
+sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' $leanpack/coremark/Makefile
+sed -i 's,\/etc\/coremark.sh\",\/etc\/coremark.sh \&\",g' $leanpack/coremark/Makefile

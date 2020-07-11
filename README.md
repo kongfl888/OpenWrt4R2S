@@ -41,7 +41,7 @@ usb-wifi驱动都有，网上常见的芯片，👇
 
 含MWAN3负载均衡、IPTV助手、adgurdhome、adbuby-plus、syncdial多拨、[r2s刷机助手](https://github.com/kongfl888/luci-app-r2sflasher/releases)、[定时重拨助手](https://github.com/kongfl888/luci-app-autorewan/releases)。
 
-可直接上传到路由器安装：[IPK分流](https://kongfl888.lanzous.com/b04sj203c) （密码:abw4）（仅仅适用于minimal系列，其他未测，但基本能装上就能用）
+可直接上传到路由器安装：[IPK分流](https://kongfl888.lanzous.com/b04sj203c) （密码:abw4）（仅仅适用于本系列，其他未测，但基本能装上就能用）
 
 [其他R2S可用的软件包](https://github.com/kongfl888/r2s-openwrt-packages)
 
@@ -105,4 +105,4 @@ flash_rom /tmp/rom.img.gz /dev/mmcblk0 gz``
 - [fanck0605](https://github.com/fanck0605)
 - [jerrykuku/theme-argon](https://github.com/jerrykuku/luci-theme-argon)
 - 各位插件大佬
-- 等
+- 等（不再一一列表，遗漏的请不要介意。请相信，分享精神缺你不可）

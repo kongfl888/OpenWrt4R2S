@@ -131,12 +131,10 @@ if [ "$profile" == "4" ];then
 else
     rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-smartdns/ >/dev/null 2>&1 || echo ""
     git clone -b lede --single-branch https://github.com/pymumu/luci-app-smartdns.git
-    cd luci-app-smartdns
     sed -i 's/\"services\"/\"network\"/g' luci-app-smartdns/luasrc/controller/smartdns.lua
     sed -i 's/admin\/services\/smartdns/admin\/network\/smartdns/g' luci-app-smartdns/luasrc/model/cbi/smartdns/smartdns.lua
     sed -i 's/admin\/services\/smartdns/admin\/network\/smartdns/g' luci-app-smartdns/luasrc/model/cbi/smartdns/upstream.lua
     sed -i 's/\"services\"/\"network\"/g' luci-app-smartdns/luasrc/view/smartdns/smartdns_status.htm
-    cd ..
     cp -rf luci-app-smartdns $luciapppack
 fi
 

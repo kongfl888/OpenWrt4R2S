@@ -193,6 +193,7 @@ jobs:
           sha256sum *ipk > packages.sha256
           cd ..
           cp ./README.txt ./r2srom/
+          cp ./scripts/checksha256.sh ./r2srom/
           zip -r artifact.zip ./r2srom/
           zip -r ipks.zip ./ipks/
           release_tag="R2S-Lean-lite2-$(date +%Y-%m-%d-%H)"

@@ -5,7 +5,7 @@ on:
     branches: 
       - master
     paths: 
-      - 'JUNK/r2s_original2_base.seed'
+      - 'JUNK/r2s_original2_base.conf'
       - '.github/workflows/r2s_original2-19.07.3-lite.yml'
       - 'patch_dosth.sh'
       - 'scripts/original-package.sh'
@@ -65,9 +65,8 @@ jobs:
           . ../patch_dosth.sh
           #sed -i 's/CONFIG_BPFILTER=y/CONFIG_BPFILTER=n/' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
           sed -i 's/dnsmasq /dnsmasq-full /' friendlywrt/include/target.mk
-          #cp ../JUNK/r2s.config.seed configs/config_rk3328
           [ -f configs/config_rk3328 ] && sed -i '/adblock/d;/docker/d;/DOCKER/d;/mwan3/d;/OPENVPN/d;/openvpn/d;' configs/config_rk3328
-          cat ../JUNK/r2s_original2_base.seed >> configs/config_rk3328
+          cat ../JUNK/r2s_original2_base.conf >> configs/config_rk3328
           cd friendlywrt
           mv ../../scripts/one_time_init.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/one_time_init.sh 23 &' package/base-files/files/etc/rc.local
           mv ../../scripts/flash_rom.sh package/base-files/files/root/flash_rom.sh && chmod +x package/base-files/files/root/flash_rom.sh

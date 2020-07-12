@@ -6,7 +6,7 @@ on:
       - master
     paths:
       - '.github/workflows/r2s_lean2.yml'
-      - 'base_rk3328.seed'
+      - 'base_rk3328.conf'
   schedule:
     - cron: '20 4 * * 5'
 
@@ -70,10 +70,10 @@ jobs:
           cd friendlywrt-rk3328
           . ../remove_unused_config.sh
           . ../patch_dosth.sh
-          cat configs/config_rk3328 | grep "TARGET" >> ../base_rk3328.seed
-          cat ../base_rk3328.seed > configs/config_rk3328
-          cat ../JUNK/r2s_lean2_user_part1.seed >> configs/config_rk3328
-          cat ../JUNK/r2s_lean2_user_part2.seed >> configs/config_rk3328
+          cat configs/config_rk3328 | grep "TARGET" >> ../base_rk3328.conf
+          cat ../base_rk3328.conf > configs/config_rk3328
+          cat ../JUNK/r2s_lean2_user_part1.conf >> configs/config_rk3328
+          cat ../JUNK/r2s_lean2_user_part2.conf >> configs/config_rk3328
           cd friendlywrt
           #sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
           cd package/lean/

@@ -1,16 +1,16 @@
-From d7291a8c35097557fd8ae36da3d11bf47fcae553 Mon Sep 17 00:00:00 2001
-From: kongfl888 <kongfl888@outlook.com>
-Date: Thu, 9 Jul 2020 13:27:18 +0800
+From 2d1a3501e79c3f03781f44e51c4b9d966183d49e Mon Sep 17 00:00:00 2001
+From: kongfl888 K <kongfl888@outlook.com>
+Date: Sun, 12 Jul 2020 23:25:09 +0800
 Subject: [PATCH] path for 19.07.1 ethinfo
 
-Signed-off-by: kongfl888 <kongfl888@outlook.com>
+Signed-off-by: kongfl888 K <kongfl888@outlook.com>
 ---
  .../modules/luci-base/root/usr/libexec/rpcd/luci   | 23 ++++++++++++++++++++++
  .../root/usr/share/rpcd/acl.d/luci-base.json       |  2 +-
  2 files changed, 24 insertions(+), 1 deletion(-)
 
 diff --git a/feeds/luci/modules/luci-base/root/usr/libexec/rpcd/luci b/feeds/luci/modules/luci-base/root/usr/libexec/rpcd/luci
-index 18fdb36..46cccbe 100644
+index 18fdb36..5d18545 100644
 --- a/feeds/luci/modules/luci-base/root/usr/libexec/rpcd/luci
 +++ b/feeds/luci/modules/luci-base/root/usr/libexec/rpcd/luci
 @@ -195,6 +195,29 @@ local methods = {
@@ -22,7 +22,7 @@ index 18fdb36..46cccbe 100644
 +			local sys = require "luci.sys"
 +			local rv = {}
 +
-+			sys.call("/sbin/ethinfo")
++			sys.call("/usr/bin/ethinfo")
 +			local ok, fd = pcall(io.open, "/tmp/state/ethinfo", "r")
 +			local line
 +			for line in fd:lines() do

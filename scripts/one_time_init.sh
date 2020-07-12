@@ -257,7 +257,7 @@ if [ -e "/etc/init.d/samba4" ];then
     uci set samba4.@samba[0].charset='UTF-8'
     uci set samba4.@samba[0].allow_legacy_protocols='1'
     if [ ! -d "/mnt/mmcblk0p2/sharing" ];  then
-        mkdir /mnt/mmcblk0p2/sharing
+        mkdir -p /mnt/mmcblk0p2/sharing
     else
         chmod 777 /mnt/mmcblk0p2/sharing
     fi

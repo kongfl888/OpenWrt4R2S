@@ -11,6 +11,8 @@ Original不带数字后缀的就是最新的snapshots版，带新功能和最新
 
 snapshots版和19.07.3版本都带最新内核。不过还是有点区别的，前者使用的是编时最新，而后者使用的是新内核中的较稳定版本。
 
+BBR默认开启（内核级）
+
 *一般用户原生LITE版推荐。*
 
 所有的版本都带了NAS四件套: 网络共享(samba)、下载工具和硬盘休眠，以及家庭网络必备的minidlna。再挂个QOS留用。 去广告都有，含adbyby、adguardhome和koolproxyR。

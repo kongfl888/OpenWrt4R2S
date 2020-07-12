@@ -96,8 +96,9 @@ leanpack="friendlywrt-rk3328/friendlywrt/package/lean"
 lienolpack="friendlywrt-rk3328/friendlywrt/package/lienol"
 ctcgfwpack="friendlywrt-rk3328/friendlywrt/package/ctcgfw"
 
-themepack="friendlywrt-rk3328/friendlywrt/feeds/luci/themes"
+feedsluci="friendlywrt-rk3328/friendlywrt/feeds/luci"
 feedspackages="friendlywrt-rk3328/friendlywrt/feeds/packages"
+themepack="friendlywrt-rk3328/friendlywrt/feeds/luci/themes"
 luciapppack="friendlywrt-rk3328/friendlywrt/feeds/luci/applications"
 
 mkdir -p $leanpack
@@ -129,16 +130,19 @@ if [ "$profile" != "4" ]; then
     mv -f openwrt-smartdns/* $wrtpackage/net/smartdns
 fi
 if [ "$profile" == "4" ];then
-    sed -i 's/admin\/services/admin\/network/g' friendlywrt-rk3328/friendlywrt/feeds/luci/*/luci-app-smartdns/root/usr/share/luci/menu.d/luci-app-smartdns.json || echo ""
+    rm -rf $feedsluci/*/luci-app-smartdns/po
+    sed -i 's/admin\/services/admin\/network/g' $feedsluci/*/luci-app-smartdns/root/usr/share/luci/menu.d/luci-app-smartdns.json || echo ""
 else
     rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-smartdns/ >/dev/null 2>&1 || echo ""
     git clone -b lede --single-branch https://github.com/pymumu/luci-app-smartdns.git
+    rm -rf luci-app-smartdns/po
     sed -i 's/\"services\"/\"network\"/g' luci-app-smartdns/luasrc/controller/smartdns.lua
     sed -i 's/admin\/services\/smartdns/admin\/network\/smartdns/g' luci-app-smartdns/luasrc/model/cbi/smartdns/smartdns.lua
     sed -i 's/admin\/services\/smartdns/admin\/network\/smartdns/g' luci-app-smartdns/luasrc/model/cbi/smartdns/upstream.lua
     sed -i 's/\"services\"/\"network\"/g' luci-app-smartdns/luasrc/view/smartdns/smartdns_status.htm
     cp -rf luci-app-smartdns $wrtpackage/
 fi
+git clone -b master https://github.com/kongfl888/luci-i18n-smartdns-zh-cn.git $wrtpackage/luci-i18n-smartdns-zh-cn
 
 #get luci-app-arpbind
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-arpbind/ >/dev/null 2>&1 || echo ""

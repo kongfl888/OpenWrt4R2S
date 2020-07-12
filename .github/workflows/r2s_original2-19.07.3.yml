@@ -154,6 +154,7 @@ jobs:
       - name: Add SSR
         run: |
           git clone -b master --single-branch https://github.com/fw876/helloworld.git
+          mv helloworld/luci-app-ssr-plus/po/zh-cn  helloworld/luci-app-ssr-plus/po/zh_Hans || echo ""
           mv -f helloworld/luci-app-ssr-plus friendlywrt-rk3328/friendlywrt/package
 
       - name: Add Passwall

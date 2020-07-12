@@ -352,7 +352,13 @@ echo $DATE" One time init Script: creat /usr/share/mywdog/" >> /tmp/one_time_ini
 mkdir -p /usr/share/mywdog/
 chmod 755 /usr/share/mywdog/
 
-sleep 5
+sleep 3
+# restart rpcd
+DATE=`date +[%Y-%m-%d]%H:%M:%S`
+echo $DATE" One time init Script: rpcd restarting." >> /tmp/one_time_init.log
+/etc/init.d/rpcd restart >/dev/null 2>&1
+
+sleep 2
 # restart uhttpd
 DATE=`date +[%Y-%m-%d]%H:%M:%S`
 echo $DATE" One time init Script: uhttpd restarting." >> /tmp/one_time_init.log

@@ -246,3 +246,6 @@ rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/coremark/ >/dev/null 2>&1 || ech
 cp -rf openwrt/package/lean/coremark $leanpack
 sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' $leanpack/coremark/Makefile
 sed -i 's,\/etc\/coremark.sh\",\/etc\/coremark.sh \&\",g' $leanpack/coremark/Makefile
+
+#luci-k-permission
+git clone -b master --single-branch https://github.com/kongfl888/luci-k-permission.git $wrtpackage/luci-k-permission

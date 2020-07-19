@@ -56,7 +56,7 @@ jobs:
 
       - name: Patch For kernel 5.4
         run: |
-          . ./scripts/patch_for_r2s_5.4.sh
+          . ./scripts/patch_for_r2s_5.4.sh 0
 
       - name: Mods
         run: |

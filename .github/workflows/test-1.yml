@@ -42,7 +42,7 @@ jobs:
         run: |
           mkdir friendlywrt-rk3328
           cd friendlywrt-rk3328
-          repo init -u https://github.com/kongfl888/friendlywrt_manifests -b master -m rk3328.xml --repo-url=https://github.com/friendlyarm/repo  --no-clone-bundle
+          repo init -u https://github.com/kongfl888/friendlywrt_manifests -b lede -m rk3328.xml --repo-url=https://github.com/friendlyarm/repo  --no-clone-bundle
           #rm -f .repo/manifests/rk3328.xml
           #cp ../JUNK/rk3328.xml .repo/manifests/rk3328.xml
           repo sync -c  --no-clone-bundle
@@ -55,7 +55,7 @@ jobs:
         run: |
           cd friendlywrt-rk3328
           #. ../remove_unused_config.sh
-          . ../patch_dosth.sh
+          #. ../patch_dosth.sh
           #sed -i 's/CONFIG_BPFILTER=y/CONFIG_BPFILTER=n/' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
           sed -i 's/dnsmasq /dnsmasq-full /' friendlywrt/include/target.mk
           [ -f configs/config_rk3328 ] && sed -i '/adblock/d;/docker/d;/DOCKER/d;/mwan3/d;/OPENVPN/d;/openvpn/d;' configs/config_rk3328
@@ -65,9 +65,10 @@ jobs:
           mv ../../scripts/one_time_init.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/one_time_init.sh 24 &' package/base-files/files/etc/rc.local
           mv ../../scripts/flash_rom.sh package/base-files/files/root/flash_rom.sh && chmod +x package/base-files/files/root/flash_rom.sh
           . ../../scripts/buildtime.sh
-          rm -f ./feeds.conf.default && wget -O ./feeds.conf.default https://raw.githubusercontent.com/openwrt/openwrt/master/feeds.conf.default
+          #rm -f ./feeds.conf.default && wget -O ./feeds.conf.default https://raw.githubusercontent.com/openwrt/openwrt/master/feeds.conf.default
           # for temporary,TRY to fix libexpat complie error
-          sed -i '/src-git packages/d' ./feeds.conf.default && echo "src-git packages https://github.com/kongfl888/packages.git" >> ./feeds.conf.default
+          #sed -i '/src-git packages/d' ./feeds.conf.default && echo "src-git packages https://github.com/kongfl888/packages.git" >> ./feeds.conf.default
+          sed -i 's,mkdir -p $(1)\/usr\/bin,rm -rf $(1)\/usr\/bin \&\& mkdir -p $(1)\/usr\/bin \|\| mkdir -p $(1)\/usr\/bin,g' package/base-files/Makefile
 
       - name: Clean Feeds
         run: |
@@ -110,5 +111,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@master
         with:
-          name: Ipks
-          path: ./ipks/
+          name: r2srom
+          path: ./r2srom/

@@ -32,6 +32,7 @@ if [ -e "configs/config_rk3328" ]; then
     sed -i '/CONFIG_PACKAGE_luci-i18n-.*-ja=/d' configs/config_rk3328
     sed -i '/CONFIG_PACKAGE_luci-i18n-.*-ko=/d' configs/config_rk3328
     sed -i '/CONFIG_PACKAGE_luci-i18n-.*-ms=/d' configs/config_rk3328
+    sed -i '/CONFIG_PACKAGE_luci-i18n-.*-mr=/d' configs/config_rk3328
     sed -i '/CONFIG_PACKAGE_luci-i18n-.*-no=/d' configs/config_rk3328
     sed -i '/CONFIG_PACKAGE_luci-i18n-.*-pl=/d' configs/config_rk3328
     sed -i '/CONFIG_PACKAGE_luci-i18n-.*-pt=/d' configs/config_rk3328

@@ -62,7 +62,6 @@ jobs:
       - name: Patch For kernel 5.4
         run: |
           . ./scripts/patch_for_r2s_5.4.sh 1
-          rm -rf friendlywrt-rk3328/friendlywrt/target/linux/rockchip-rk3328/patches-5.4
 
       - name: Mods
         run: |

@@ -41,7 +41,7 @@ usb-wifi驱动都有，网上常见的芯片，👇
 
 ### 一些软件包
 
-含MWAN3负载均衡、IPTV助手、adgurdhome、adbuby-plus、syncdial多拨、[r2s刷机助手](https://github.com/kongfl888/luci-app-r2sflasher/releases)、[定时重拨助手](https://github.com/kongfl888/luci-app-autorewan/releases)、[定时关机助手](https://github.com/kongfl888/luci-app-timedreboot/release)。
+含MWAN3负载均衡、IPTV助手、adgurdhome、adbuby-plus、syncdial多拨、[r2s刷机助手](https://github.com/kongfl888/luci-app-r2sflasher/releases)、[定时重拨助手](https://github.com/kongfl888/luci-app-autorewan/releases)、[定时关机助手](https://github.com/kongfl888/luci-app-timedreboot/releases)。
 
 可直接上传到路由器安装：[IPK分流](https://kongfl888.lanzous.com/b04sj203c) （密码:abw4）（仅仅适用于本系列，其他未测，但基本能装上就能用）
 

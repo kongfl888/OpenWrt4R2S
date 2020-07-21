@@ -191,6 +191,7 @@ jobs:
       - name: Zip Files
         run: |
           gzip friendlywrt-rk3328/out/*.img
+          gzip friendlywrt-rk3328/*/rootfs*.img || echo ""
       - name: Assemble Artifact
         id: assemble_artifact
         run: |
@@ -210,7 +211,11 @@ jobs:
           cp ./scripts/checksha256.sh ./r2srom/
           cp friendlywrt-rk3328/friendlywrt/.config ./r2sconfig/wrt.config
           cp friendlywrt-rk3328/friendlywrt/kernel/.config ./r2sconfig/kconf.config || echo ""
+          mkdir -p ./imgs/
+          echo "imgs" > ./imgs/README
+          mv friendlywrt-rk3328/*/rootfs*img* ./imgs/ || echo ""
           zip -r artifact.zip ./r2srom/
+          zip -r imgs.zip ./imgs/
           zip -r ipks.zip ./ipks/
           zip -r r2sconfig.zip ./r2sconfig/
           release_tag="R2S-Original-lite$(date +%Y-%m-%d-%H)"
@@ -254,4 +259,14 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
           asset_path: ./r2sconfig.zip
           asset_name: ${{ steps.assemble_artifact.outputs.release_tag }}-config.zip
+          asset_content_type: application/zip
+      - name: Upload Release Asset Imgs
+        id: upload-release-asset-imgs
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.sec_token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./imgs.zip
+          asset_name: ${{ steps.assemble_artifact.outputs.release_tag }}-imgs.zip
           asset_content_type: application/zip

@@ -17,14 +17,17 @@ else
     git clone https://github.com/openwrt/openwrt && cd openwrt/
 fi
 
-rm -f target/linux/generic/*/*led*.patch
-rm -f target/linux/generic/*/*mips*.patch
-rm -f target/linux/generic/*/*MIPS*.patch
-rm -f target/linux/generic/*/*x86*.patch
-cp -a ./target/linux/generic/files/* ../kernel/
-./scripts/patch-kernel.sh ../kernel target/linux/generic/backport-5.4
-./scripts/patch-kernel.sh ../kernel target/linux/generic/pending-5.4
-./scripts/patch-kernel.sh ../kernel target/linux/generic/hack-5.4
+rm -rf /tmp/linuxgeneric || echo ""
+mkdir -p /tmp/linuxgeneric
+cp -arf target/linux/generic/* /tmp/linuxgeneric
+rm -f /tmp/linuxgeneric/*/*leds*.patch
+rm -f /tmp/linuxgeneric/*/*mips*.patch
+rm -f /tmp/linuxgeneric/*/*MIPS*.patch
+rm -f /tmp/linuxgeneric/*/*x86*.patch
+cp -a /tmp/linuxgeneric/files/* ../kernel/
+./scripts/patch-kernel.sh ../kernel /tmp/linuxgeneric/backport-5.4
+./scripts/patch-kernel.sh ../kernel /tmp/linuxgeneric/pending-5.4
+./scripts/patch-kernel.sh ../kernel /tmp/linuxgeneric/hack-5.4
 cd ../
 
 if [ "$snapshot" != "1" ]; then

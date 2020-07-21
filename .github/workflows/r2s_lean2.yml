@@ -44,7 +44,7 @@ jobs:
         run: |
           mkdir friendlywrt-rk3328
           cd friendlywrt-rk3328
-          repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master-v19.07.1 -m rk3328.xml --repo-url=https://github.com/friendlyarm/repo --no-clone-bundle --depth=1
+          repo init -u https://github.com/kongfl888/friendlywrt_manifests -b master-20200707 -m rk3328.xml --repo-url=https://github.com/friendlyarm/repo  --no-clone-bundle --depth=1
           repo sync -c --no-tags --no-clone-bundle -j8
           cd friendlywrt/ && git fetch --unshallow
 
@@ -57,7 +57,7 @@ jobs:
           cd friendlywrt-rk3328/friendlywrt
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
           git remote add upstream https://github.com/coolsnowwolf/lede && git fetch upstream
-          git rebase adc1a9a3676b8d7be1b48b5aed185a94d8e42728^ --onto upstream/master -X theirs
+          git rebase e87625f0e0097cb7f1cfd59e42dfb0296f16b664^ --onto upstream/master -X theirs
           #rm -rf package/kernel/mt76/Makefile package/network/services/hostapd package/kernel/mac80211
           #git checkout 0a395d6fd6c38c554709197ae3cd6315f143cd7a -- package/kernel/mt76/Makefile package/network/services/hostapd package/kernel/mac80211
           rm target/linux/rockchip-rk3328/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch

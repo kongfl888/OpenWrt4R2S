@@ -56,9 +56,10 @@ DATE=`date +[%Y-%m-%d]%H:%M:%S`
 echo $DATE" One time init Script: set arch." >> /tmp/one_time_init.log
 if [ "$profile" != "2" ]; then
 sed -i "s#),boardinfo.system#),'ARMv8 / Cortex-A53,64-bit (Rockchip rk3328)'#g" /www/luci-static/resources/view/status/include/10_system.js
-fi
+else
 sed -i '/<%:Architecture%>/d' /usr/lib/lua/luci/view/admin_status/index.htm >/dev/null 2>&1
 sed -i '/<%:CPU Info%><\/td>/i\\t\t<tr><td width="33%"><%:Architecture%></td><td>ARMv8 / Cortex-A53,64-bit (Rockchip rk3328)</td></tr>' /usr/lib/lua/luci/view/admin_status/index.htm
+fi
 
 #disable some boot items
 #DATE=`date +[%Y-%m-%d]%H:%M:%S`

@@ -8,7 +8,10 @@ if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*adbyby*.ipk" | 
 fi
 
 if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*adguardhome*.ipk" | grep "adguardhome" -c` -gt 0 ]; then
-	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*adguardhome*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack adguardhome ipk fail" >> ipklost.txt
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*adguardhome*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack luci-app-adguardhome ipk fail" >> ipklost.txt
+fi
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "AdGuardHome*.ipk" | grep "AdGuardHome" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/AdGuardHome*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack AdGuardHome ipk fail" >> ipklost.txt
 fi
 
 if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*iptvhelper*.ipk" | grep "iptvhelper" -c` -gt 0 ]; then

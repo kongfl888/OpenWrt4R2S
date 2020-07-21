@@ -1,5 +1,18 @@
+From ed3af066854e1da14c1c68cc4d7465f56bea041a Mon Sep 17 00:00:00 2001
+From: kongfl888 K <kongfl888@outlook.com>
+Date: Tue, 21 Jul 2020 17:58:10 +0800
+Subject: [PATCH] enable autocore
+
+Signed-off-by: kongfl888 K <kongfl888@outlook.com>
+---
+ package/lean/autocore/Makefile           | 2 +-
+ package/lean/autocore/files/autocore     | 4 ++--
+ package/lean/autocore/files/index.htm    | 1 +
+ package/lean/autocore/files/sbin/cpuinfo | 4 ++--
+ 4 files changed, 6 insertions(+), 5 deletions(-)
+
 diff --git a/package/lean/autocore/Makefile b/package/lean/autocore/Makefile
-index c6cde396e..347a45203 100644
+index c6cde39..347a452 100644
 --- a/package/lean/autocore/Makefile
 +++ b/package/lean/autocore/Makefile
 @@ -17,7 +17,7 @@ include $(INCLUDE_DIR)/package.mk
@@ -12,7 +25,7 @@ index c6cde396e..347a45203 100644
  
  define Package/autocore/description
 diff --git a/package/lean/autocore/files/autocore b/package/lean/autocore/files/autocore
-index 614e21761..90f9f52dd 100755
+index 614e217..90f9f52 100755
 --- a/package/lean/autocore/files/autocore
 +++ b/package/lean/autocore/files/autocore
 @@ -31,7 +31,7 @@ start()
@@ -34,7 +47,7 @@ index 614e21761..90f9f52dd 100755
  		ethtool -K $c tso on >/dev/null 2>&1
  		ethtool -K $c ufo on >/dev/null 2>&1
 diff --git a/package/lean/autocore/files/index.htm b/package/lean/autocore/files/index.htm
-index c24224cb3..e7da9b7a6 100644
+index c24224c..9727538 100644
 --- a/package/lean/autocore/files/index.htm
 +++ b/package/lean/autocore/files/index.htm
 @@ -718,6 +718,7 @@
@@ -46,7 +59,7 @@ index c24224cb3..e7da9b7a6 100644
  		<tr><td width="33%"><%:Kernel Version%></td><td><%=unameinfo.release or "?"%></td></tr>
  		<tr><td width="33%"><%:Local Time%></td><td id="localtime">-</td></tr>
 diff --git a/package/lean/autocore/files/sbin/cpuinfo b/package/lean/autocore/files/sbin/cpuinfo
-index 8c0527f84..6adabeafc 100755
+index 8c0527f..6adabea 100755
 --- a/package/lean/autocore/files/sbin/cpuinfo
 +++ b/package/lean/autocore/files/sbin/cpuinfo
 @@ -1,5 +1,5 @@
@@ -57,3 +70,6 @@ index 8c0527f84..6adabeafc 100755
 +MHz=`echo "$(cat /sys/devices/system/cpu/cpu[04]/cpufreq/cpuinfo_cur_freq)/1000" | bc`
 +TEMP=`echo "scale=2; $(cat /sys/class/thermal/thermal_zone0/temp)/1000" | bc`°
  echo "$MHz MHz $TEMP "
+-- 
+2.14.1.windows.1
+

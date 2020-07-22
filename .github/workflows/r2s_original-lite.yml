@@ -12,6 +12,7 @@ on:
       - 'scripts/original-package.sh'
       - 'scripts/copyipk.sh'
       - 'scripts/patch_for_r2s.sh'
+      - 'scripts/patch_for_r2s_5.4.sh'
   schedule:
     - cron: '30 2 * * 6'
 

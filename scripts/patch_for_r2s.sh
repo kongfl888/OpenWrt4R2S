@@ -6,11 +6,6 @@ cd kernel/
 wget https://github.com/armbian/build/raw/master/patch/kernel/rockchip64-dev/RK3328-enable-1512mhz-opp.patch
 git apply --check RK3328-enable-1512mhz-opp.patch && git apply RK3328-enable-1512mhz-opp.patch || echo ""
 # fix when during system boot,GPIO ocnflict with sdmmc
-wget https://github.com/armbian/build/raw/master/patch/kernel/rockchip64-dev/add-board-nanopi-r2s.patch
-git apply --check add-board-nanopi-r2s.patch && git apply add-board-nanopi-r2s.patch || echo ""
-
-wget https://github.com/armbian/build/raw/master/patch/kernel/rockchip64-dev/add-rk3328-usb3-phy-driver.patch
-git apply --check add-rk3328-usb3-phy-driver.patch && git apply add-rk3328-usb3-phy-driver.patch || echo ""
 
 # patch for defconfig
 git apply --check ../../patches/0001-Patch-for-nanopi-r2s_linux_defconfig.patch && git apply ../../patches/0001-Patch-for-nanopi-r2s_linux_defconfig.patch

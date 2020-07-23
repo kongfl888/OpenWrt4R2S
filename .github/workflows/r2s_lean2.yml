@@ -202,9 +202,9 @@ jobs:
         run: |
           rm -rf ./r2srom/
           mkdir -p ./r2srom/
+          mkdir -p ./r2sconfig/
+          mkdir -p ./imgs/
           mv friendlywrt-rk3328/out/*img* ./r2srom/
-          cp friendlywrt-rk3328/friendlywrt/.config ./r2srom/
-          cp friendlywrt-rk3328/friendlywrt/.current_config.mk ./r2srom/ || echo ""
           cd ./r2srom/
           sha256sum *img* > sha256sum.txt
           cd ..
@@ -215,8 +215,13 @@ jobs:
           cd ..
           cp ./README.txt ./r2srom/
           cp ./scripts/checksha256.sh ./r2srom/
+          . ./scripts/copyimg.sh
+          . ./scripts/copyconfig.sh
+          . ./scripts/ls-dir.sh friendlywrt-rk3328 > ./r2sconfig/workdir.txt
           zip -r artifact.zip ./r2srom/
           zip -r ipks.zip ./ipks/
+          zip -r imgs.zip ./imgs/
+          zip -r r2sconfig.zip ./r2sconfig/
           release_tag="R2S-Lean-$(date +%Y-%m-%d-%H)"
           echo "##[set-output name=release_tag;]$release_tag"
       - name: Create Release
@@ -248,4 +253,24 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
           asset_path: ./ipks.zip
           asset_name: ${{ steps.assemble_artifact.outputs.release_tag }}-ipk.zip
+          asset_content_type: application/zip
+      - name: Upload Release Asset Config
+        id: upload-release-asset-config
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.sec_token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./r2sconfig.zip
+          asset_name: ${{ steps.assemble_artifact.outputs.release_tag }}-config.zip
+          asset_content_type: application/zip
+      - name: Upload Release Asset Img
+        id: upload-release-asset-img
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.sec_token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./imgs.zip
+          asset_name: ${{ steps.assemble_artifact.outputs.release_tag }}-imgs.zip
           asset_content_type: application/zip

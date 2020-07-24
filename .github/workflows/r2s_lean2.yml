@@ -7,6 +7,7 @@ on:
     paths:
       - '.github/workflows/r2s_lean2.yml'
       - 'base_rk3328.conf'
+      - 'scripts/lean-packages.sh'
   schedule:
     - cron: '20 4 * * 5'
 

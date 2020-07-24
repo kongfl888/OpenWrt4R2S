@@ -28,3 +28,7 @@ mkdir -p friendlywrt/staging_dir/host/bin/
 if [ ! -e "friendlywrt/staging_dir/host/bin/upx" ];then
     ln -s /usr/bin/upx-ucl friendlywrt/staging_dir/host/bin/upx
 fi
+
+if [ -e "friendlywrt/target/linux/rockchip-rk3328/base-files/etc/init.d/fa-rk3328-misc" ]; then
+	sed -i '/scaling_governor/d' friendlywrt/target/linux/rockchip-rk3328/base-files/etc/init.d/fa-rk3328-misc
+fi

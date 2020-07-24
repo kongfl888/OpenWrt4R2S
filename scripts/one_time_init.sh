@@ -358,6 +358,7 @@ if [ -e "/etc/config/kcpufreq" ]; then
         DATE=`date +[%Y-%m-%d]%H:%M:%S`
         echo $DATE" One time init Script: set kcupfreq" >> /tmp/one_time_init.log
         uci commit kcpufreq
+        [ -e "/etc/init.d/fa-rk3328-misc" ] && sed -i '/scaling_governor/d' /etc/init.d/fa-rk3328-misc
     fi
 fi
 [ -e "/etc/init.d/kcpufreq" ] && chmod +x /etc/init.d/kcpufreq

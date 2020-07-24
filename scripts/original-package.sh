@@ -257,3 +257,5 @@ if [ "$profile" == "4" ]; then
     git clone -b master --single-branch https://github.com/kongfl888/luci-k-permission.git $wrtpackage/luci-k-permission
 fi
 
+#kcpufreq
+git clone -b master --single-branch https://github.com/kongfl888/luci-app-kcpufreq.git $wrtpackage/luci-app-kcpufreq

@@ -114,6 +114,11 @@ jobs:
           git clone -b master --single-branch https://github.com/kongfl888/luci-app-autorewan.git
           mv luci-app-autorewan friendlywrt-rk3328/friendlywrt/package
 
+      - name: Add Luci-app-kcpufreq
+        run: |
+          git clone -b master --single-branch https://github.com/kongfl888/luci-app-kcpufreq.git
+          mv luci-app-kcpufreq friendlywrt-rk3328/friendlywrt/package
+
       - name: Add Luci-app-timedreboot
         run: |
           git clone -b master --single-branch https://github.com/kongfl888/luci-app-timedreboot.git

@@ -347,6 +347,21 @@ if [ -e "/etc/coremark.sh" ];then
     fi
 fi
 
+# set kcupfreq
+if [ -e "/etc/config/kcpufreq" ]; then
+    if [ -d "/sys/devices/system/cpu/cpufreq/policy0" ]; then
+        local cmin=`cat /sys/devices/system/cpu/cpufreq/policy0/cpuinfo_min_freq`
+        local cmax=`cat /sys/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq`
+        [ ! -z "$cmin" ] && uci set kcpufreq.@settings[-1].minifreq="$cmin"
+        [ ! -z "$cmax" ] && uci set kcpufreq.@settings[-1].maxfreq="$cmax"
+
+        DATE=`date +[%Y-%m-%d]%H:%M:%S`
+        echo $DATE" One time init Script: set kcupfreq" >> /tmp/one_time_init.log
+        uci commit kcpufreq
+    fi
+fi
+[ -e "/etc/init.d/kcpufreq" ] && chmod +x /etc/init.d/kcpufreq
+
 # creat /usr/share/mywdog/
 DATE=`date +[%Y-%m-%d]%H:%M:%S`
 echo $DATE" One time init Script: creat /usr/share/mywdog/" >> /tmp/one_time_init.log

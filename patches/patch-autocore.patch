@@ -1,15 +1,17 @@
-From ed3af066854e1da14c1c68cc4d7465f56bea041a Mon Sep 17 00:00:00 2001
+From 623054471974393f6fccefa4452f32605ed95ab7 Mon Sep 17 00:00:00 2001
 From: kongfl888 K <kongfl888@outlook.com>
-Date: Tue, 21 Jul 2020 17:58:10 +0800
-Subject: [PATCH] enable autocore
+Date: Fri, 24 Jul 2020 13:36:53 +0800
+Subject: [PATCH] patch autocore
+
+patch cpufreq
 
 Signed-off-by: kongfl888 K <kongfl888@outlook.com>
 ---
- package/lean/autocore/Makefile           | 2 +-
- package/lean/autocore/files/autocore     | 4 ++--
- package/lean/autocore/files/index.htm    | 1 +
- package/lean/autocore/files/sbin/cpuinfo | 4 ++--
- 4 files changed, 6 insertions(+), 5 deletions(-)
+ package/lean/autocore/Makefile           |  2 +-
+ package/lean/autocore/files/autocore     |  4 ++--
+ package/lean/autocore/files/index.htm    |  1 +
+ package/lean/autocore/files/sbin/cpuinfo | 21 ++++++++++++++++-----
+ 4 files changed, 20 insertions(+), 8 deletions(-)
 
 diff --git a/package/lean/autocore/Makefile b/package/lean/autocore/Makefile
 index c6cde39..347a452 100644
@@ -59,17 +61,31 @@ index c24224c..9727538 100644
  		<tr><td width="33%"><%:Kernel Version%></td><td><%=unameinfo.release or "?"%></td></tr>
  		<tr><td width="33%"><%:Local Time%></td><td id="localtime">-</td></tr>
 diff --git a/package/lean/autocore/files/sbin/cpuinfo b/package/lean/autocore/files/sbin/cpuinfo
-index 8c0527f..6adabea 100755
+index 8c0527f..90efcca 100755
 --- a/package/lean/autocore/files/sbin/cpuinfo
 +++ b/package/lean/autocore/files/sbin/cpuinfo
-@@ -1,5 +1,5 @@
- #!/bin/sh
- 
+@@ -1,5 +1,16 @@
+-#!/bin/sh
+-
 -MHz=`grep 'MHz' /proc/cpuinfo | cut -c11- |sed -n '1p'`
 -TEMP=`sensors 2>/dev/null | grep 'Core 0' | cut -c12-`
-+MHz=`echo "$(cat /sys/devices/system/cpu/cpu[04]/cpufreq/cpuinfo_cur_freq)/1000" | bc`
-+TEMP=`echo "scale=2; $(cat /sys/class/thermal/thermal_zone0/temp)/1000" | bc`°
- echo "$MHz MHz $TEMP "
+-echo "$MHz MHz $TEMP "
++#!/bin/sh
++#
++# [K] (c)2020
++#
++MHz=`grep 'MHz' /proc/cpuinfo | cut -c11- |sed -n '1p'`
++[ -z "$MHz" ] && MHz=`echo "$(cat /sys/devices/system/cpu/cpu[04]/cpufreq/cpuinfo_cur_freq)/1000" | bc`
++TEMP=`echo "scale=2; $(cat /sys/class/thermal/thermal_zone0/temp)/1000" | bc`
++[ -z "$TEMP" ] && TEMP=`sensors 2>/dev/null | grep 'Core 0' | cut -c12-` || TEMP="$TEMP""℃"
++MIN=`echo "$(cat /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq)/1000" | bc`
++[ ! -z "$MIN" ] && MIN="$MIN""MHz" || MIN=""
++MAX=`echo "$(cat /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq)/1000" | bc`
++[ ! -z "$MAX" ] && MAX="$MAX""MHz" || MAX=""
++GOV=`cat /sys/devices/system/cpu/cpufreq/policy0/scaling_governor`
++PLUS="$MIN$MAX$GOV"
++[ ! -z "$PLUS" ] && PLUS="(mini-max : $MIN - $MAX / $GOV)"
++echo "$MHz MHz $TEMP $PLUS"
 -- 
 2.14.1.windows.1
 

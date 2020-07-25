@@ -1,3 +1,5 @@
+# [K] (c)@2020
+
 name: r2s-19071-lite
 
 on:
@@ -9,7 +11,6 @@ on:
       - '.github/workflows/r2s_original2-19.07.1-lite.yml'
       - 'patch_dosth.sh'
       - 'scripts/original-package.sh'
-      - 'scripts/copyipk.sh'
       - 'scripts/patch_for_r2s.sh'
 jobs:
 

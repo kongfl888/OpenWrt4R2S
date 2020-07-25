@@ -1,3 +1,5 @@
+# [K] (c)@2020
+
 name: r2s-original-lite
 
 on:
@@ -10,9 +12,8 @@ on:
       - '.github/workflows/r2s_original-lite.yml'
       - 'patch_dosth.sh'
       - 'scripts/original-package.sh'
-      - 'scripts/copyipk.sh'
-      - 'scripts/patch_for_r2s.sh'
-      - 'scripts/patch_for_r2s_5.4.sh'
+      - 'scripts/copy*.sh'
+      - 'scripts/patch_for_r2s*.sh'
   schedule:
     - cron: '30 2 * * 6'
 

@@ -1,3 +1,5 @@
+# [K] (c)@2020
+
 name: r2s Lean
 
 on:
@@ -7,6 +9,7 @@ on:
     paths:
       - '.github/workflows/r2s_lean2.yml'
       - 'base_rk3328.conf'
+      - 'JUNK/r2s_lean2_user_part1.conf'
       - 'scripts/lean-packages.sh'
   schedule:
     - cron: '20 4 * * 5'

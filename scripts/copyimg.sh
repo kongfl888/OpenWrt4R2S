@@ -5,11 +5,11 @@
 
 mkdir -p ./imgs/
 
-for i in `find friendlywrt/bin/targets/ -name '*.img'`; do
+for i in `find friendlywrt-rk3328/friendlywrt/bin/targets/ -name '*.img'`; do
     cp -f $i ./imgs/
 done
 
-gzip ./imgs/*.img
+gzip ./imgs/*.img || echo ""
 
 cd ./imgs/
 sha256sum *.img > imgs.sha256 || echo "blank" > noimg.txt

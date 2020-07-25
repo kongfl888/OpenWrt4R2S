@@ -46,6 +46,9 @@ mv luci-i18n-sqm-zh-cn $wrtpackage
 git clone -b master --single-branch https://github.com/kongfl888/check-network.git
 mv check-network $wrtpackage
 
+#koptimalize
+git clone -b master https://github.com/kongfl888/koptimalize.git $wrtpackage/koptimalize
+
 # add smartdns
 git clone -b master --single-branch https://github.com/pymumu/openwrt-smartdns.git
 git clone -b lede --single-branch https://github.com/pymumu/luci-app-smartdns.git

@@ -288,6 +288,12 @@ do
     echo 32768 > $fileRfc
 done
 
+if [ -e "/etc/init.d/koptimalize" ]; then
+    chmod +x /etc/init.d/koptimalize
+    /etc/init.d/koptimalize enable
+    /etc/init.d/koptimalize start
+fi
+
 # open eth features
 ethx=$(ip address | grep ^[0-9] | awk -F: '{print $2}' | sed "s/ //g" | grep '^[e]' | grep -v "@" | grep -v "\.")
 ethc=$(echo "$ethx" | wc -l)

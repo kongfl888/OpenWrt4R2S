@@ -259,3 +259,6 @@ fi
 
 #kcpufreq
 git clone -b master --single-branch https://github.com/kongfl888/luci-app-kcpufreq.git $wrtpackage/luci-app-kcpufreq
+
+#koptimalize
+git clone -b master https://github.com/kongfl888/koptimalize.git $wrtpackage/koptimalize

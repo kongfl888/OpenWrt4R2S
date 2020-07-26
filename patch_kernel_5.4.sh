@@ -15,6 +15,7 @@ rm -f target/linux/generic/*/*sfp_*.patch
 rm -f target/linux/generic/*/*SFP-*.patch
 rm -f target/linux/generic/*/*GPON-*.patch
 rm -f target/linux/generic/*/*gpon-*.patch
+rm -f target/linux/generic/*/*BCM84881*.patch
 cp -a ./target/linux/generic/files/* ../kernel/
 sed -i '/exit 1/d' ./scripts/patch-kernel.sh
 ./scripts/patch-kernel.sh ../kernel target/linux/generic/backport-5.4

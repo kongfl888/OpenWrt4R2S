@@ -30,6 +30,7 @@ rm -f /tmp/linuxgeneric/*/*sfp_*.patch
 rm -f /tmp/linuxgeneric/*/*SFP-*.patch
 rm -f /tmp/linuxgeneric/*/*GPON-*.patch
 rm -f /tmp/linuxgeneric/*/*gpon-*.patch
+rm -f /tmp/linuxgeneric/*/*BCM84881*.patch
 cp -a /tmp/linuxgeneric/files/* ../kernel/
 sed -i '/exit 1/d' /tmp/patchkernel.sh
 /tmp/patchkernel.sh ../kernel /tmp/linuxgeneric/backport-5.4

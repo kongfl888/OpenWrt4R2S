@@ -12,7 +12,7 @@ on:
       - 'JUNK/r2s_lean2_user_part1.conf'
       - 'scripts/lean-packages.sh'
   schedule:
-    - cron: '20 4 * * 5'
+    - cron: '10 4 * * 5'
 
 jobs:
 

@@ -251,3 +251,4 @@ jobs:
           asset_path: ./imgs.zip
           asset_name: ${{ steps.assemble_artifact.outputs.release_tag }}-imgs.zip
           asset_content_type: application/zip
+# end

@@ -356,8 +356,8 @@ fi
 # set kcupfreq
 if [ -e "/etc/config/kcpufreq" ]; then
     if [ -d "/sys/devices/system/cpu/cpufreq/policy0" ]; then
-        local cmin=`cat /sys/devices/system/cpu/cpufreq/policy0/cpuinfo_min_freq`
-        local cmax=`cat /sys/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq`
+        cmin=`cat /sys/devices/system/cpu/cpufreq/policy0/cpuinfo_min_freq`
+        cmax=`cat /sys/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq`
         [ ! -z "$cmin" ] && uci set kcpufreq.@settings[-1].minifreq="$cmin"
         [ ! -z "$cmax" ] && uci set kcpufreq.@settings[-1].maxfreq="$cmax"
 

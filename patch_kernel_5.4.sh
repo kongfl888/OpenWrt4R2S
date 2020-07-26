@@ -5,13 +5,16 @@ wget https://github.com/armbian/build/raw/master/patch/kernel/rockchip64-dev/RK3
 git apply RK3328-enable-1512mhz-opp.patch
 cd ../
 git clone https://github.com/openwrt/openwrt && cd openwrt/
-#git checkout 68d9cb82143b864d70e4fb3d7cbb7068f82216a1
-#rm target/linux/generic/pending-5.4/403-mtd-hook-mtdsplit-to-Kbuild.patch
-#rm target/linux/generic/hack-5.4/700-swconfig_switch_drivers.patch
+#git checkout 68d9cb82143b864d70e4fb3d7cbb7068f82216a1 #5.4.50
 rm -f target/linux/generic/*/*leds-*.patch
 rm -f target/linux/generic/*/*mips*.patch
 rm -f target/linux/generic/*/*MIPS*.patch
 rm -f target/linux/generic/*/*x86*.patch
+rm -f target/linux/generic/*/*sfp-*.patch
+rm -f target/linux/generic/*/*sfp_*.patch
+rm -f target/linux/generic/*/*SFP-*.patch
+rm -f target/linux/generic/*/*GPON-*.patch
+rm -f target/linux/generic/*/*gpon-*.patch
 cp -a ./target/linux/generic/files/* ../kernel/
 sed -i '/exit 1/d' ./scripts/patch-kernel.sh
 ./scripts/patch-kernel.sh ../kernel target/linux/generic/backport-5.4

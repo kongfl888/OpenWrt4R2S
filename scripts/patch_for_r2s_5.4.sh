@@ -25,6 +25,11 @@ rm -f /tmp/linuxgeneric/*/*leds*.patch
 rm -f /tmp/linuxgeneric/*/*mips*.patch
 rm -f /tmp/linuxgeneric/*/*MIPS*.patch
 rm -f /tmp/linuxgeneric/*/*x86*.patch
+rm -f /tmp/linuxgeneric/*/*sfp-*.patch
+rm -f /tmp/linuxgeneric/*/*sfp_*.patch
+rm -f /tmp/linuxgeneric/*/*SFP-*.patch
+rm -f /tmp/linuxgeneric/*/*GPON-*.patch
+rm -f /tmp/linuxgeneric/*/*gpon-*.patch
 cp -a /tmp/linuxgeneric/files/* ../kernel/
 sed -i '/exit 1/d' /tmp/patchkernel.sh
 /tmp/patchkernel.sh ../kernel /tmp/linuxgeneric/backport-5.4

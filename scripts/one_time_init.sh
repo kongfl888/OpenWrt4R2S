@@ -375,6 +375,12 @@ echo $DATE" One time init Script: creat /usr/share/mywdog/" >> /tmp/one_time_ini
 mkdir -p /usr/share/mywdog/
 chmod 755 /usr/share/mywdog/
 
+# clean luci cache
+DATE=`date +[%Y-%m-%d]%H:%M:%S`
+echo $DATE" One time init Script: clean luci cache" >> /tmp/one_time_init.log
+rm -rf /tmp/luci-modulecache/* >/dev/null 2>&1 || echo ""
+rm -f /tmp/luci-indexcache* >/dev/null 2>&1 || echo ""
+
 sleep 3
 # restart rpcd
 DATE=`date +[%Y-%m-%d]%H:%M:%S`

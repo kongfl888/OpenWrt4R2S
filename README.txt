@@ -25,6 +25,8 @@ sh /root/flash_rom.sh /tmp/rom具体取名.img.gz /dev/mmcblk0 gz
 
 更新和安装DDNS姿势：网页端--系统--软件包--更新列表--输入ddns--安装luci-app-ddns--到一些ipk网盘找到ddns-scripts_aliyun等使用文件传输上传并装上
 
+docker也一样，通过官方源来获取最新的软件包。
+
 *刷机并首次完成配置后建议你重启路由一次（重启姿势：网页端-系统-重启-点击执行）*
 
 分流地址：

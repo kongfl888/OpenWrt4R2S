@@ -27,6 +27,8 @@ sh /root/flash_rom.sh /tmp/rom具体取名.img.gz /dev/mmcblk0 gz
 
 docker也一样，通过官方源来获取最新的软件包。
 
+某些usb-wifi芯片也一样可通过软件包安装
+
 *刷机并首次完成配置后建议你重启路由一次（重启姿势：网页端-系统-重启-点击执行）*
 
 分流地址：

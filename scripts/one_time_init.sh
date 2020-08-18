@@ -420,7 +420,7 @@ sleep 2
 DATE=`date +[%Y-%m-%d]%H:%M:%S`
 echo $DATE" One time init Script: uhttpd restarting." >> /tmp/one_time_init.log
 rm -rf /tmp/luci-modulecache/ >/dev/null 2>&1 || echo ""
-rm -f /tmp/luci-indexcache >/dev/null 2>&1 || echo ""
+rm -f /tmp/luci-indexcache* >/dev/null 2>&1 || echo ""
 /etc/init.d/uhttpd restart >/dev/null 2>&1
 
 sleep 2

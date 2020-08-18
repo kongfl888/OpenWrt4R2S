@@ -139,7 +139,7 @@ uci commit network
 # close ipv6
 if [ "$profile" != "2" -o "$lite" = "1" ]; then
     uci set network.wan.ipv6="0"
-    uci delete network.lan.ip6assign
+    uci delete network.lan.ip6assign 2>/dev/null
     uci commit network
 fi
 

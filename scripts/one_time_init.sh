@@ -386,6 +386,17 @@ if [ -e "/etc/config/kcpufreq" ]; then
 fi
 [ -e "/etc/init.d/kcpufreq" ] && chmod +x /etc/init.d/kcpufreq
 
+# set wrtbwmon
+if [ -e "/etc/config/wrtbwmon" ]; then
+    if [ "$profile" == "1" ]; then
+        DATE=`date +[%Y-%m-%d]%H:%M:%S`
+        echo $DATE" One time init Script: set wrtbwmon" >> /tmp/one_time_init.log
+        uci set wrtbwmon.general.enabled='0'
+        uci commit wrtbwmon
+        /etc/init.d/wrtbwmon stop 2>/dev/null
+    fi
+fi
+
 # creat /usr/share/mywdog/
 DATE=`date +[%Y-%m-%d]%H:%M:%S`
 echo $DATE" One time init Script: creat /usr/share/mywdog/" >> /tmp/one_time_init.log

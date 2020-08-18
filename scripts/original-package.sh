@@ -173,6 +173,13 @@ cp -rf openwrt/package/lean/luci-app-zerotier/ $leanpack
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/kcptun/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/kcptun/ $leanpack
 
+#get wrtbwmon
+git clone -b master https://github.com/brvphoenix/wrtbwmon.git
+cp -rf wrtbwmon/wrtbwmon $wrtpackage
+git clone -b master https://github.com/brvphoenix/luci-app-wrtbwmon.git
+sed -i "s/'class': 'table'/'class': 'cbi-section'/g" luci-app-wrtbwmon/luci-app-wrtbwmon/htdocs/luci-static/resources/view/wrtbwmon/details.js || echo ""
+cp -rf luci-app-wrtbwmon/luci-app-wrtbwmon $wrtpackage
+
 ##### big ####
 if [ "$fullin" = "1" ]; then
 

@@ -305,6 +305,16 @@ do
     ethtool -K $x ufo on >/dev/null 2>&1
 done
 
+# check bbr
+bbrcount=`sysctl net.ipv4.tcp_congestion_control | grep "bbr" -c`
+if [ $bbrcount -eq 0 ]; then
+DATE=`date +[%Y-%m-%d]%H:%M:%S`
+echo $DATE" One time init Script: enable bbr" >> /tmp/one_time_init.log
+echo 'net.core.default_qdisc=fq' >> /etc/sysctl.conf
+echo 'net.ipv4.tcp_congestion_control=bbr' >> /etc/sysctl.conf
+sysctl -p
+fi
+
 # set opkg feeds
 if [ -e "/etc/opkg/distfeeds.conf" ];then
 DATE=`date +[%Y-%m-%d]%H:%M:%S`

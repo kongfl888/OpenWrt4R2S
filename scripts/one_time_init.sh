@@ -257,15 +257,10 @@ if [ -e "/etc/init.d/samba4" ];then
     uci set samba4.@samba[0].interface='lan'
     uci set samba4.@samba[0].charset='UTF-8'
     uci set samba4.@samba[0].allow_legacy_protocols='1'
-    if [ ! -d "/mnt/mmcblk0p2/sharing" ];  then
-        mkdir -p /mnt/mmcblk0p2/sharing
-    else
-        chmod 777 /mnt/mmcblk0p2/sharing
-    fi
     uci add samba4 sambashare
     uci set samba4.@sambashare[-1].name="sharing"
     uci set samba4.@sambashare[-1].browseable="yes"
-    uci set samba4.@sambashare[-1].path="/mnt/mmcblk0p2/sharing"
+    uci set samba4.@sambashare[-1].path="/mnt/mmcblk0p2/"
     uci set samba4.@sambashare[-1].read_only="no"
     uci set samba4.@sambashare[-1].guest_ok="yes"
     uci set samba4.@sambashare[-1].create_mask="0666"

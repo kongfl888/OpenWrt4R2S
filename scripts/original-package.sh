@@ -266,10 +266,6 @@ sed -i 's,\/etc\/coremark.sh\",\/etc\/coremark.sh \&\",g' $leanpack/coremark/Mak
 if [ "$profile" == "4" ]; then
     #luci-k-permission
     git clone -b master --single-branch https://github.com/kongfl888/luci-k-permission.git $wrtpackage/luci-k-permission
-
-    # [tmp]fix for libs/boost 1.74
-    rm -f $feedspackages/libs/boost/patches/002-outcome-assert.patch
-    rm -f $feedspackages/libs/boost/patches/003-beast-coroutines.patch
 fi
 
 #kcpufreq

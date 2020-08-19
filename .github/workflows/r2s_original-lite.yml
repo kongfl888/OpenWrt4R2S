@@ -218,7 +218,7 @@ jobs:
           zip -r ipks.zip ./ipks/
           zip -r imgs.zip ./imgs/
           zip -r r2sconfig.zip ./r2sconfig/
-          release_tag="R2S-Original-lite$(date +%Y-%m-%d-%H)"
+          release_tag="R2S-Original-snapshot$(date +%Y-%m-%d-%H)"
           echo "##[set-output name=release_tag;]$release_tag"
       - name: Create Release
         id: create_release

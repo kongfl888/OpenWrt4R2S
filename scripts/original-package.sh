@@ -176,8 +176,7 @@ cp -rf openwrt/package/lean/kcptun/ $leanpack
 #get wrtbwmon
 git clone -b master https://github.com/brvphoenix/wrtbwmon.git
 cp -rf wrtbwmon/wrtbwmon $wrtpackage
-git clone -b master https://github.com/brvphoenix/luci-app-wrtbwmon.git
-sed -i "s/'class': 'table'/'class': 'cbi-section'/g" luci-app-wrtbwmon/luci-app-wrtbwmon/htdocs/luci-static/resources/view/wrtbwmon/details.js || echo ""
+git clone -b master https://github.com/kongfl888/luci-app-wrtbwmon.git
 cp -rf luci-app-wrtbwmon/luci-app-wrtbwmon $wrtpackage
 
 ##### big ####

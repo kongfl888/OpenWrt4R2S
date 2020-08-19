@@ -225,19 +225,11 @@ cp -rf openwrt/package/lean/UnblockNeteaseMusic/ $leanpack
 #rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-flowoffload/ >/dev/null 2>&1 || echo ""
 #cp -rf openwrt/package/lean/luci-app-flowoffload/ $leanpack
 
-#get luci-app-vssr
-git clone -b master --single-branch https://github.com/jerrykuku/lua-maxminddb.git  $leanpack/lua-maxminddb
-git clone -b master --single-branch https://github.com/jerrykuku/luci-app-vssr.git  $leanpack/luci-app-vssr
-# big
-fi
-
-#### little or big ####
-if [ "$little" = "1" -o "$fullin" = "1" ]; then
 # get luci-app-ssrserver-python
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-ssrserver-python/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/luci-app-ssrserver-python/ $leanpack
 
-#get ssr
+#get ssr depends
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/shadowsocksr-libev/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/shadowsocksr-libev/ $leanpack
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/srelay/ >/dev/null 2>&1 || echo ""
@@ -250,6 +242,17 @@ rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/tcpping/ >/dev/null 2>&1 || echo
 cp -rf openwrt/package/lean/tcpping/ $leanpack
 git clone -b master --single-branch https://github.com/aa65535/openwrt-simple-obfs  $leanpack/simple-obfs
 git clone -b master --single-branch https://github.com/kongfl888/redsocks2.git $leanpack/redsocks2
+
+# big
+fi
+
+#### little or big ####
+if [ "$little" = "1" -o "$fullin" = "1" ]; then
+
+#get luci-app-vssr
+git clone -b master --single-branch https://github.com/jerrykuku/lua-maxminddb.git  $leanpack/lua-maxminddb
+git clone -b master --single-branch https://github.com/jerrykuku/luci-app-vssr.git  $leanpack/luci-app-vssr
+
 # little or big
 fi
 

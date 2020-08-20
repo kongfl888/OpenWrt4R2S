@@ -113,6 +113,10 @@ if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*kcpufreq*.ipk" 
 	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*kcpufreq*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack kcpufreq ipk fail" >> ipklost.txt
 fi
 
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*wrtbwmon*.ipk" | grep "wrtbwmon" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*wrtbwmon*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack wrtbwmon ipk fail" >> ipklost.txt
+fi
+
 if [ `find ./ipks/* -name "*.ipk" | grep ".ipk" -c` -eq 0 ]; then
     echo "1" > ./ipks/noipk
 fi

@@ -152,13 +152,19 @@ if [ -e "/etc/config/dhcp" ]; then
     uci commit dhcp
 fi
 
-# init argon
-if [ -e "/etc/uci-defaults/30_luci-theme-argon" ];then
+# init theme
+argon="argon1"
+if [ "$profile" == "2" ]; then
+    argon="argon"
+else
+    argon="argon1"
+fi
+if [ -e "/etc/uci-defaults/30_luci-theme-$argon" ];then
     DATE=`date +[%Y-%m-%d]%H:%M:%S`
-    echo $DATE" One time init Script: init luci-theme-argon" >> /tmp/one_time_init.log
-    chmod +x /etc/uci-defaults/30_luci-theme-argon
-    /etc/uci-defaults/30_luci-theme-argon && rm -f /etc/uci-defaults/30_luci-theme-argon || \
-    echo $DATE" One time init Script: init luci-theme-argon failed." >> /tmp/one_time_init.log
+    echo $DATE" One time init Script: init luci-theme-$argon" >> /tmp/one_time_init.log
+    chmod +x /etc/uci-defaults/30_luci-theme-$argon
+    /etc/uci-defaults/30_luci-theme-$argon && rm -f /etc/uci-defaults/30_luci-theme-$argon || \
+    echo $DATE" One time init Script: init luci-theme-$argon failed." >> /tmp/one_time_init.log
 fi
 
 # disable ttyd

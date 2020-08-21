@@ -68,6 +68,7 @@ jobs:
           cat ../JUNK/r2s_lean2_user_part2.conf >> configs/config_rk3328
           cd friendlywrt
           #sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
+          sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
           cd package/lean/
           #git clone https://github.com/jerrykuku/lua-maxminddb.git
           #git clone https://github.com/jerrykuku/luci-app-vssr.git

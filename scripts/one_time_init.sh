@@ -264,7 +264,7 @@ if [ -e "/etc/init.d/samba4" ];then
     uci set samba4.@samba[0].charset='UTF-8'
     uci set samba4.@samba[0].allow_legacy_protocols='1'
     uci add samba4 sambashare
-    uci set samba4.@sambashare[-1].name="sharing"
+    uci set samba4.@sambashare[-1].name="sdcard"
     uci set samba4.@sambashare[-1].browseable="yes"
     uci set samba4.@sambashare[-1].path="/mnt/mmcblk0p2/"
     uci set samba4.@sambashare[-1].read_only="no"

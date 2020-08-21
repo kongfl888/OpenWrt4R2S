@@ -92,3 +92,9 @@ chmod +x clash
 cd ../../../../../../../../
 # fullin - end
 fi
+
+# patch adbyby
+wget https://raw.githubusercontent.com/kongfl888/ad-rules/master/scripts/patch-adbyby.sh
+patch-adbyby.sh $leanpack/luci-app-adbyby-plus/root/usr/share/adbyby
+wget https://raw.githubusercontent.com/kongfl888/ad-rules/master/video.txt
+mv -f video.txt $leanpack/adbyby/files/data/ || echo ""

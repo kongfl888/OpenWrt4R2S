@@ -100,3 +100,6 @@ wget -q https://raw.githubusercontent.com/kongfl888/ad-rules/master/video.txt
 mv -f video.txt $leanpack/adbyby/files/data/ || echo ""
 wget -q https://raw.githubusercontent.com/kongfl888/ad-rules/master/lazy.txt
 mv -f lazy.txt $leanpack/adbyby/files/data/ || echo ""
+
+# patch luci-app-flowoffload
+sed -i 's/@LINUX_5_4//' $leanpack/luci-app-flowoffload/Makefile

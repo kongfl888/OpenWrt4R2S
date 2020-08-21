@@ -97,6 +97,7 @@ jobs:
           mv ../../scripts/one_time_init.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/one_time_init.sh 22 &' package/base-files/files/etc/rc.local
           #mv ../../scripts/autoupdate2.sh package/base-files/files/root/au.sh && chmod +x package/base-files/files/root/au.sh
           mv ../../scripts/flash_rom.sh package/base-files/files/root/flash_rom.sh && chmod +x package/base-files/files/root/flash_rom.sh
+          sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
           . ../../scripts/buildtime.sh
 
       - name: Add Packages

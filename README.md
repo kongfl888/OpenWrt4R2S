@@ -74,7 +74,7 @@ flash_rom /tmp/rom.img.gz /dev/mmcblk0 gz``
 
 ### 登录
 
-路由器登陆页面： http://openwrt/ 或 http://friendlywrt/  或 http://IP地址(自己找，推荐使用IP)。 有的是HTTPS。
+路由器登陆页面： http://openwrt/ 或 http://friendlywrt/ 或 http://lede/ 或 http://IP地址(自己找，推荐使用IP)。 有的是HTTPS。
 
 默认用户名是``root``, 密码是 ``空密码`` 或 ``password`` 。
 

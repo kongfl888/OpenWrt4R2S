@@ -121,10 +121,12 @@ rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-adbyby-plus/ >/dev/null
 cp -rf openwrt/package/lean/adbyby/ $leanpack
 cp -rf openwrt/package/lean/luci-app-adbyby-plus/ $leanpack
 # patch adbyby
-wget https://raw.githubusercontent.com/kongfl888/ad-rules/master/scripts/patch-adbyby.sh
+wget -q https://raw.githubusercontent.com/kongfl888/ad-rules/master/scripts/patch-adbyby.sh
 sh ./patch-adbyby.sh $leanpack/luci-app-adbyby-plus/root/usr/share/adbyby
-wget https://raw.githubusercontent.com/kongfl888/ad-rules/master/video.txt
+wget -q https://raw.githubusercontent.com/kongfl888/ad-rules/master/video.txt
 mv -f video.txt $leanpack/adbyby/files/data/ || echo ""
+wget -q https://raw.githubusercontent.com/kongfl888/ad-rules/master/lazy.txt
+mv -f lazy.txt $leanpack/adbyby/files/data/ || echo ""
 
 # get smartdns
 if [ "$profile" != "4" ]; then

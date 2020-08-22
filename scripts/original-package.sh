@@ -278,7 +278,7 @@ fi
 #coremark
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/coremark/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/coremark $leanpack
-rm -f $leanpack/coremark/Makefile && wget -O $leanpack/coremark/Makefile https://raw.githubusercontent.com/kongfl888/lede/coremark/package/lean/coremark/Makefile
+rm -f $leanpack/coremark/Makefile && wget -O $leanpack/coremark/Makefile https://raw.githubusercontent.com/kongfl888/lede/test/files/core-Makefile
 sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' $leanpack/coremark/Makefile
 sed -i 's,\/etc\/coremark.sh\",\/etc\/coremark.sh \&\",g' $leanpack/coremark/Makefile
 

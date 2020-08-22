@@ -198,6 +198,12 @@ rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/net/kcptun/ >/dev/null 2>&1 || ech
 git clone -b master https://github.com/brvphoenix/wrtbwmon.git
 cp -rf wrtbwmon/wrtbwmon $wrtpackage
 git clone -b master-k https://github.com/kongfl888/luci-app-wrtbwmon.git
+if [ "$profile" != "4" ]; then
+    mkdir -p luci-app-wrtbwmon/luci-app-wrtbwmon/luasrc/controller
+    rm -f luci-app-wrtbwmon/luci-app-wrtbwmon/luasrc/controller/wrtbwmon.lua || echo ""
+    wget -O luci-app-wrtbwmon/luci-app-wrtbwmon/luasrc/controller/wrtbwmon.lua https://raw.githubusercontent.com/kongfl888/luci-app-wrtbwmon/6fe8e08076afcbe9631880807203ca48c97c6ac5/luci-app-wrtbwmon/luasrc/controller/wrtbwmon.lua
+    rm -rf luci-app-wrtbwmon/luci-app-wrtbwmon/root/usr/share/luci/menu.d || echo ""
+fi
 cp -rf luci-app-wrtbwmon/luci-app-wrtbwmon $wrtpackage
 
 #get fullconenat

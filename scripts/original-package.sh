@@ -61,13 +61,13 @@ cd ../../
 
 cp -f ./resources/zh_Hans/base.po friendlywrt-rk3328/friendlywrt/feeds/luci/modules/luci-base/po/zh_Hans/base.po || echo ""
 
-git clone -b master --single-branch https://github.com/Lienol/openwrt-package.git
+#git clone -b master --single-branch https://github.com/Lienol/openwrt-package.git
 
 # patch feeds、package
 cd friendlywrt-rk3328/friendlywrt
 #clear unused
 rm -rf package/feeds/lienol/luci-app-verysync || echo ""
-rm -rf feeds/lienol/lienol/shadowsocksr-libev || echo ""
+rm -rf feeds/lienol/*/shadowsocksr-libev || echo ""
 rm -rf feeds/lienol/package/verysync || echo ""
 # luci-lib-jsonc patch
 git apply ../../patches/use_json_object_new_int64.patch
@@ -188,8 +188,11 @@ rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-zerotier/ >/dev/null 2>
 cp -rf openwrt/package/lean/luci-app-zerotier/ $leanpack
 
 #get kcptun
-rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/kcptun/ >/dev/null 2>&1 || echo ""
-cp -rf openwrt/package/lean/kcptun/ $leanpack
+rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/net/kcptun/ >/dev/null 2>&1 || echo ""
+#Lienol/openwrt-package already have
+#rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/*/kcptun/ >/dev/null 2>&1 || echo ""
+#sed -i '/bin\/upx/d' openwrt/package/lean/kcptun/Makefile
+#cp -rf openwrt/package/lean/kcptun/ $leanpack
 
 #get wrtbwmon
 git clone -b master https://github.com/brvphoenix/wrtbwmon.git

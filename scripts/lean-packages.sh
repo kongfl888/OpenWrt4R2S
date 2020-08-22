@@ -8,6 +8,10 @@ if [ "${1}" == "1" ]; then
     fullin=1
 fi
 
+# kernel open sfe
+echo "CONFIG_SHORTCUT_FE=y" >> friendlywrt-rk3328/kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+
+
 wrtpackage="friendlywrt-rk3328/friendlywrt/package"
 leanpack="friendlywrt-rk3328/friendlywrt/package/lean"
 

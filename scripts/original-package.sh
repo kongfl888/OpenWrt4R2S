@@ -48,6 +48,16 @@ fi
 
 sed -i '/feeds update -a/d' friendlywrt-rk3328/scripts/mk-friendlywrt.sh || echo ""
 
+cd friendlywrt-rk3328/friendlywrt
+# Patch FireWall - fullcone
+mkdir package/network/config/firewall/patches
+wget -P package/network/config/firewall/patches/ https://github.com/LGA1150/fullconenat-fw3-patch/raw/master/fullconenat.patch
+# Patch luci-app-firewall fullcone option
+pushd feeds/luci
+wget -O- https://github.com/LGA1150/fullconenat-fw3-patch/raw/master/luci.patch | git apply
+popd
+cd ../../
+
 cp -f ./resources/zh_Hans/base.po friendlywrt-rk3328/friendlywrt/feeds/luci/modules/luci-base/po/zh_Hans/base.po || echo ""
 
 git clone -b master --single-branch https://github.com/Lienol/openwrt-package.git
@@ -186,16 +196,17 @@ cp -rf wrtbwmon/wrtbwmon $wrtpackage
 git clone -b master-k https://github.com/kongfl888/luci-app-wrtbwmon.git
 cp -rf luci-app-wrtbwmon/luci-app-wrtbwmon $wrtpackage
 
+#get fullconenat
+rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/openwrt-fullconenat/ >/dev/null 2>&1 || echo ""
+rm -rf $leanpack/openwrt-fullconenat || echo ""
+git clone https://github.com/kongfl888/openwrt-fullconenat.git  $wrtpackage/fullconenat
+
 ##### big ####
 if [ "$fullin" = "1" ]; then
 
 #get luci-app-syncdial
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-syncdial/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/luci-app-syncdial/ $leanpack
-
-#get fullconenat
-rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/openwrt-fullconenat/ >/dev/null 2>&1 || echo ""
-cp -rf openwrt/package/lean/openwrt-fullconenat/ $leanpack
 
 #get ddns-scripts_aliyun/dnspod
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/ddns-scripts_aliyun/ >/dev/null 2>&1 || echo ""

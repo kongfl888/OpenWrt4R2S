@@ -11,18 +11,6 @@ git apply --check RK3328-enable-1512mhz-opp.patch && git apply RK3328-enable-151
 git apply --check ../../patches/0001-Patch-for-nanopi-r2s_linux_defconfig.patch && git apply ../../patches/0001-Patch-for-nanopi-r2s_linux_defconfig.patch
 
 cd ..
-#cd friendlywrt
-##Patch FireWall 以增添fullcone功能 
-#mkdir package/network/config/firewall/patches
-#wget -P package/network/config/firewall/patches/ https://github.com/LGA1150/fullconenat-fw3-patch/raw/master/fullconenat.patch
-# Patch LuCI 以增添fullcone开关
-#pushd feeds/luci
-#wget -O- https://github.com/LGA1150/fullconenat-fw3-patch/raw/master/luci.patch | git apply
-#popd
-## Patch Kernel 以解决fullcone冲突
-#pushd target/linux/generic/hack-5.4
-#wget https://raw.githubusercontent.com/project-openwrt/openwrt/18.06-kernel5.4/target/linux/generic/hack-5.4/952-net-conntrack-events-support-multiple-registrant.patch
-#popd
 
 mkdir -p friendlywrt/staging_dir/host/bin/
 if [ ! -e "friendlywrt/staging_dir/host/bin/upx" ];then

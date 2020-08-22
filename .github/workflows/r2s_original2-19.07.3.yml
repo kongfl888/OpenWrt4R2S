@@ -15,6 +15,7 @@ on:
       - 'scripts/original-package.sh'
       - 'scripts/copy*.sh'
       - 'scripts/patch_for_r2s.sh'
+      - 'version'
 
 jobs:
 

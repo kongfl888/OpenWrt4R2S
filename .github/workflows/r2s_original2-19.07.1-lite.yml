@@ -12,6 +12,7 @@ on:
       - 'patch_dosth.sh'
       - 'scripts/original-package.sh'
       - 'scripts/patch_for_r2s.sh'
+      - 'version'
 jobs:
 
   build:

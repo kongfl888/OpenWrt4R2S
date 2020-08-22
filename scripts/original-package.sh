@@ -195,6 +195,7 @@ rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/net/kcptun/ >/dev/null 2>&1 || ech
 #cp -rf openwrt/package/lean/kcptun/ $leanpack
 
 #get wrtbwmon
+rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/wrtbwmon/ >/dev/null 2>&1 || echo ""
 git clone -b master https://github.com/brvphoenix/wrtbwmon.git
 cp -rf wrtbwmon/wrtbwmon $wrtpackage
 git clone -b master-k https://github.com/kongfl888/luci-app-wrtbwmon.git

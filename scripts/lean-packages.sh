@@ -111,6 +111,8 @@ sed -i 's/@LINUX_5_4//' $leanpack/luci-app-flowoffload/Makefile
 # get wrtbwmon
 rm -rf $leanpack/wrtbwmon
 rm -rf $leanpack/luci-app-wrtbwmon
+rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/wrtbwmon/ >/dev/null 2>&1 || echo ""
+rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-wrtbwmon/ >/dev/null 2>&1 || echo ""
 git clone -b master https://github.com/brvphoenix/wrtbwmon.git
 cp -rf wrtbwmon/wrtbwmon $leanpack
 git clone -b master-18.06 https://github.com/kongfl888/luci-app-wrtbwmon.git

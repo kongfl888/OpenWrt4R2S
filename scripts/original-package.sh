@@ -47,6 +47,7 @@ if [ ! -z "${1}" ];then
 fi
 
 sed -i '/feeds update -a/d' friendlywrt-rk3328/scripts/mk-friendlywrt.sh || echo ""
+sed -i '/feeds install/d' friendlywrt-rk3328/scripts/mk-friendlywrt.sh || echo ""
 
 cd friendlywrt-rk3328/friendlywrt
 # Patch FireWall - fullcone

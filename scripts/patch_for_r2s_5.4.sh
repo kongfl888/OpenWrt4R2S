@@ -14,7 +14,7 @@ cd friendlywrt-rk3328
 if [ "$snapshot" == "1" ]; then
     cd friendlywrt
 else
-    git clone https://github.com/openwrt/openwrt && cd openwrt/
+    git clone -b snapshot --single-branch --depth=1 https://github.com/kongfl888/friendlywrt.git fwrt && cd fwrt/
 fi
 
 rm -rf /tmp/linuxgeneric || echo ""
@@ -39,5 +39,5 @@ sed -i '/exit 1/d' /tmp/patchkernel.sh
 cd ../
 
 if [ "$snapshot" != "1" ]; then
-    rm -rf openwrt || echo ""
+    rm -rf fwrt/ || echo ""
 fi

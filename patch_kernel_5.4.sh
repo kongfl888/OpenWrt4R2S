@@ -4,7 +4,7 @@ git apply ../../add_fullconenat.diff
 wget https://github.com/armbian/build/raw/master/patch/kernel/rockchip64-dev/RK3328-enable-1512mhz-opp.patch
 git apply RK3328-enable-1512mhz-opp.patch
 cd ../
-git clone https://github.com/openwrt/openwrt && cd openwrt/
+git clone -b snapshot --single-branch --depth=1 https://github.com/kongfl888/friendlywrt.git fwrt && cd fwrt/
 #git checkout 68d9cb82143b864d70e4fb3d7cbb7068f82216a1 #5.4.50
 rm -f target/linux/generic/*/*leds-*.patch
 rm -f target/linux/generic/*/*mips*.patch
@@ -16,6 +16,7 @@ rm -f target/linux/generic/*/*SFP-*.patch
 rm -f target/linux/generic/*/*GPON-*.patch
 rm -f target/linux/generic/*/*gpon-*.patch
 rm -f target/linux/generic/*/*BCM84881*.patch
+# copy files
 cp -a ./target/linux/generic/files/* ../kernel/
 sed -i '/exit 1/d' ./scripts/patch-kernel.sh
 ./scripts/patch-kernel.sh ../kernel target/linux/generic/backport-5.4

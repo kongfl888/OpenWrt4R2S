@@ -154,10 +154,13 @@ fi
 
 # init theme
 argon="argon1"
+Argon="Argon1"
 if [ "$profile" == "2" ]; then
     argon="argon"
+    Argon="Argon"
 else
     argon="argon1"
+    Argon="Argon1"
 fi
 if [ -e "/etc/uci-defaults/30_luci-theme-$argon" ];then
     DATE=`date +[%Y-%m-%d]%H:%M:%S`
@@ -176,10 +179,10 @@ fi
 # set theme
 if [ "$profile" != "2" ]; then
     DATE=`date +[%Y-%m-%d]%H:%M:%S`
-    echo $DATE" One time init Script: set theme" >> /tmp/one_time_init.log
+    echo $DATE" One time init Script: set theme $argon" >> /tmp/one_time_init.log
     uci set luci.main.lang='zh_cn'
-    [ -d "/www/luci-static/argon/" ] && uci set luci.themes.Argon='/luci-static/argon'
-    [ -d "/www/luci-static/argon/" ] && uci set luci.main.mediaurlbase='/luci-static/argon'
+    [ -d "/www/luci-static/$argon/" ] && uci set luci.themes.$Argon="/luci-static/$argon"
+    [ -d "/www/luci-static/$argon/" ] && uci set luci.main.mediaurlbase="/luci-static/$argon"
     uci set luci.diag.dns='baidu.com'
     uci set luci.diag.ping='baidu.com'
     uci set luci.diag.route='baidu.com'

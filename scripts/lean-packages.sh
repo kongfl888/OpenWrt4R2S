@@ -103,3 +103,9 @@ mv -f lazy.txt $leanpack/adbyby/files/data/ || echo ""
 
 # patch luci-app-flowoffload
 sed -i 's/@LINUX_5_4//' $leanpack/luci-app-flowoffload/Makefile
+
+# get wrtbwmon
+git clone -b master https://github.com/brvphoenix/wrtbwmon.git
+cp -rf wrtbwmon/wrtbwmon $leanpack
+git clone -b master-18.06 https://github.com/kongfl888/luci-app-wrtbwmon.git
+cp -rf luci-app-wrtbwmon/luci-app-wrtbwmon $leanpack

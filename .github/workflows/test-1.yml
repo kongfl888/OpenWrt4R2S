@@ -79,16 +79,12 @@ jobs:
 
       - name: Update Feeds
         run: |
+          mkdir -p ./r2sconfig/
           cd friendlywrt-rk3328/friendlywrt
           ./scripts/feeds update -a
+          . ../../scripts/ls-dir.sh ./feeds/ > ../../r2sconfig/feedskupdate.txt
           ./scripts/feeds install -a
-
-      - name: Build FriendlyWrt
-        run: |
-          cd friendlywrt-rk3328
-          sed -i 's/set -eu/set -u/' scripts/mk-friendlywrt.sh
-          wget https://raw.githubusercontent.com/kongfl888/friendlywrt_device_rk3328/lean/rk3328/nanopi_r2s.mk -O .current_config.mk
-          ./build.sh friendlywrt
+          . ../../scripts/ls-dir.sh ./feeds/ > ../../r2sconfig/feedsinstall.txt
 
       - name: Assemble Artifact
         id: assemble_artifact
@@ -97,8 +93,7 @@ jobs:
           mkdir -p ./r2srom/
           mkdir -p ./r2sconfig/
           mkdir -p ./ipks/
-          . ./scripts/copyconfig.sh || echo ""
-          . ./scripts/ls-dir.sh friendlywrt-rk3328 > ./r2sconfig/workdir.txt
+
       - name: Upload Artifact
         uses: actions/upload-artifact@main
         with:

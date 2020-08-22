@@ -16,6 +16,8 @@ rm -f target/linux/generic/*/*SFP-*.patch
 rm -f target/linux/generic/*/*GPON-*.patch
 rm -f target/linux/generic/*/*gpon-*.patch
 rm -f target/linux/generic/*/*BCM84881*.patch
+# 5.4.60 remove
+rm -f target/linux/generic/backport-5.4/041-genirq-affinity-Make-affinity-setting-if-activated-o.patch
 # copy files
 cp -a ./target/linux/generic/files/* ../kernel/
 sed -i '/exit 1/d' ./scripts/patch-kernel.sh

@@ -406,6 +406,14 @@ if [ -e "/etc/config/wrtbwmon" ]; then
     fi
 fi
 
+# fix ssh rsa key
+if [ -e "/etc/dropbear/dropbear_rsa_host_key" ]; then
+    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+    echo $DATE" One time init Script: fix ssh rsa key file permission" >> /tmp/one_time_init.log
+    chown root:root /etc/dropbear/dropbear_rsa_host_key
+    chmod 640 /etc/dropbear/dropbear_rsa_host_key
+fi
+
 # creat /usr/share/mywdog/
 DATE=`date +[%Y-%m-%d]%H:%M:%S`
 echo $DATE" One time init Script: creat /usr/share/mywdog/" >> /tmp/one_time_init.log

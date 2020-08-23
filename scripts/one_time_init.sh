@@ -176,6 +176,14 @@ if [ -e "/etc/config/ttyd" ]; then
     uci commit ttyd
 fi
 
+# init theme argon-gray
+if [ -d "/www/luci-static/argon-gray/" ]; then
+    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+    echo $DATE" One time init Script: init theme argon-gray" >> /tmp/one_time_init.log
+    uci set luci.themes.ArgonGray="/luci-static/argon-gray"
+    uci commit luci
+fi
+
 # set theme
 if [ "$profile" != "2" ]; then
     DATE=`date +[%Y-%m-%d]%H:%M:%S`

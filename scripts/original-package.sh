@@ -188,11 +188,12 @@ rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-zerotier/ >/dev/null 2>
 cp -rf openwrt/package/lean/luci-app-zerotier/ $leanpack
 
 #get kcptun
-rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/net/kcptun/ >/dev/null 2>&1 || echo ""
-#Lienol/openwrt-package already have
-#rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/*/kcptun/ >/dev/null 2>&1 || echo ""
+rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/kcptun/ >/dev/null 2>&1 || echo ""
+rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/*/kcptun/ >/dev/null 2>&1 || echo ""
 #sed -i '/bin\/upx/d' openwrt/package/lean/kcptun/Makefile
-#cp -rf openwrt/package/lean/kcptun/ $leanpack
+rm -f openwrt/package/lean/kcptun/Makefile
+wget -O openwrt/package/lean/kcptun/Makefile https://raw.githubusercontent.com/coolsnowwolf/lede/master/package/lean/kcptun/Makefile
+cp -rf openwrt/package/lean/kcptun/ $leanpack
 
 #get wrtbwmon
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/wrtbwmon/ >/dev/null 2>&1 || echo ""

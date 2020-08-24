@@ -1,21 +1,29 @@
+# [K] (c)@2020
+
 name: Test
 
 on:
   push:
-    branches: 
+    branches:
       - master
-    paths: 
+    paths:
       - '.github/workflows/test-1.yml'
+      - 'base_rk3328.conf'
+      - 'JUNK/r2s_lean2_user_part1.conf'
+      - 'scripts/lean-packages.sh'
+      - 'version-lede'
+  schedule:
+    - cron: '10 4 * * 5'
 
 jobs:
 
   build:
-    
+
     runs-on: ubuntu-latest
-    if: github.event.repository.owner.id == github.event.sender.id
-    
+    if: github.repository == 'kongfl888/OpenWrt4R2S'
+
     steps:
-      
+
       - name: Checkout
         uses: actions/checkout@main
         with:
@@ -25,16 +33,15 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
+          sudo rm -rf /etc/apt/sources.list.d
           sudo apt-get update
-          sudo apt-get -y --no-install-recommends install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs gcc-multilib g++-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler antlr3 gperf swig
+          sudo apt-get -y --no-install-recommends install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs gcc-multilib g++-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler
           curl https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh  | sed '/#/d' | sed 's/\\//g' | sed 's/exit 0//g' | sed 's/sudo apt -y install//g' | sed 's/sudo apt-get -y install//g' | sed 's/:i386//g' | xargs sudo apt-get -y --no-install-recommends install
           docker rmi `docker images -q`
           sudo rm -rf /usr/share/dotnet /usr/local/lib/android/sdk /usr/local/share/boost /opt/ghc
-          sudo -E apt-get -y autoremove --purge
-          sudo -E apt-get clean
           git config --global user.name "kongfl888 K"
           git config --global user.email "kongfl888@outlook.com"
-          
+
       - name: Install Repo
         run: |
           git clone https://github.com/friendlyarm/repo
@@ -44,58 +51,160 @@ jobs:
         run: |
           mkdir friendlywrt-rk3328
           cd friendlywrt-rk3328
-          repo init -u https://github.com/kongfl888/friendlywrt_manifests -b lean -m rk3328.xml --repo-url=https://github.com/friendlyarm/repo  --no-clone-bundle
-          #rm -f .repo/manifests/rk3328.xml
-          #cp ../JUNK/rk3328.xml .repo/manifests/rk3328.xml
-          repo sync -c  --no-clone-bundle
+          repo init -u https://github.com/kongfl888/friendlywrt_manifests -b lede -m rk3328.xml --repo-url=https://github.com/friendlyarm/repo  --no-clone-bundle --depth=1
+          repo sync -c --no-tags --no-clone-bundle -j8
 
-      - name: Patch For R2S
+      - name: Patch Kernel
         run: |
-          . ./scripts/patch_for_r2s.sh
+          . patch_kernel_5.4.sh
 
       - name: Mods
         run: |
           cd friendlywrt-rk3328
-          #. ../remove_unused_config.sh
-          #. ../patch_dosth.sh
-          #sed -i 's/CONFIG_BPFILTER=y/CONFIG_BPFILTER=n/' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
-          sed -i 's/dnsmasq /dnsmasq-full /' friendlywrt/include/target.mk
-          [ -f configs/config_rk3328 ] && sed -i '/adblock/d;/docker/d;/DOCKER/d;/mwan3/d;/OPENVPN/d;/openvpn/d;' configs/config_rk3328
-          sed -i '/luci-app/d;/kmod-/d;/_lib/d;/luci-i18n/d' configs/config_rk3328
-          echo "CONFIG_PACKAGE_libexpat=y" >> configs/config_rk3328
+          . ../remove_unused_config.sh
+          . ../patch_dosth.sh
+          cat configs/config_rk3328 | grep "TARGET" >> ../base_rk3328.conf
+          cat ../base_rk3328.conf > configs/config_rk3328
+          #sed -i '/ddns/d' configs/config_rk3328 && echo ""
+          cat ../JUNK/r2s_lean2_user_part1.conf >> configs/config_rk3328
+          sed -i '/CONFIG_V2RAY_COMPRESS_UPX/d' configs/config_rk3328
+          echo 'CONFIG_PACKAGE_luci-app-v2ray-server=y' >> configs/config_rk3328
+          echo 'CONFIG_V2RAY_COMPRESS_UPX=y' >> configs/config_rk3328
           cd friendlywrt
-          mv ../../scripts/one_time_init.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/one_time_init.sh 24 &' package/base-files/files/etc/rc.local
+          #sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
+          sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
+          cd package/lean/
+          #git clone https://github.com/jerrykuku/lua-maxminddb.git
+          #git clone https://github.com/jerrykuku/luci-app-vssr.git
+          #cd luci-app-vssr/root/etc/
+          #echo 'china_ssr.txt
+          #config/black.list
+          #config/white.list
+          #dnsmasq.oversea/oversea_list.conf
+          #dnsmasq.ssr/ad.conf
+          #dnsmasq.ssr/gfw_base.conf' | xargs rm
+          #cd ../../../
+          rm -rf luci-theme-argon
+          git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
+          cd ../../
+          git apply ../../patches/patch-autocore.patch
+          #git apply ../../fix_cpufreq.diff
+          sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon"' package/lean/default-settings/files/zzz-default-settings
+          sed -i '/exit/i\chown -R root:root /usr/share/netdata/web' package/lean/default-settings/files/zzz-default-settings
+          sed -i '/exit/i\find /etc/rc.d/ -name *docker* -delete' package/lean/default-settings/files/zzz-default-settings
+          sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
+          sed -i '/8.8.8.8/d' package/base-files/files/root/setup.sh
+          sed -i 's/192.168.2.1/192.168.31.3/g' package/base-files/files/root/setup.sh
+          sed -i 's/addr_offset=2/addr_offset=31/g' package/base-files/files/bin/config_generate
+          sed -i 's/ipad=${ipaddr:-"192.168.$((addr_offset++)).1"}/ipad=${ipaddr:-"192.168.$((addr_offset++)).3"}/g' package/base-files/files/bin/config_generate
+          sed -i 's/ipaddr:-"192.168.1.1"/ipaddr:-"192.168.31.3"/g' package/base-files/files/bin/config_generate
+          mv ../../scripts/one_time_init.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/one_time_init.sh 22 &' package/base-files/files/etc/rc.local
+          #mv ../../scripts/autoupdate2.sh package/base-files/files/root/au.sh && chmod +x package/base-files/files/root/au.sh
           mv ../../scripts/flash_rom.sh package/base-files/files/root/flash_rom.sh && chmod +x package/base-files/files/root/flash_rom.sh
+          sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
           . ../../scripts/buildtime.sh
-          #rm -f ./feeds.conf.default && wget -O ./feeds.conf.default https://raw.githubusercontent.com/openwrt/openwrt/master/feeds.conf.default
-          # for temporary,TRY to fix libexpat complie error
-          #sed -i '/src-git packages/d' ./feeds.conf.default && echo "src-git packages https://github.com/kongfl888/packages.git" >> ./feeds.conf.default
-          sed -i 's,mkdir -p $(1)\/usr\/bin,rm -rf $(1)\/usr\/bin \&\& mkdir -p $(1)\/usr\/bin \|\| mkdir -p $(1)\/usr\/bin,g' package/base-files/Makefile
 
-      - name: Clean Feeds
+      - name: Add Packages
         run: |
-          cd friendlywrt-rk3328/friendlywrt
-          ./scripts/feeds clean -a
+          . ./scripts/lean-packages.sh 0
+          mkdir -p friendlywrt-rk3328/friendlywrt/tools/upx
+          mkdir -p friendlywrt-rk3328/friendlywrt/tools/ucl
+          rm -f friendlywrt-rk3328/friendlywrt/tools/upx/Makefile || echo ""
+          rm -f friendlywrt-rk3328/friendlywrt/tools/ucl/Makefile || echo ""
+          wget -O friendlywrt-rk3328/friendlywrt/tools/upx/Makefile https://raw.githubusercontent.com/kongfl888/lede/upx/tools/upx/Makefile
+          wget -O friendlywrt-rk3328/friendlywrt/tools/ucl/Makefile https://raw.githubusercontent.com/kongfl888/lede/upx/tools/ucl/Makefile
 
       - name: Update Feeds
         run: |
-          mkdir -p ./r2sconfig/
           cd friendlywrt-rk3328/friendlywrt
           ./scripts/feeds update -a
-          . ../../scripts/ls-dir.sh ./feeds/ > ../../r2sconfig/feedskupdate.txt
           ./scripts/feeds install -a
-          . ../../scripts/ls-dir.sh ./feeds/ > ../../r2sconfig/feedsinstall.txt
 
+      - name: Build FriendlyWrt
+        run: |
+          cd friendlywrt-rk3328
+          . ../scripts/rename_sdimg.sh 22 || echo ""
+          sed -i 's/set -eu/set -u/' scripts/mk-friendlywrt.sh
+          ./build.sh nanopi_r2s.mk
+
+      - name: Zip Files
+        run: |
+          gzip friendlywrt-rk3328/out/*.img
       - name: Assemble Artifact
         id: assemble_artifact
         run: |
           rm -rf ./r2srom/
           mkdir -p ./r2srom/
           mkdir -p ./r2sconfig/
+          mkdir -p ./imgs/
+          mv friendlywrt-rk3328/out/*img* ./r2srom/
+          cd ./r2srom/
+          sha256sum *img* > sha256sum.txt
+          cd ..
           mkdir -p ./ipks/
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@main
+          . ./scripts/copyipk.sh
+          cd ./ipks/
+          sha256sum *ipk > packages.sha256
+          cd ..
+          cp ./README.txt ./r2srom/
+          cp ./scripts/checksha256.sh ./r2srom/
+          . ./scripts/copyimg.sh
+          . ./scripts/copyconfig.sh
+          . ./scripts/ls-dir.sh friendlywrt-rk3328 > ./r2sconfig/workdir.txt
+          zip -r artifact.zip ./r2srom/
+          zip -r ipks.zip ./ipks/
+          zip -r imgs.zip ./imgs/
+          zip -r r2sconfig.zip ./r2sconfig/
+          release_tag="test-$(date +%Y-%m-%d-%H)"
+          echo "##[set-output name=release_tag;]$release_tag"
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.sec_token }}
         with:
-          name: r2sconfig
-          path: ./r2sconfig/
+          tag_name: ${{ steps.assemble_artifact.outputs.release_tag }}
+          release_name: ${{ steps.assemble_artifact.outputs.release_tag }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.sec_token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./artifact.zip
+          asset_name: ${{ steps.assemble_artifact.outputs.release_tag }}-ROM.zip
+          asset_content_type: application/zip
+      - name: Upload Release Asset Ipk
+        id: upload-release-asset-ipk
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.sec_token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./ipks.zip
+          asset_name: ${{ steps.assemble_artifact.outputs.release_tag }}-ipk.zip
+          asset_content_type: application/zip
+      - name: Upload Release Asset Config
+        id: upload-release-asset-config
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.sec_token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./r2sconfig.zip
+          asset_name: ${{ steps.assemble_artifact.outputs.release_tag }}-config.zip
+          asset_content_type: application/zip
+      - name: Upload Release Asset Img
+        id: upload-release-asset-img
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.sec_token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./imgs.zip
+          asset_name: ${{ steps.assemble_artifact.outputs.release_tag }}-imgs.zip
+          asset_content_type: application/zip
+# end

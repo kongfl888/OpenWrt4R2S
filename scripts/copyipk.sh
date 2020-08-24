@@ -117,6 +117,18 @@ if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*wrtbwmon*.ipk" 
 	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*wrtbwmon*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack wrtbwmon ipk fail" >> ipklost.txt
 fi
 
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*-sfe*.ipk" | grep "sfe" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*-sfe*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack sfe ipk fail" >> ipklost.txt
+fi
+
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*shortcut-fe*.ipk" | grep "shortcut-fe" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*shortcut-fe*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack shortcut-fe ipk fail" >> ipklost.txt
+fi
+
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*v2ray*.ipk" | grep "v2ray" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*v2ray*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack v2ray ipk fail" >> ipklost.txt
+fi
+
 if [ `find ./ipks/* -name "*.ipk" | grep ".ipk" -c` -eq 0 ]; then
     echo "1" > ./ipks/noipk
 fi

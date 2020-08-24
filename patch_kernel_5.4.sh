@@ -36,4 +36,4 @@ sed -i -r 's/# (CONFIG_.*_ERRATUM_.*?) is.*/\1=y/g' kernel/arch/arm64/configs/na
 rm -rf /tmp/openwrt-upx
 git clone https://github.com/kongfl888/openwrt-upx.git /tmp/openwrt-upx
 cp -rf /tmp/openwrt-upx/upx friendlywrt/tools/
-cp -rf /tmp/openwrt-upx/ucl friendlywrt/tools/
+#cp -rf /tmp/openwrt-upx/ucl friendlywrt/tools/

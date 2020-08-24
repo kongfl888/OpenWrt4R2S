@@ -12,11 +12,14 @@ git apply --check ../../patches/0001-Patch-for-nanopi-r2s_linux_defconfig.patch 
 
 cd ..
 
-mkdir -p friendlywrt/staging_dir/host/bin/
-if [ ! -e "friendlywrt/staging_dir/host/bin/upx" ];then
-    ln -s /usr/bin/upx-ucl friendlywrt/staging_dir/host/bin/upx
-fi
-
 if [ -e "friendlywrt/target/linux/rockchip-rk3328/base-files/etc/init.d/fa-rk3328-misc" ]; then
 	sed -i '/scaling_governor/d' friendlywrt/target/linux/rockchip-rk3328/base-files/etc/init.d/fa-rk3328-misc
 fi
+
+# fix upx
+rm -rf /tmp/openwrt-upx
+git clone https://github.com/kongfl888/openwrt-upx.git /tmp/openwrt-upx
+cp -rf /tmp/openwrt-upx/upx friendlywrt/tools/
+cp -rf /tmp/openwrt-upx/ucl friendlywrt/tools/
+
+cd ..

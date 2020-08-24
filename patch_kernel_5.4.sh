@@ -24,6 +24,7 @@ sed -i '/exit 1/d' ./scripts/patch-kernel.sh
 ./scripts/patch-kernel.sh ../kernel target/linux/generic/backport-5.4
 ./scripts/patch-kernel.sh ../kernel target/linux/generic/pending-5.4
 ./scripts/patch-kernel.sh ../kernel target/linux/generic/hack-5.4
+# out fwrt/
 cd ../
 wget https://github.com/torvalds/linux/raw/master/scripts/kconfig/merge_config.sh && chmod +x merge_config.sh
 grep -i '_NETFILTER_\|FLOW' ../.config.override > .config.override
@@ -31,7 +32,8 @@ grep -i '_NETFILTER_\|FLOW' ../.config.override > .config.override
 
 sed -i -r 's/# (CONFIG_.*_ERRATUM_.*?) is.*/\1=y/g' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
 
-mkdir -p friendlywrt/staging_dir/host/bin/
-if [ ! -e "friendlywrt/staging_dir/host/bin/upx" ];then
-    ln -s /usr/bin/upx-ucl friendlywrt/staging_dir/host/bin/upx
-fi
+# fix upx
+rm -rf /tmp/openwrt-upx
+git clone https://github.com/kongfl888/openwrt-upx.git /tmp/openwrt-upx
+cp -rf /tmp/openwrt-upx/upx friendlywrt/tools/
+cp -rf /tmp/openwrt-upx/ucl friendlywrt/tools/

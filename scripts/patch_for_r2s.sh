@@ -18,8 +18,10 @@ fi
 
 # fix upx
 rm -rf /tmp/openwrt-upx
+mkdir -p friendlywrt/tools/ucl
+mkdir -p friendlywrt/tools/upx
 git clone https://github.com/kongfl888/openwrt-upx.git /tmp/openwrt-upx
 cp -rf /tmp/openwrt-upx/upx friendlywrt/tools/
-cp -rf /tmp/openwrt-upx/ucl friendlywrt/tools/
+wget -O friendlywrt/tools/ucl/Makefile https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/ucl/Makefile
 
 cd ..

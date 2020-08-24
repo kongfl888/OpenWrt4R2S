@@ -195,6 +195,12 @@ rm -f openwrt/package/lean/kcptun/Makefile
 wget -O openwrt/package/lean/kcptun/Makefile https://raw.githubusercontent.com/coolsnowwolf/lede/master/package/lean/kcptun/Makefile
 cp -rf openwrt/package/lean/kcptun/ $leanpack
 
+#get ssr depends p1
+rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/shadowsocksr-libev/ >/dev/null 2>&1 || echo ""
+cp -rf openwrt/package/lean/shadowsocksr-libev/ $leanpack
+rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/tcpping/ >/dev/null 2>&1 || echo ""
+cp -rf openwrt/package/lean/tcpping/ $leanpack
+
 #get wrtbwmon
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/wrtbwmon/ >/dev/null 2>&1 || echo ""
 git clone -b master https://github.com/brvphoenix/wrtbwmon.git
@@ -260,17 +266,13 @@ cp -rf openwrt/package/lean/UnblockNeteaseMusic/ $leanpack
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/luci-app-ssrserver-python/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/luci-app-ssrserver-python/ $leanpack
 
-#get ssr depends
-rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/shadowsocksr-libev/ >/dev/null 2>&1 || echo ""
-cp -rf openwrt/package/lean/shadowsocksr-libev/ $leanpack
+#get ssr depends p2
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/srelay/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/srelay/ $leanpack
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/microsocks/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/microsocks/ $leanpack
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/proxychains-ng/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/proxychains-ng/ $leanpack
-rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/tcpping/ >/dev/null 2>&1 || echo ""
-cp -rf openwrt/package/lean/tcpping/ $leanpack
 git clone -b master --single-branch https://github.com/aa65535/openwrt-simple-obfs  $leanpack/simple-obfs
 git clone -b master --single-branch https://github.com/kongfl888/redsocks2.git $leanpack/redsocks2
 

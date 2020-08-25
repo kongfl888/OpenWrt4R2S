@@ -8,12 +8,6 @@ on:
       - master
     paths:
       - '.github/workflows/test-1.yml'
-      - 'base_rk3328.conf'
-      - 'JUNK/r2s_lean2_user_part1.conf'
-      - 'scripts/lean-packages.sh'
-      - 'version-lede'
-  schedule:
-    - cron: '10 4 * * 5'
 
 jobs:
 

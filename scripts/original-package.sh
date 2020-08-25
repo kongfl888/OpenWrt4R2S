@@ -66,7 +66,7 @@ cp -f ./resources/zh_Hans/base.po friendlywrt-rk3328/friendlywrt/feeds/luci/modu
 # patch feeds、package
 cd friendlywrt-rk3328/friendlywrt
 #clear unused
-rm -rf package/feeds/lienol/luci-app-verysync || echo ""
+rm -rf package/feeds/lienol/*/luci-app-verysync || echo ""
 rm -rf feeds/lienol/*/shadowsocksr-libev || echo ""
 rm -rf feeds/lienol/package/verysync || echo ""
 # luci-lib-jsonc patch
@@ -306,3 +306,6 @@ git clone -b master --single-branch https://github.com/kongfl888/luci-app-kcpufr
 
 #koptimalize
 git clone -b master https://github.com/kongfl888/koptimalize.git $wrtpackage/koptimalize
+
+#add upx
+cp -f./resources/upx  $wrtpackage/base-files/files/bin/

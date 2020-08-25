@@ -117,3 +117,6 @@ git clone -b master https://github.com/brvphoenix/wrtbwmon.git
 cp -rf wrtbwmon/wrtbwmon $leanpack
 git clone -b master-18.06 https://github.com/kongfl888/luci-app-wrtbwmon.git
 cp -rf luci-app-wrtbwmon/luci-app-wrtbwmon $leanpack
+
+#add upx
+cp -f./resources/upx  $wrtpackage/base-files/files/bin/

@@ -308,4 +308,10 @@ git clone -b master --single-branch https://github.com/kongfl888/luci-app-kcpufr
 git clone -b master https://github.com/kongfl888/koptimalize.git $wrtpackage/koptimalize
 
 #add upx
-cp -f./resources/upx  $wrtpackage/base-files/files/bin/
+cp -f ./resources/upx  $wrtpackage/base-files/files/bin/
+
+# remove upx cmd of Makefile
+cp -f ./scripts/remove_upx.sh friendlywrt-rk3328/friendlywrt/
+cd friendlywrt-rk3328/friendlywrt
+/bin/bash ./remove_upx.sh
+cd ../../

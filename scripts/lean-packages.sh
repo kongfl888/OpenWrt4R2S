@@ -119,4 +119,10 @@ git clone -b master-18.06 https://github.com/kongfl888/luci-app-wrtbwmon.git
 cp -rf luci-app-wrtbwmon/luci-app-wrtbwmon $leanpack
 
 #add upx
-cp -f./resources/upx  $wrtpackage/base-files/files/bin/
+cp -f ./resources/upx  $wrtpackage/base-files/files/bin/
+
+# remove upx cmd of Makefile
+cp -f ./scripts/remove_upx.sh friendlywrt-rk3328/friendlywrt/
+cd friendlywrt-rk3328/friendlywrt
+/bin/bash ./remove_upx.sh
+cd ../../

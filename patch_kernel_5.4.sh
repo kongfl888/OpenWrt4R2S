@@ -33,7 +33,6 @@ grep -i '_NETFILTER_\|FLOW' ../.config.override > .config.override
 sed -i -r 's/# (CONFIG_.*_ERRATUM_.*?) is.*/\1=y/g' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
 
 # fix upx
-rm -rf /tmp/openwrt-upx
-git clone https://github.com/kongfl888/openwrt-upx.git /tmp/openwrt-upx
-cp -rf /tmp/openwrt-upx/upx friendlywrt/tools/
-cp -rf /tmp/openwrt-upx/ucl friendlywrt/tools/
+mkdir -p friendlywrt/tools/upx
+rm -f friendlywrt/tools/upx/Makefile
+wget -O friendlywrt/tools/upx/Makefile https://raw.githubusercontent.com/kongfl888/friendlywrt/snapshot/tools/upx/Makefile

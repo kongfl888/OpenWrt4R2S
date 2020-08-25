@@ -1,0 +1,33 @@
+From 16ea38a4ed3f99c744e5fbd04ecfcbe5f325b5a4 Mon Sep 17 00:00:00 2001
+From: kongfl888 K <kongfl888@outlook.com>
+Date: Wed, 26 Aug 2020 02:21:49 +0800
+Subject: [PATCH] tools: include upx to makefile.
+
+Signed-off-by: kongfl888 K <kongfl888@outlook.com>
+---
+ tools/Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/tools/Makefile b/tools/Makefile
+index d7207ba89d..65b11be406 100644
+--- a/tools/Makefile
++++ b/tools/Makefile
+@@ -34,6 +34,7 @@ tools-$(CONFIG_TARGET_ar71xx) += lzma-old
+ tools-$(CONFIG_TARGET_ar71xx)$(CONFIG_TARGET_ath79) += squashfs
+ tools-$(CONFIG_USES_MINOR) += kernel2minor
+ tools-y += lzma squashfskit4 zip
++tools-y += ucl upx
+ tools-$(BUILD_B43_TOOLS) += b43-tools
+ tools-$(BUILD_ISL) += isl
+ tools-$(CONFIG_USE_SPARSE) += sparse
+@@ -41,6 +42,7 @@ tools-$(CONFIG_TARGET_apm821xx)$(CONFIG_TARGET_gemini) += genext2fs
+ tools-$(CONFIG_TARGET_tegra) += cbootimage cbootimage-configs
+ 
+ # builddir dependencies
++$(curdir)/upx/compile := $(curdir)/ucl/compile
+ $(curdir)/bison/compile := $(curdir)/flex/compile
+ $(curdir)/flex/compile := $(curdir)/libtool/compile
+ $(curdir)/libtool/compile := $(curdir)/m4/compile $(curdir)/autoconf/compile $(curdir)/automake/compile $(curdir)/missing-macros/compile
+-- 
+2.14.1.windows.1
+

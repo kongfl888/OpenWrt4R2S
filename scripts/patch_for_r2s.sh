@@ -17,9 +17,14 @@ if [ -e "friendlywrt/target/linux/rockchip-rk3328/base-files/etc/init.d/fa-rk332
 fi
 
 # fix upx
-rm -rf /tmp/openwrt-upx
-git clone https://github.com/kongfl888/openwrt-upx.git /tmp/openwrt-upx
-cp -rf /tmp/openwrt-upx/upx friendlywrt/tools/
-cp -rf /tmp/openwrt-upx/ucl friendlywrt/tools/
+if [ ! -d "friendlywrt/tools/upx" ]; then
+    git apply --check ../patches/0001-tools-include-upx-to-makefile.patch && git apply ../patches/0001-tools-include-upx-to-makefile.patch
+    mkdir -p friendlywrt/tools/ucl
+    mkdir -p friendlywrt/tools/upx
+    rm -f friendlywrt/tools/ucl/Makefile
+    rm -f friendlywrt/tools/upx/Makefile
+    wget -O friendlywrt/tools/ucl/Makefile https://raw.githubusercontent.com/coolsnowwolf/lede/master/tools/ucl/Makefile
+    wget -O friendlywrt/tools/upx/Makefile https://raw.githubusercontent.com/kongfl888/friendlywrt/snapshot/tools/upx/Makefile
+fi
 
 cd ..

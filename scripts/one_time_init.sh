@@ -217,9 +217,11 @@ echo $DATE" One time init Script: set hostname" >> /tmp/one_time_init.log
 if [ "$profile" == "2" ]; then
     uci set system.@system[0].hostname="LEDE"
     uci commit system
+    echo "LEDE" > /proc/sys/kernel/hostname
 else
     uci set system.@system[0].hostname="OpenWrt"
     uci commit system
+    echo "OpenWrt" > /proc/sys/kernel/hostname
 fi
 
 # set ntp time

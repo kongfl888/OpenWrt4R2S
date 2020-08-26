@@ -21,9 +21,9 @@ sh /root/flash_rom.sh /tmp/rom具体取名.img.gz /dev/mmcblk0 gz
 
 设置宽带拨号：https://jingyan.baidu.com/article/3ea514891e5b8613e71bba79.html
 
-关闭IPV6：https://jingyan.baidu.com/article/0eb457e573e2e842f0a90567.html （反过来就是打开）
+关闭IPV6：https://jingyan.baidu.com/article/0eb457e573e2e842f0a90567.html （反过来就是打开）。不需要ipv6的还可以把WAN6接口删除（这有时很重要）
 
-更新和安装DDNS姿势：网页端--系统--软件包--更新列表--输入ddns--安装luci-app-ddns--到一些ipk网盘找到ddns-scripts_aliyun等使用文件传输上传并装上
+更新和安装DDNS姿势：网页端--系统--软件包--更新列表--输入ddns--安装luci-app-ddns--到一些ipk网盘找到ddns-scripts_aliyun等使用文件传输上传并装上(使用DDNS时你可能需要关闭flowoffload 或 sfe -- 如果有开启)
 
 docker也一样，通过官方源来获取最新的软件包。
 

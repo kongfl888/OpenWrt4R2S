@@ -129,6 +129,10 @@ if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*v2ray*.ipk" | g
 	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*v2ray*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack v2ray ipk fail" >> ipklost.txt
 fi
 
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*dns2socks*.ipk" | grep "dns2socks" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*dns2socks*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack dns2socks ipk fail" >> ipklost.txt
+fi
+
 if [ `find ./ipks/* -name "*.ipk" | grep ".ipk" -c` -eq 0 ]; then
     echo "1" > ./ipks/noipk
 fi

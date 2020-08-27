@@ -14,6 +14,16 @@ echo "CONFIG_SHORTCUT_FE=y" >> friendlywrt-rk3328/kernel/arch/arm64/configs/nano
 
 wrtpackage="friendlywrt-rk3328/friendlywrt/package"
 leanpack="friendlywrt-rk3328/friendlywrt/package/lean"
+feedsdir="friendlywrt-rk3328/friendlywrt/feeds"
+
+# remove some package of feeds
+rm -rf $feedsdir/lienol/*/ipt2socks
+rm -rf $feedsdir/lienol/*/shadowsocksr-libev
+rm -rf $feedsdir/lienol/*/pdnsd-alt
+rm -rf $feedsdir/lienol/*/trojan
+rm -rf $feedsdir/lienol/*/verysync
+rm -rf $feedsdir/lienol/*/v2ray
+rm -rf $feedsdir/lienol/*/v2ray-plugin
 
 # add adguardhome
 git clone -b master --single-branch https://github.com/kongfl888/luci-app-adguardhome.git

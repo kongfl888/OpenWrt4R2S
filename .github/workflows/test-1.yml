@@ -106,6 +106,7 @@ jobs:
           rm -rf friendlywrt-rk3328/friendlywrt/tools/upx
           mkdir -p friendlywrt-rk3328/friendlywrt/staging_dir/host/bin/
           cp -f ./resources/upx friendlywrt-rk3328/friendlywrt/staging_dir/host/bin/
+          chmod +x friendlywrt-rk3328/friendlywrt/staging_dir/host/bin/upx
 
       - name: Update Feeds
         run: |

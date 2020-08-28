@@ -200,6 +200,8 @@ rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/shadowsocksr-libev/ >/dev/null 2
 cp -rf openwrt/package/lean/shadowsocksr-libev/ $leanpack
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/tcpping/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/tcpping/ $leanpack
+rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/pdnsd-alt/ >/dev/null 2>&1 || echo ""
+cp -rf openwrt/package/lean/pdnsd-alt/ $leanpack
 
 #get wrtbwmon
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/wrtbwmon/ >/dev/null 2>&1 || echo ""

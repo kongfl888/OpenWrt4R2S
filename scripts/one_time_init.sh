@@ -431,6 +431,13 @@ if [ -e "/etc/dropbear/dropbear_rsa_host_key" ]; then
     chmod 640 /etc/dropbear/dropbear_rsa_host_key
 fi
 
+# fix upx
+if [ -e "/bin/upx" ]; then
+    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+    echo $DATE" One time init Script: fix upx permission" >> /tmp/one_time_init.log
+    chmod +x /bin/upx
+fi
+
 # creat /usr/share/mywdog/
 DATE=`date +[%Y-%m-%d]%H:%M:%S`
 echo $DATE" One time init Script: creat /usr/share/mywdog/" >> /tmp/one_time_init.log

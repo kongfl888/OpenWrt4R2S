@@ -61,44 +61,12 @@ jobs:
           cat ../base_rk3328.conf > configs/config_rk3328
           #sed -i '/ddns/d' configs/config_rk3328 && echo ""
           cat ../JUNK/r2s_lean2_user_part1.conf >> configs/config_rk3328
+          sed -i -r '/^CONFIG_PACKAGE/d' configs/config_rk3328
           echo 'CONFIG_PACKAGE_dns2socks=y' >> configs/config_rk3328
-          cd friendlywrt
-          #sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
-          sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
-          cd package/lean/
-          #git clone https://github.com/jerrykuku/lua-maxminddb.git
-          #git clone https://github.com/jerrykuku/luci-app-vssr.git
-          #cd luci-app-vssr/root/etc/
-          #echo 'china_ssr.txt
-          #config/black.list
-          #config/white.list
-          #dnsmasq.oversea/oversea_list.conf
-          #dnsmasq.ssr/ad.conf
-          #dnsmasq.ssr/gfw_base.conf' | xargs rm
-          #cd ../../../
-          rm -rf luci-theme-argon
-          git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
-          cd ../../
-          git apply ../../patches/patch-autocore.patch
-          #git apply ../../fix_cpufreq.diff
-          sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon"' package/lean/default-settings/files/zzz-default-settings
-          sed -i '/exit/i\chown -R root:root /usr/share/netdata/web' package/lean/default-settings/files/zzz-default-settings
-          sed -i '/exit/i\find /etc/rc.d/ -name *docker* -delete' package/lean/default-settings/files/zzz-default-settings
-          sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
-          sed -i '/8.8.8.8/d' package/base-files/files/root/setup.sh
-          sed -i 's/192.168.2.1/192.168.31.3/g' package/base-files/files/root/setup.sh
-          sed -i 's/addr_offset=2/addr_offset=31/g' package/base-files/files/bin/config_generate
-          sed -i 's/ipad=${ipaddr:-"192.168.$((addr_offset++)).1"}/ipad=${ipaddr:-"192.168.$((addr_offset++)).3"}/g' package/base-files/files/bin/config_generate
-          sed -i 's/ipaddr:-"192.168.1.1"/ipaddr:-"192.168.31.3"/g' package/base-files/files/bin/config_generate
-          mv ../../scripts/one_time_init.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/one_time_init.sh 22 &' package/base-files/files/etc/rc.local
-          #mv ../../scripts/autoupdate2.sh package/base-files/files/root/au.sh && chmod +x package/base-files/files/root/au.sh
-          mv ../../scripts/flash_rom.sh package/base-files/files/root/flash_rom.sh && chmod +x package/base-files/files/root/flash_rom.sh
-          sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
-          . ../../scripts/buildtime.sh
 
       - name: Add Packages
         run: |
-          git clone https://github.com/kongfl888/op-dns2socks.git friendlywrt-rk3328/friendlywrt/package/lean/op-dns2socks
+          git clone -b master https://github.com/kongfl888/openwrt-dns2socks.git friendlywrt-rk3328/friendlywrt/package/lean/op-dns2socks
           rm -rf friendlywrt-rk3328/friendlywrt/package/lean/dns2socks
       - name: Update Feeds
         run: |

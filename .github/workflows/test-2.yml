@@ -66,9 +66,8 @@ jobs:
 
       - name: Add Packages
         run: |
-          git clone -b main https://github.com/kongfl888/openwrt-dns2socks.git friendlywrt-rk3328/friendlywrt/package/lean/op-dns2socks
+          git clone -b master https://github.com/kongfl888/openwrt-dns2socks.git friendlywrt-rk3328/friendlywrt/package/lean/op-dns2socks
           rm -rf friendlywrt-rk3328/friendlywrt/package/lean/dns2socks
-          sed -i 's/37ed1b4a67587b2e94fdbe6b492e72c3edc2c7e1/HEAD/g' friendlywrt-rk3328/friendlywrt/package/lean/op-dns2socks/Makefile
       - name: Update Feeds
         run: |
           cd friendlywrt-rk3328/friendlywrt

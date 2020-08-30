@@ -136,3 +136,8 @@ cp -f ./scripts/remove_upx.sh friendlywrt-rk3328/friendlywrt/
 cd friendlywrt-rk3328/friendlywrt
 /bin/bash ./remove_upx.sh
 cd ../../
+
+# use my dns2socks
+rm -rf $leanpack/dns2socks
+rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/dns2socks/ >/dev/null 2>&1 || echo ""
+git clone -b main https://github.com/kongfl888/openwrt-dns2socks.git $leanpack/dns2socks

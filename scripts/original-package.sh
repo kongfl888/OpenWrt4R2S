@@ -202,6 +202,10 @@ rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/tcpping/ >/dev/null 2>&1 || echo
 cp -rf openwrt/package/lean/tcpping/ $leanpack
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/pdnsd-alt/ >/dev/null 2>&1 || echo ""
 cp -rf openwrt/package/lean/pdnsd-alt/ $leanpack
+# use my dns2socks
+rm -rf $leanpack/dns2socks
+rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/dns2socks/ >/dev/null 2>&1 || echo ""
+git clone -b main https://github.com/kongfl888/openwrt-dns2socks.git $leanpack/dns2socks
 
 #get wrtbwmon
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/wrtbwmon/ >/dev/null 2>&1 || echo ""

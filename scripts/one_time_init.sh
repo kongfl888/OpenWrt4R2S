@@ -380,7 +380,7 @@ fi
 # clear smp_affinity
 DATE=`date +[%Y-%m-%d]%H:%M:%S`
 echo $DATE" One time init Script: clear smp_affinity" >> /tmp/one_time_init.log
-[ -e "/etc/init.d/koptimalize" ] && sed -i '/proc\/irq\/28\/smp_affinity/d' /etc/init.d/fa-rk3328-misc
+[ -e "/etc/init.d/koptimalize" -a -e "/etc/init.d/fa-rk3328-misc" ] && sed -i '/proc\/irq\/28\/smp_affinity/d' /etc/init.d/fa-rk3328-misc
 
 [ -e "/etc/init.d/fa-rk3328-misc" ] && sed -i '/start()/a\echo "fa-rk3328-misc"' /etc/init.d/fa-rk3328-misc
 

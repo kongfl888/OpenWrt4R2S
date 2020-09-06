@@ -5,7 +5,7 @@
 MHz=`grep 'MHz' /proc/cpuinfo | cut -c11- |sed -n '1p'`
 [ -z "$MHz" ] && MHz=`echo "$(cat /sys/devices/system/cpu/cpu[04]/cpufreq/cpuinfo_cur_freq)/1000" | bc`
 TEMP=`echo "scale=2; $(cat /sys/class/thermal/thermal_zone0/temp)/1000" | bc`
-[ -z "$TEMP" ] && TEMP=`sensors 2>/dev/null | grep 'Core 0' | cut -c12-` || TEMP="$TEMP""℃"
+[ -z "$TEMP" ] && TEMP=`sensors 2>/dev/null | grep ':.*C'| head -n 1 | cut -c13-` || TEMP="$TEMP""℃"
 MIN=`echo "$(cat /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq)/1000" | bc`
 [ ! -z "$MIN" ] && MIN="$MIN""MHz" || MIN=""
 MAX=`echo "$(cat /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq)/1000" | bc`

@@ -60,7 +60,7 @@ jobs:
 
       - name: Patch For R2S
         run: |
-          . ./scripts/patch_for_r2s.sh
+          . ./scripts/patch_for_r2s.sh 4
 
       - name: Patch For kernel 5.4
         run: |

@@ -1,10 +1,43 @@
 #!/bin/bash
+#
+# [K] (c)2020
+# * 1 19071, 2 lean, 3 19073, 4 snapshot
+
+profile=0
+
+if [ ! -z "${1}" ];then
+    case ${1} in
+    1)
+        profile=1
+        ;;
+    2)
+        profile=2
+        ;;
+    3)
+        profile=3
+        ;;
+    4)
+        profile=4
+        ;;
+    *)
+        profile=1
+        ;;
+    esac
+fi
 
 cd friendlywrt-rk3328
 cd kernel/
-# enable-1512mhz-opp
-wget https://github.com/armbian/build/raw/master/patch/kernel/rockchip64-dev/RK3328-enable-1512mhz-opp.patch
-git apply --check RK3328-enable-1512mhz-opp.patch && git apply RK3328-enable-1512mhz-opp.patch || echo ""
+
+# cpu overclocking
+if [ "$profile" == "4" ]; then
+    # enable-1.4/1.5/1.6ghz-opp
+    git apply --check ../../patches/rk3328-enable-1.4-1.5-1.6ghz-opp.patch && git apply ../../patches/rk3328-enable-1.4-1.5-1.6ghz-opp.patch
+else
+    # enable-1512mhz-opp
+    wget https://github.com/armbian/build/raw/master/patch/kernel/rockchip64-dev/RK3328-enable-1512mhz-opp.patch
+    git apply --check RK3328-enable-1512mhz-opp.patch && git apply RK3328-enable-1512mhz-opp.patch || echo ""
+fi
+
 # fix when during system boot,GPIO ocnflict with sdmmc
 
 # patch for defconfig

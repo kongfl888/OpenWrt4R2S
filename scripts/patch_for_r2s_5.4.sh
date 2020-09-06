@@ -13,6 +13,11 @@ cd friendlywrt-rk3328
 
 if [ "$snapshot" == "1" ]; then
     cd friendlywrt
+    kernelver=`cat ./include/kernel-version.mk | grep "LINUX_VERSION-5.4" | cut -d"." -f3`
+    if [ $kernelver -lt 63 ]; then
+        git remote add upkernel https://github.com/graysky2/openwrt.git && git fetch upkernel newkernel
+        git cherry-pick bc3fa1a1bd128a95d61a3791b70568784ec23000
+    fi
 else
     git clone -b snapshot --single-branch --depth=1 https://github.com/kongfl888/friendlywrt.git fwrt && cd fwrt/
 fi
@@ -31,8 +36,7 @@ rm -f /tmp/linuxgeneric/*/*SFP-*.patch
 rm -f /tmp/linuxgeneric/*/*GPON-*.patch
 rm -f /tmp/linuxgeneric/*/*gpon-*.patch
 rm -f /tmp/linuxgeneric/*/*BCM84881*.patch
-# 5.4.60 remove
-rm -f /tmp/linuxgeneric/backport-5.4/041-genirq-affinity-Make-affinity-setting-if-activated-o.patch
+
 cp -a /tmp/linuxgeneric/files/* ../kernel/
 sed -i '/exit 1/d' /tmp/patchkernel.sh
 /tmp/patchkernel.sh ../kernel /tmp/linuxgeneric/backport-5.4

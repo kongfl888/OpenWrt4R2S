@@ -7,6 +7,74 @@ fi
 sed -i '/CONFIG_NF_CONNTRACK_CHAIN_EVENTS/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
 echo "CONFIG_NF_CONNTRACK_CHAIN_EVENTS=y" >> kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
 
+# remove drm drivers and display config
+sed -i '/CONFIG_DRM=y/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_DRM_/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/_HDMI/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_ROCKCHIP_ANALOGIX_DP/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_ROCKCHIP_CDN_DP/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_ROCKCHIP_DW_HDMI/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_ROCKCHIP_DW_MIPI_DSI/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_ROCKCHIP_INNO_HDMI/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_ROCKCHIP_LVDS/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+echo "# CONFIG_DRM is not set" >> kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+# remove webcam / TV (analog/digital) drivers
+sed -i '/CONFIG_USB_GSPCA/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_USB_VIDEO_CLASS/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_USB_M5602/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_USB_STV06XX/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_USB_GL860/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_USB_STKWEBCAM/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/USB_PWC/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/VIDEO_CPIA2/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/USB_ZR364XX/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/USB_STKWEBCAM/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/USB_S2255/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/VIDEO_USBTV/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/VIDEO_EM28XX/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_MEDIA_CAMERA/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/VIDEO_V4L2/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_V4L_/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_VIDEOBUF2/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+# remove bluetooth drivers
+sed -i '/CONFIG_BT=/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_BT_/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_INPUT_CM109/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+echo "# CONFIG_BT is not set" >> kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+# remove nfc
+sed -i '/CONFIG_NFC=/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_NFC_/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+echo "# CONFIG_NFC is not set" >> kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+# remove pci pci-e
+sed -i '/CONFIG_PCI=/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_PCI_/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_PCIEPORTBUS/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_PCIEASPM/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_PCIE_/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_ATH9K_PCI/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_BRCMFMAC_PCIE/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_BLK_DEV_PCIESSD/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/_PCI=/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/_PCIE=/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+echo "# CONFIG_PCI is not set" >> kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+echo "# CONFIG_PCIEPORTBUS is not set" >> kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+echo "# CONFIG_PCIEAER is not set" >> kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+echo "# CONFIG_SSB_PCIHOST_POSSIBLE is not set" >> kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+# remove input keyboard mouse joystick touchscreen remote
+sed -i '/CONFIG_INPUT_JOYDEV/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_INPUT_JOYSTICK/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_INPUT_TOUCHSCREEN/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_INPUT_MATRIXKMAP/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_INPUT_MOUSEDEV/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_INPUT_YEALINK/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_INPUT_ATI_REMOTE2/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_INPUT_KEYSPAN_REMOTE/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_MOUSE_/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_KEYBOARD/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_JOYSTICK/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_TOUCHSCREEN/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+sed -i '/CONFIG_GAMEPORT/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+
 zh_cntw=0
 
 if [ -e "configs/config_rk3328" ]; then

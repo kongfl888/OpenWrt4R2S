@@ -64,7 +64,7 @@ flash_rom /tmp/rom.img.gz /dev/mmcblk0 gz``
 
 1、Ubuntu下（其中/dev/sdX为TF卡的真实路径）
 
-``sudo dd if=out/FriendlyWrt_20xxxx_NanoPi-R1_armhf_sd.img bs=1M of=/dev/sdX``
+``sudo dd if=out/FriendlyWrt_20xxxx_sd.img bs=1M of=/dev/sdX``
 
 2、Windows系统
 
@@ -84,7 +84,7 @@ flash_rom /tmp/rom.img.gz /dev/mmcblk0 gz``
 
 ### 三外设说明
 
-+ tf卡直接影响系统启动速度。建议使用C10+卡，卡容量大小至少4GB，推荐8G以上。
++ tf卡直接影响系统启动及启动速度。建议使用C10+卡，卡容量大小至少4GB，推荐8G以上。
 
 + 电流不稳或波动大直接影响板子的正常运行
 

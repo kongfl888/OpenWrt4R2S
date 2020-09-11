@@ -25,8 +25,8 @@ index eedc869..a0541aa 100644
  			local ipad
  			case "$1" in
 -				lan) ipad=${ipaddr:-"192.168.2.1"} ;;
-+				lan) ipad=${ipaddr:-"192.168.31.1"} ;;
- 				*) ipad=${ipaddr:-"192.168.$((addr_offset++)).1"} ;;
++				lan) ipad=${ipaddr:-"192.168.31.3"} ;;
+ 				*) ipad=${ipaddr:-"192.168.$((addr_offset++)).3"} ;;
  			esac
  
 @@ -240,9 +240,11 @@ generate_switch() {

@@ -385,16 +385,25 @@ echo $DATE" One time init Script: clear smp_affinity" >> /tmp/one_time_init.log
 [ -e "/etc/init.d/fa-rk3328-misc" ] && sed -i '/start()/a\echo "fa-rk3328-misc"' /etc/init.d/fa-rk3328-misc
 
 # set cpufreq
-DATE=`date +[%Y-%m-%d]%H:%M:%S`
-echo $DATE" One time init Script: set cpufreq to schedutil" >> /tmp/one_time_init.log
-[ -e "/etc/init.d/fa-rk3328-misc" ] && sed -i '/scaling_governor/d' /etc/init.d/fa-rk3328-misc
-echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
-DATE=`date +[%Y-%m-%d]%H:%M:%S`
-echo $DATE" One time init Script: set max_freq to 1512000" >> /tmp/one_time_init.log
-echo -n 1512000 > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq
-DATE=`date +[%Y-%m-%d]%H:%M:%S`
-echo $DATE" One time init Script: set min_freq to 600000" >> /tmp/one_time_init.log
-echo -n 600000 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
+testsgovernor=`cat /sys/devices/system/cpu/cpufreq/policy0/scaling_available_governors | grep -c "schedutil"`
+if [ $testsgovernor -gt 0 ]; then
+    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+    echo $DATE" One time init Script: set cpufreq to schedutil" >> /tmp/one_time_init.log
+    [ -e "/etc/init.d/fa-rk3328-misc" ] && sed -i '/scaling_governor/d' /etc/init.d/fa-rk3328-misc
+    echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
+fi
+available1512=`cat /sys/devices/system/cpu/cpufreq/policy0/scaling_available_frequencies | grep -c "1512"`
+if [ $available1512 -gt 0 ]; then
+    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+    echo $DATE" One time init Script: set max_freq to 1512000" >> /tmp/one_time_init.log
+    echo -n 1512000 > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq
+fi
+available600=`cat /sys/devices/system/cpu/cpufreq/policy0/scaling_available_frequencies | grep -c "600000"`
+if [ $available600 -gt 0 ]; then
+    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+    echo $DATE" One time init Script: set min_freq to 600000" >> /tmp/one_time_init.log
+    echo -n 600000 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
+fi
 
 # set kcupfreq
 if [ -e "/etc/config/kcpufreq" ]; then

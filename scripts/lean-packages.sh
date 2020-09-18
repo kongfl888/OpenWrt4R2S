@@ -9,7 +9,7 @@ if [ "${1}" == "1" ]; then
 fi
 
 # kernel open sfe
-echo "CONFIG_SHORTCUT_FE=y" >> friendlywrt-rk3328/kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+#echo "CONFIG_SHORTCUT_FE=y" >> friendlywrt-rk3328/kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
 
 
 wrtpackage="friendlywrt-rk3328/friendlywrt/package"

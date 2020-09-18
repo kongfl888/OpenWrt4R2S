@@ -133,6 +133,14 @@ if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*dns2socks*.ipk"
 	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*dns2socks*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack dns2socks ipk fail" >> ipklost.txt
 fi
 
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*oaf*.ipk" | grep "oaf" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*oaf*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack openappfilter ipk fail" >> ipklost.txt
+fi
+
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*appfilter*.ipk" | grep "appfilter" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*appfilter*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack appfilter ipk fail" >> ipklost.txt
+fi
+
 if [ `find ./ipks/* -name "*.ipk" | grep ".ipk" -c` -eq 0 ]; then
     echo "1" > ./ipks/noipk
 fi

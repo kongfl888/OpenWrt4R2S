@@ -25,6 +25,10 @@ rm -rf $feedsdir/lienol/*/verysync
 rm -rf $feedsdir/lienol/*/v2ray
 rm -rf $feedsdir/lienol/*/v2ray-plugin
 
+# remove some package of lean
+rm -rf $leanpack/luci-app-autoreboot
+rm -rf $leanpack/luci-app-cpufreq
+
 # add adguardhome
 git clone -b master --single-branch https://github.com/kongfl888/luci-app-adguardhome.git
 mv luci-app-adguardhome $wrtpackage

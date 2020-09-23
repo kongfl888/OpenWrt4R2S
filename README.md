@@ -31,7 +31,7 @@ usb-wifi驱动都有，网上常见的芯片，👇
 
 ### 发布地址
 
-[下载传送门](https://github.com/kongfl888/OpenWrt4R2S/releases)（建议用网盘的，因为我有时会调试一波）
+[下载传送门](https://github.com/kongfl888/OpenWrt4R2S/releases)（建议用网盘的，因为这里“水货”居多，还不一定能用。当帮助文档看看就好）
 
 [网盘分流](https://github.com/kongfl888/OpenWrt4R2S/blob/r2s/README.txt)
 

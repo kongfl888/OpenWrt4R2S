@@ -432,11 +432,11 @@ if [ -e "/etc/config/wrtbwmon" ]; then
 fi
 
 # stop check-network before reboot
-if [ -e "/etc/init.d/check-network" ];then
-    DATE=`date +[%Y-%m-%d]%H:%M:%S`
-    echo $DATE" One time init Script: stop check-network" >> /tmp/one_time_init.log
-     /etc/init.d/check-network stop 2>/dev/null
-fi
+#if [ -e "/etc/init.d/check-network" ];then
+#    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+#    echo $DATE" One time init Script: stop check-network" >> /tmp/one_time_init.log
+#     /etc/init.d/check-network stop 2>/dev/null
+#fi
 
 # fix ssh rsa key
 if [ -e "/etc/dropbear/dropbear_rsa_host_key" ]; then

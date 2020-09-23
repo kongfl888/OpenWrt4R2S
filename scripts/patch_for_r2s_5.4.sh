@@ -14,9 +14,9 @@ cd friendlywrt-rk3328
 if [ "$snapshot" == "1" ]; then
     cd friendlywrt
     kernelver=`cat ./include/kernel-version.mk | grep "LINUX_VERSION-5.4" | cut -d"." -f3`
-    if [ $kernelver -lt 63 ]; then
-        git remote add upkernel https://github.com/graysky2/openwrt.git && git fetch upkernel newkernel
-        git cherry-pick bc3fa1a1bd128a95d61a3791b70568784ec23000
+    if [ $kernelver -lt 67 ]; then
+        git remote add upkernel https://github.com/graysky2/openwrt.git && git fetch upkernel updatedkernel
+        git cherry-pick 4ce0bd6d83554497643ca51f9d85a6e656b898e0
     fi
 else
     git clone -b snapshot --single-branch --depth=1 https://github.com/kongfl888/friendlywrt.git fwrt && cd fwrt/

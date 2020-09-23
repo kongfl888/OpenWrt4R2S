@@ -384,7 +384,7 @@ echo $DATE" One time init Script: clear smp_affinity" >> /tmp/one_time_init.log
 
 [ -e "/etc/init.d/fa-rk3328-misc" ] && sed -i '/start()/a\echo "fa-rk3328-misc"' /etc/init.d/fa-rk3328-misc
 
-# set cpufreq
+# set cpufreq -p1
 testsgovernor=`cat /sys/devices/system/cpu/cpufreq/policy0/scaling_available_governors | grep -c "schedutil"`
 if [ $testsgovernor -gt 0 ]; then
     DATE=`date +[%Y-%m-%d]%H:%M:%S`
@@ -405,20 +405,27 @@ if [ $available600 -gt 0 ]; then
     echo -n 600000 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
 fi
 
-# set kcupfreq
+# set kcpufreq -p2
 if [ -e "/etc/config/kcpufreq" ]; then
     if [ -d "/sys/devices/system/cpu/cpufreq/policy0" ]; then
-        cmin=`cat /sys/devices/system/cpu/cpufreq/policy0/cpuinfo_min_freq`
-        cmax=`cat /sys/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq`
+        #cmin=`cat /sys/devices/system/cpu/cpufreq/policy0/cpuinfo_min_freq`
+        #cmax=`cat /sys/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq`
+        cmin="600000"
+        cmax="1296000"
         [ ! -z "$cmin" ] && uci set kcpufreq.@settings[-1].minifreq="$cmin"
         [ ! -z "$cmax" ] && uci set kcpufreq.@settings[-1].maxfreq="$cmax"
+        uci set kcpufreq.@settings[-1].enable="1"
+        uci set kcpufreq.@settings[-1].advance="1"
+        uci set kcpufreq.@settings[-1].governor="schedutil"
 
         DATE=`date +[%Y-%m-%d]%H:%M:%S`
-        echo $DATE" One time init Script: set kcupfreq" >> /tmp/one_time_init.log
+        echo $DATE" One time init Script: set kcpufreq" >> /tmp/one_time_init.log
         uci commit kcpufreq
     fi
 fi
 [ -e "/etc/init.d/kcpufreq" ] && chmod +x /etc/init.d/kcpufreq
+[ -e "/etc/init.d/kcpufreq" ] && /etc/init.d/kcpufreq enable &
+[ -e "/etc/init.d/kcpufreq" ] && /etc/init.d/kcpufreq restart &
 
 # set wrtbwmon
 if [ -e "/etc/config/wrtbwmon" ]; then

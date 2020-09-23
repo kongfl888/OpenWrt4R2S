@@ -392,11 +392,11 @@ if [ $testsgovernor -gt 0 ]; then
     [ -e "/etc/init.d/fa-rk3328-misc" ] && sed -i '/scaling_governor/d' /etc/init.d/fa-rk3328-misc
     echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
 fi
-available1512=`cat /sys/devices/system/cpu/cpufreq/policy0/scaling_available_frequencies | grep -c "1512"`
-if [ $available1512 -gt 0 ]; then
+available1296=`cat /sys/devices/system/cpu/cpufreq/policy0/scaling_available_frequencies | grep -c "1296"`
+if [ $available1296 -gt 0 ]; then
     DATE=`date +[%Y-%m-%d]%H:%M:%S`
-    echo $DATE" One time init Script: set max_freq to 1512000" >> /tmp/one_time_init.log
-    echo -n 1512000 > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq
+    echo $DATE" One time init Script: set max_freq to 1296000" >> /tmp/one_time_init.log
+    echo -n 1296000 > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq
 fi
 available600=`cat /sys/devices/system/cpu/cpufreq/policy0/scaling_available_frequencies | grep -c "600000"`
 if [ $available600 -gt 0 ]; then

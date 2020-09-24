@@ -141,6 +141,10 @@ if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*appfilter*.ipk"
 	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*appfilter*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack appfilter ipk fail" >> ipklost.txt
 fi
 
+if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*msgkun*.ipk" | grep "msgkun" -c` -gt 0 ]; then
+	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*msgkun*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack msgkun ipk fail" >> ipklost.txt
+fi
+
 if [ `find ./ipks/* -name "*.ipk" | grep ".ipk" -c` -eq 0 ]; then
     echo "1" > ./ipks/noipk
 fi

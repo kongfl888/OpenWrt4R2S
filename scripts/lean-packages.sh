@@ -135,6 +135,9 @@ cp -rf luci-app-wrtbwmon/luci-app-wrtbwmon $leanpack
 # add appfilter
 git clone https://github.com/destan19/OpenAppFilter.git $wrtpackage/OpenAppFilter
 
+# add msgkun
+git clone https://github.com/kongfl888/luci-app-msgkun.git $wrtpackage/luci-app-msgkun
+
 #add upx
 cp -f ./resources/upx  $wrtpackage/base-files/files/bin/
 

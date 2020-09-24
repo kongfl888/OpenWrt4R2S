@@ -237,6 +237,9 @@ if [ "$profile" != "4" ]; then
 fi
 cp -rf luci-app-wrtbwmon/luci-app-wrtbwmon $wrtpackage
 
+# add msgkun
+git clone https://github.com/kongfl888/luci-app-msgkun.git $wrtpackage/luci-app-msgkun
+
 #get fullconenat
 rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/openwrt-fullconenat/ >/dev/null 2>&1 || echo ""
 rm -rf $leanpack/openwrt-fullconenat || echo ""

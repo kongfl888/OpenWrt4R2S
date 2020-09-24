@@ -126,22 +126,6 @@ jobs:
           cd ..
           mv luci-app-koolproxyR friendlywrt-rk3328/friendlywrt/package
 
-      - name: Add OpenClash
-        run: |
-          git clone -b master https://github.com/vernesong/OpenClash.git
-          cd OpenClash/luci-app-openclash/files
-          sed -i 's/\"services\"/\"vpn\"/g' ./usr/lib/lua/luci/controller/openclash.lua
-          grep -rnl '\"services\",' ./usr/lib/lua/luci/model/cbi/openclash |xargs sed -i 's/\"services\",/\"vpn\",/g'  || echo ""
-          grep -rnl 'admin\/services\/' ./usr/lib/lua/luci/model/cbi/openclash |xargs sed -i 's/admin\/services\//admin\/vpn\//g'  || echo ""
-          grep -rnl '\"services\",' ./usr/lib/lua/luci/view/openclash |xargs sed -i 's/\"services\",/\"vpn\",/g'  || echo ""
-          grep -rnl 'admin\/services\/' ./usr/lib/lua/luci/view/openclash |xargs sed -i 's/admin\/services\//admin\/vpn\//g' || echo ""
-          cd ../../../
-          cp -rf OpenClash/luci-app-openclash friendlywrt-rk3328/friendlywrt/package
-          cd friendlywrt-rk3328/friendlywrt/package/base-files/files
-          mkdir -p etc/openclash/core && cd etc/openclash/core
-          curl -L https://github.com/vernesong/OpenClash/releases/download/Clash/clash-linux-armv8.tar.gz | tar zxf -
-          chmod +x clash
-
       - name: Add Passwall
         run: |
           cd friendlywrt-rk3328/friendlywrt

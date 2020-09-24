@@ -94,13 +94,13 @@ sed -i 's/+luci-compat//g' $wrtpackage/luci-app-iptvhelper/Makefile
 
 # add OpenClash
 git clone -b master https://github.com/vernesong/OpenClash.git
-cd OpenClash/luci-app-openclash/files
-sed -i 's/\"services\"/\"vpn\"/g' ./usr/lib/lua/luci/controller/openclash.lua
-grep -rnl '\"services\",' ./usr/lib/lua/luci/model/cbi/openclash |xargs sed -i 's/\"services\",/\"vpn\",/g'  || echo ""
-grep -rnl 'admin\/services\/' ./usr/lib/lua/luci/model/cbi/openclash |xargs sed -i 's/admin\/services\//admin\/vpn\//g'  || echo ""
-grep -rnl '\"services\",' ./usr/lib/lua/luci/view/openclash |xargs sed -i 's/\"services\",/\"vpn\",/g'  || echo ""
-grep -rnl 'admin\/services\/' ./usr/lib/lua/luci/view/openclash |xargs sed -i 's/admin\/services\//admin\/vpn\//g' || echo ""
-cd ../../../
+cd OpenClash/luci-app-openclash
+sed -i 's/\"services\"/\"vpn\"/g' ./luasrc/controller/openclash.lua
+grep -rnl '\"services\",' ./luasrc/openclash |xargs sed -i 's/\"services\",/\"vpn\",/g'  || echo ""
+grep -rnl 'admin\/services\/' ./luasrc/openclash |xargs sed -i 's/admin\/services\//admin\/vpn\//g'  || echo ""
+grep -rnl '\"services\",' ./luasrc/view/openclash |xargs sed -i 's/\"services\",/\"vpn\",/g'  || echo ""
+grep -rnl 'admin\/services\/' ./luasrc/view/openclash |xargs sed -i 's/admin\/services\//admin\/vpn\//g' || echo ""
+cd ../../
 cp -rf OpenClash/luci-app-openclash $wrtpackage
 cd friendlywrt-rk3328/friendlywrt/package/base-files/files
 mkdir -p etc/openclash/core

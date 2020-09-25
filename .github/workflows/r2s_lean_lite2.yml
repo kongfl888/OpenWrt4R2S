@@ -129,6 +129,7 @@ jobs:
           mkdir -p ./r2srom/
           mkdir -p ./r2sconfig/
           mkdir -p ./imgs/
+          . ./scripts/ls-dir.sh friendlywrt-rk3328 > ./r2sconfig/workdir.txt
           mv friendlywrt-rk3328/out/*img* ./r2srom/
           cd ./r2srom/
           sha256sum *img* > sha256sum.txt
@@ -142,7 +143,6 @@ jobs:
           cp ./scripts/checksha256.sh ./r2srom/
           . ./scripts/copyimg.sh
           . ./scripts/copyconfig.sh
-          . ./scripts/ls-dir.sh friendlywrt-rk3328 > ./r2sconfig/workdir.txt
           zip -r artifact.zip ./r2srom/
           zip -r ipks.zip ./ipks/
           zip -r imgs.zip ./imgs/

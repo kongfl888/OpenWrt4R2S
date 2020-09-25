@@ -1,6 +1,6 @@
 # [K] (c)@2020
 
-name: r2s-original-19073-lite
+name: r2s-19074-lite
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
       - master
     paths: 
       - 'JUNK/r2s_original2_base.conf'
-      - '.github/workflows/r2s_original2-19.07.3-lite.yml'
+      - '.github/workflows/r2s_original2-19.07.4-lite.yml'
       - 'patch_dosth.sh'
       - 'scripts/original-package.sh'
       - 'scripts/copy*.sh'
@@ -50,7 +50,7 @@ jobs:
         run: |
           mkdir friendlywrt-rk3328
           cd friendlywrt-rk3328
-          repo init -u https://github.com/kongfl888/friendlywrt_manifests -b master-v19.07.3 -m rk3328.xml --repo-url=https://github.com/friendlyarm/repo  --no-clone-bundle --depth=1
+          repo init -u https://github.com/kongfl888/friendlywrt_manifests -b master-v19.07.4 -m rk3328.xml --repo-url=https://github.com/friendlyarm/repo  --no-clone-bundle --depth=1
           repo sync -c --no-tags --no-clone-bundle -j8
 
       - name: Patch For R2S
@@ -75,7 +75,7 @@ jobs:
           mv ../../scripts/flash_rom.sh package/base-files/files/root/flash_rom.sh && chmod +x package/base-files/files/root/flash_rom.sh
           . ../../scripts/add-for-statusview.sh
           . ../../scripts/buildtime.sh
-          rm -f ./feeds.conf.default && wget -O ./feeds.conf.default https://raw.githubusercontent.com/openwrt/openwrt/v19.07.3/feeds.conf.default
+          rm -f ./feeds.conf.default && wget -O ./feeds.conf.default https://raw.githubusercontent.com/openwrt/openwrt/v19.07.4/feeds.conf.default
 
       - name: Clean Feeds
         run: |
@@ -188,7 +188,7 @@ jobs:
           zip -r ipks.zip ./ipks/
           zip -r imgs.zip ./imgs/
           zip -r r2sconfig.zip ./r2sconfig/
-          release_tag="R2S-Original-lite-19.07.3-$(date +%Y-%m-%d-%H)"
+          release_tag="R2S-Original-lite-19.07.4-$(date +%Y-%m-%d-%H)"
           echo "##[set-output name=release_tag;]$release_tag"
       - name: Create Release
         id: create_release

@@ -3,7 +3,7 @@
 # built
 # mv ../../scripts/one_time_init.sh package/base-files/files/usr/bin && sed -i '/exit/i\/bin/sh /usr/bin/one_time_init.sh &' package/base-files/files/etc/rc.local
 # https://github.com/kongfl888/OpenWrt4R2S
-# ** 1st: 1 normal, 2 lite; 2nd: 1 19.07.1, 2 lean, 3 19.07.3, 4 snapshot
+# ** 1st: 1 normal, 2 lite; 2nd: 1 19.07.1, 2 lean, 3 19.07.4, 4 snapshot
 
 lite=0
 profile=0
@@ -351,9 +351,9 @@ case $profile in
     echo "src/gz openwrt_packages https://downloads.openwrt.org/releases/18.06.8/packages/aarch64_cortex-a53/packages" >> /etc/opkg/distfeeds.conf
     ;;
 3)
-    sed -i 's/releases\/.*\/package/releases\/19.07.3\/package/g' /etc/opkg/distfeeds.conf
-    sed -i 's/snapshots\/package/releases\/19.07.3\/package/g' /etc/opkg/distfeeds.conf
-    echo "src/gz openwrt_packages https://downloads.openwrt.org/releases/19.07.3/packages/aarch64_cortex-a53/packages" >> /etc/opkg/distfeeds.conf
+    sed -i 's/releases\/.*\/package/releases\/19.07.4\/package/g' /etc/opkg/distfeeds.conf
+    sed -i 's/snapshots\/package/releases\/19.07.4\/package/g' /etc/opkg/distfeeds.conf
+    echo "src/gz openwrt_packages https://downloads.openwrt.org/releases/19.07.4/packages/aarch64_cortex-a53/packages" >> /etc/opkg/distfeeds.conf
     ;;
 4)
     sed -i 's/releases\/.*\/package/snapshots\/package/g' /etc/opkg/distfeeds.conf

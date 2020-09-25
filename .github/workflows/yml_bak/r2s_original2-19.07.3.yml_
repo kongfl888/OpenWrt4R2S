@@ -7,15 +7,7 @@ on:
     branches: 
       - master
     paths: 
-      - 'JUNK/r2s_original2_base.conf'
-      - 'JUNK/r2s_original2_user.conf'
-      - 'JUNK/r2s_original2_user_little.conf'
       - '.github/workflows/r2s_original2-19.07.3.yml'
-      - 'patch_dosth.sh'
-      - 'scripts/original-package.sh'
-      - 'scripts/copy*.sh'
-      - 'scripts/patch_for_r2s.sh'
-      - 'version'
 
 jobs:
 

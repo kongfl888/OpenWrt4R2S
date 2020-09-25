@@ -1,5 +1,5 @@
 #[K] (c)2020
-# ** 1st: 1 normal, 2 lite; 2nd: 1 19.07.1, 2 lean, 3 19.07.3, 4 snapshot
+# ** 1st: 1 normal, 2 lite; 2nd: 1 19.07.1, 2 lean, 3 19.07.4, 4 snapshot
 
 case ${1} in
 "11")

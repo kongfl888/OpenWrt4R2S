@@ -344,4 +344,4 @@ cd ../../
 
 # update golang from lienol
 rm -f $feedspackages/lang/golang/golang/Makefile || echo ""
-wget --no-check-certificate wget -O $feedspackages/lang/golang/golang/Makefile https://raw.githubusercontent.com/Lienol/openwrt-packages/dev-19.07/lang/golang/golang/Makefile
+wget --no-check-certificate -O $feedspackages/lang/golang/golang/Makefile https://raw.githubusercontent.com/Lienol/openwrt-packages/dev-19.07/lang/golang/golang/Makefile

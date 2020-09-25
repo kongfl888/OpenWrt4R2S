@@ -341,3 +341,7 @@ cp -f ./scripts/remove_upx.sh friendlywrt-rk3328/friendlywrt/
 cd friendlywrt-rk3328/friendlywrt
 /bin/bash ./remove_upx.sh
 cd ../../
+
+# update golang from lienol
+rm -f $feedspackages/lang/golang/golang/Makefile || echo ""
+wget --no-check-certificate wget -O $feedspackages/lang/golang/golang/Makefile https://raw.githubusercontent.com/Lienol/openwrt-packages/dev-19.07/lang/golang/golang/Makefile

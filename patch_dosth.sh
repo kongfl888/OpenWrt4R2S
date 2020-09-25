@@ -65,6 +65,10 @@ fi
 
 cd friendlywrt
 git apply --check ../../patches/Patch-for-timezone-and-ip.patch && git apply ../../patches/Patch-for-timezone-and-ip.patch || echo ""
+sed -i 's/addr_offset=2/addr_offset=31/g' package/base-files/files/bin/config_generate || echo ""
+sed -i 's/ipad=${ipaddr:-"192.168.$((addr_offset++)).1"}/ipad=${ipaddr:-"192.168.$((addr_offset++)).3"}/g' package/base-files/files/bin/config_generate || echo ""
+sed -i 's/ipaddr:-"192.168.1.1"/ipaddr:-"192.168.31.3"/g' package/base-files/files/bin/config_generate || echo ""
+sed -i 's/ipaddr:-"192.168.2.1"/ipaddr:-"192.168.31.3"/g' package/base-files/files/bin/config_generate || echo ""
 sed -i 's/-Os/-O3/g' include/target.mk
 sed -i 's/-O2/-O3/g' ./rules.mk
 cd ..

@@ -15,7 +15,7 @@ sh /root/flash_rom.sh /tmp/rom具体取名.img.gz /dev/mmcblk0 gz
 
 刷机工具：http://www.ksite.xyz/contents/balena-etcher.html
 
-刷机后初始化时段请耐心等待。
+刷机后初始化时段请耐心等待。预估个5分钟吧，然后电脑断网重连（Windows 用 ipconfig /release 再 ipconfig /renew 也可以）。
 
 正确的重启网络的姿势：定时重拨--马上执行--等待。路由器能上网，你也能上路由器，那说明你手机等设备可能需要关网重连，或者多等等也行。
 
@@ -32,6 +32,7 @@ docker也一样，通过官方源来获取最新的软件包。
 2020-9 开始逐渐移除显示输出和设备输入（其他同方案的盒子自己注意）
 
 **刷机并首次完成配置后建议你重启路由一次（重启姿势：网页端-系统-重启-点击执行）**
+http://openwrt  http://lede  http://friendlywrt 自己实际试试，零密码或password
 
 分流地址：
 

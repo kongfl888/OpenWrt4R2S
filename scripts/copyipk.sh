@@ -3,6 +3,8 @@
 
 mkdir -p ./ipks/
 
+# --old-
+
 if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*adbyby*.ipk" | grep "adbyby" -c` -gt 0 ]; then
 	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*adbyby*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack adbyby ipk fail" >> ipklost.txt
 fi
@@ -144,6 +146,27 @@ fi
 if [ `find friendlywrt-rk3328/friendlywrt/bin/packages/* -name "*msgkun*.ipk" | grep "msgkun" -c` -gt 0 ]; then
 	mv -f friendlywrt-rk3328/friendlywrt/bin/packages/*/*/*msgkun*.ipk ./ipks/ >/dev/null 2>&1 || echo "pack msgkun ipk fail" >> ipklost.txt
 fi
+
+# --new--
+
+mvipks() {
+    fkey="$1"
+    fregex="$2"
+    spath="$3"
+    dpath="$4"
+    [ `find $spath  -name "$fregex" | grep "$fkey" -c` -eq 0 ] && { echo "pack $fkey fail" >> ipklost.txt; return 0; }
+    for f in `find $spath  -name "$fregex"`; do
+        mv -f $f $dpath >/dev/null 2>&1 || echo "pack $f fail" >> ipklost.txt
+    done
+    return 0
+}
+binpackages="friendlywrt-rk3328/friendlywrt/bin/packages/*"
+bintargets="friendlywrt-rk3328/friendlywrt/bin/targets/*"
+toDir="./ipks/"
+
+# kmod-oaf
+mvipks  "kmod-oaf" "kmod-oaf*.ipk" "$bintargets" "$toDir"
+
 
 if [ `find ./ipks/* -name "*.ipk" | grep ".ipk" -c` -eq 0 ]; then
     echo "1" > ./ipks/noipk

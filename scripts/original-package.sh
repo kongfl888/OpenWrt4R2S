@@ -51,7 +51,7 @@ sed -i '/feeds install/d' friendlywrt-rk3328/scripts/mk-friendlywrt.sh || echo "
 
 cd friendlywrt-rk3328/friendlywrt
 # Patch FireWall - fullcone
-mkdir package/network/config/firewall/patches
+mkdir -p package/network/config/firewall/patches || echo ""
 wget -P package/network/config/firewall/patches/ https://github.com/LGA1150/fullconenat-fw3-patch/raw/master/fullconenat.patch
 # Patch luci-app-firewall fullcone option
 pushd feeds/luci

@@ -5,7 +5,20 @@ wget https://github.com/armbian/build/raw/master/patch/kernel/rockchip64-dev/RK3
 git apply RK3328-enable-1512mhz-opp.patch
 cd ../
 git clone -b snapshot --single-branch --depth=1 https://github.com/kongfl888/friendlywrt.git fwrt && cd fwrt/
-#git checkout 68d9cb82143b864d70e4fb3d7cbb7068f82216a1 #5.4.50
+
+# update lede
+cp -f include/kernel-version.mk ../friendlywrt/include/kernel-version.mk
+rm -rf ../friendlywrt/target/linux/generic/backport-5.4
+rm -rf ../friendlywrt/target/linux/generic/pending-5.4
+rm -rf ../friendlywrt/target/linux/generic/hack-5.4
+rm -rf ../friendlywrt/target/linux/generic/files
+rm -rf ../friendlywrt/target/linux/generic/config-5.4
+cp -rf target/linux/generic/backport-5.4 ../friendlywrt/target/linux/generic/
+cp -rf target/linux/generic/pending-5.4 ../friendlywrt/target/linux/generic/
+cp -rf target/linux/generic/hack-5.4 ../friendlywrt/target/linux/generic/
+cp -rf target/linux/generic/files ../friendlywrt/target/linux/generic/
+cp -rf target/linux/generic/config-5.4 ../friendlywrt/target/linux/generic/
+
 rm -f target/linux/generic/*/*leds-*.patch
 rm -f target/linux/generic/*/*mips*.patch
 rm -f target/linux/generic/*/*MIPS*.patch
@@ -16,8 +29,7 @@ rm -f target/linux/generic/*/*SFP-*.patch
 rm -f target/linux/generic/*/*GPON-*.patch
 rm -f target/linux/generic/*/*gpon-*.patch
 rm -f target/linux/generic/*/*BCM84881*.patch
-# 5.4.60 remove
-rm -f target/linux/generic/backport-5.4/041-genirq-affinity-Make-affinity-setting-if-activated-o.patch
+
 # copy files
 cp -a ./target/linux/generic/files/* ../kernel/
 sed -i '/exit 1/d' ./scripts/patch-kernel.sh

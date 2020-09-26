@@ -237,6 +237,11 @@ if [ "$profile" != "4" ]; then
 fi
 cp -rf luci-app-wrtbwmon/luci-app-wrtbwmon $wrtpackage
 
+#add appfilter kmod
+git clone https://github.com/destan19/OpenAppFilter.git $wrtpackage/OpenAppFilter
+rm -rf $wrtpackage/OpenAppFilter/luci-app-oaf
+rm -rf $wrtpackage/OpenAppFilter/open-app-filter
+
 # add msgkun
 git clone https://github.com/kongfl888/luci-app-msgkun.git $wrtpackage/luci-app-msgkun
 

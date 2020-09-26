@@ -438,6 +438,12 @@ if [ -e "/etc/config/wrtbwmon" ]; then
     fi
 fi
 
+# rmmod oaf
+if [ "$profile" != "2" ]; then
+DATE=`date +[%Y-%m-%d]%H:%M:%S`
+lsmod | grep "oaf" && rmmod oaf && echo $DATE" One time init Script: rmmod oaf" >> /tmp/one_time_init.log
+fi
+
 # stop check-network before reboot
 #if [ -e "/etc/init.d/check-network" ];then
 #    DATE=`date +[%Y-%m-%d]%H:%M:%S`

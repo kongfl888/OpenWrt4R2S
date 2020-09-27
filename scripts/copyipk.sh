@@ -166,7 +166,13 @@ toDir="./ipks/"
 
 # kmod-oaf
 mvipks  "kmod-oaf" "kmod-oaf*.ipk" "$bintargets" "$toDir"
-
+# fullconenat
+mvipks "kmod-ipt-fullconenat" "kmod-ipt-fullconenat*.ipk" "$bintargets" "$toDir"
+mvipks "fullconenat" "*fullconenat*.ipk" "$binpackages" "$toDir"
+# offload
+mvipks "offload" "*-offload*.ipk" "$bintargets" "$toDir"
+# brook
+mvipks "brook" "*brook*.ipk" "$binpackages" "$toDir"
 
 if [ `find ./ipks/* -name "*.ipk" | grep ".ipk" -c` -eq 0 ]; then
     echo "1" > ./ipks/noipk

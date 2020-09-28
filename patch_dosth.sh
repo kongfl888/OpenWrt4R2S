@@ -1,3 +1,31 @@
+#!/bin/bash
+#
+# [K] (c)2020
+
+profile=0
+#1 19071, 2 lean, 3 last-stable, 4 snapshot
+if [ -f "friendlywrt/package/lean/default-settings/files/zzz-default-settings" ]; then
+    [ `cat "friendlywrt/package/lean/default-settings/files/zzz-default-settings" | grep -c "DISTRIB_REVISION"` -gt 0 ] && profile=2
+elif [ -f "friendlywrt/include/version.mk" ]; then
+    opver=`cat friendlywrt/include/version.mk | grep -Eo "VERSION_NUMBER.*([0-9]|SNAPSHOT|snapshot)+" | grep -Eo "([0-9\.]+[0-9])|SNAPSHOT|snapshot"`
+    case ${opver} in
+    19.07.1)
+        profile=1
+        ;;
+    19.07.2 | 19.07.3 | 19.07.4)
+        profile=3
+        ;;
+    "SNAPSHOT" |"snapshot")
+        profile=4
+        ;;
+    *)
+        profile=0
+        ;;
+    esac
+else
+    profile=0
+fi
+
 
 if [ `grep -c "CONFIG_BRIDGE_NETFILTER=y" kernel/arch/arm64/configs/nanopi-r2_linux_defconfig` -eq 0 ]; then
     sed -i '/CONFIG_BRIDGE_NETFILTER/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig >/dev/null 2>&1
@@ -62,6 +90,8 @@ CONFIG_TARGET_ROOTFS_PARTSIZE=960
         echo -e "\nCONFIG_LUCI_LANG_zh_Hans=y" >>configs/config_rk3328
     fi
 fi
+
+sh ../scripts/distfeeds.sh "$profile" "device/friendlyelec/rk3328/common-files/etc/opkg/distfeeds.conf"
 
 cd friendlywrt
 git apply --check ../../patches/Patch-for-timezone-and-ip.patch && git apply ../../patches/Patch-for-timezone-and-ip.patch || echo ""

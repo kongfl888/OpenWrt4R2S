@@ -166,11 +166,25 @@ toDir="./ipks/"
 
 # kmod-oaf
 mvipks  "kmod-oaf" "kmod-oaf*.ipk" "$bintargets" "$toDir"
+mvipks  "kmod-ipt-conntrack" "kmod-ipt-conntrack*.ipk" "$bintargets" "$toDir"
 # fullconenat
 mvipks "kmod-ipt-fullconenat" "kmod-ipt-fullconenat*.ipk" "$bintargets" "$toDir"
+mvipks "kmod-nf-ipt" "kmod-nf-ipt*.ipk" "$bintargets" "$toDir"
+mvipks "kmod-nf-ipt6" "kmod-nf-ipt*.ipk" "$bintargets" "$toDir"
+mvipks "kmod-nf-nat" "kmod-nf-nat*.ipk" "$bintargets" "$toDir"
+mvipks "kmod-nf-nat6" "kmod-nf-nat*.ipk" "$bintargets" "$toDir"
 mvipks "fullconenat" "*fullconenat*.ipk" "$binpackages" "$toDir"
 # offload
 mvipks "offload" "*-offload*.ipk" "$bintargets" "$toDir"
+mvipks "kmod-ipt-core" "kmod-ipt-core*.ipk" "$bintargets" "$toDir"
+mvipks "kmod-nf-flow" "kmod-nf-flow*.ipk" "$bintargets" "$toDir"
+mvipks "kmod-nf-conntrack" "kmod-nf-conntrack*.ipk" "$bintargets" "$toDir"
+# kmod-nf-*
+mvipks "kmod-nf-" "kmod-nf-*.ipk" "$bintargets" "$toDir"
+# kmod-ipt-
+mvipks "kmod-ipt-" "kmod-ipt-*.ipk" "$bintargets" "$toDir"
+# kmod-
+mvipks "kmod-" "kmod-*.ipk" "$bintargets" "$toDir"
 # brook
 mvipks "brook" "*brook*.ipk" "$binpackages" "$toDir"
 

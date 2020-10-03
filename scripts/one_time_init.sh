@@ -366,6 +366,16 @@ sed -i 's/http:/https:/g' /etc/opkg/distfeeds.conf
 #sed - 's/downloads.openwrt.org/openwrt.proxy.ustclug.org/g' /etc/opkg/distfeeds.conf
 fi
 
+# opkg customfeeds
+DATE=`date +[%Y-%m-%d]%H:%M:%S`
+echo $DATE" One time init Script: add opkg customfeeds" >> /tmp/one_time_init.log
+sed -i "/check_signature/d" /etc/opkg.conf
+sed -i "/op.supes.top\/packages/d" /etc/opkg/customfeeds.conf
+sed -i "/openwrt_custom_lean/d" /etc/opkg/customfeeds.conf
+echo -ne "\n" >> /etc/opkg/customfeeds.conf
+echo "src/gz openwrt_custom_lean https://op.supes.top/packages/aarch64" >> /etc/opkg/customfeeds.conf
+sed -i -r "/^$/d" /etc/opkg/customfeeds.conf
+
 # set coremark
 if [ -e "/etc/coremark.sh" ];then
     DATE=`date +[%Y-%m-%d]%H:%M:%S`

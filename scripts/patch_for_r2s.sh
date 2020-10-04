@@ -61,3 +61,11 @@ if [ ! -d "friendlywrt/tools/upx" ]; then
 fi
 
 cd ..
+
+# fix uhttpd [temp]
+if [ "$profile" == "4" ]; then
+    if [ `cat friendlywrt/package/network/services/uhttpd/Makefile | grep -c "2020-09"` -gt 0 ]; then
+        rm -f friendlywrt/package/network/services/uhttpd/Makefile
+        wget -O friendlywrt/package/network/services/uhttpd/Makefile https://raw.githubusercontent.com/kongfl888/friendlywrt/master-20200906/package/network/services/uhttpd/Makefile
+    fi
+fi

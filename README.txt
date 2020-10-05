@@ -15,7 +15,7 @@ sh /root/flash_rom.sh /tmp/rom具体取名.img.gz /dev/mmcblk0 gz
 
 刷机工具：http://www.ksite.xyz/contents/balena-etcher.html
 
-刷机后初始化时段请耐心等待。预估个5分钟吧，去热口茶再回来，然后电脑断网重连（Windows 用 ipconfig /release 再 ipconfig /renew 也可以）。
+刷机后初始化时段请耐心等待。预估个5-10分钟吧，去热口茶再回来，然后电脑断网重连（Windows 用 ipconfig /release 再 ipconfig /renew 也可以）。
 
 网络问题，自检程序会自动启用修复，多等等就行。
 

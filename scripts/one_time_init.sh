@@ -338,7 +338,11 @@ fi
 if [ -e "/etc/opkg/distfeeds.conf" ];then
 DATE=`date +[%Y-%m-%d]%H:%M:%S`
 echo $DATE" One time init Script: set opkg feeds" >> /tmp/one_time_init.log
+sed -i '/openwrt_core/d' /etc/opkg/distfeeds.conf
+sed -i '/openwrt_freifunk/d' /etc/opkg/distfeeds.conf
+sed -i '/openwrt_helloworld/d' /etc/opkg/distfeeds.conf
 sed -i '/openwrt_packages/d' /etc/opkg/distfeeds.conf
+echo -ne "\n" >> /etc/opkg/distfeeds.conf
 case $profile in
 1)
     sed -i 's/releases\/.*\/package/releases\/19.07.1\/package/g' /etc/opkg/distfeeds.conf
@@ -357,6 +361,7 @@ case $profile in
     ;;
 4)
     sed -i 's/releases\/.*\/package/snapshots\/package/g' /etc/opkg/distfeeds.conf
+    echo "src/gz openwrt_core https://downloads.openwrt.org/snapshots/targets/rockchip/armv8/packages" >> /etc/opkg/distfeeds.conf
     echo "src/gz openwrt_packages https://downloads.openwrt.org/snapshots/packages/aarch64_cortex-a53/packages" >> /etc/opkg/distfeeds.conf
     ;;
 *)
@@ -364,6 +369,7 @@ case $profile in
 esac
 sed -i 's/http:/https:/g' /etc/opkg/distfeeds.conf
 #sed - 's/downloads.openwrt.org/openwrt.proxy.ustclug.org/g' /etc/opkg/distfeeds.conf
+sed -i -r '/^$/d' /etc/opkg/distfeeds.conf
 fi
 
 # opkg customfeeds

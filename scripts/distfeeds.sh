@@ -34,7 +34,11 @@ filepath="${2}"
 
 # set opkg feeds
 if [ -f "$filepath" ];then
+sed -i '/openwrt_core/d' $filepath
+sed -i '/openwrt_freifunk/d' $filepath
+sed -i '/openwrt_helloworld/d' $filepath
 sed -i '/openwrt_packages/d' $filepath
+echo -ne "\n" >> $filepath
 case $profile in
 1)
     sed -i 's/releases\/.*\/package/releases\/19.07.1\/package/g' $filepath
@@ -57,9 +61,11 @@ case $profile in
     ;;
 *)
     sed -i 's/releases\/.*\/package/snapshots\/package/g' $filepath
+    echo "src/gz openwrt_core https://downloads.openwrt.org/snapshots/targets/rockchip/armv8/packages" >> $filepath
     echo "src/gz openwrt_packages https://downloads.openwrt.org/snapshots/packages/aarch64_cortex-a53/packages" >> $filepath
     ;;
 esac
 sed -i 's/http:/https:/g' $filepath
 #sed - 's/downloads.openwrt.org/openwrt.proxy.ustclug.org/g' $filepath
+sed -i -r '/^$/d' $filepath
 fi

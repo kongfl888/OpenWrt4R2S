@@ -72,6 +72,7 @@ jobs:
           sed -i 's/dnsmasq /dnsmasq-full /' friendlywrt/include/target.mk
           [ -f configs/config_rk3328 ] && sed -i '/adblock/d;/docker/d;/DOCKER/d;/mwan3/d;/OPENVPN/d;/openvpn/d;' configs/config_rk3328
           cat ../JUNK/r2s_original2_base.conf >> configs/config_rk3328
+          cat ../JUNK/r2s_original2_kmod.conf >> configs/config_rk3328
           cat ../JUNK/r2s_original2_user_little.conf >> configs/config_rk3328
           cat ../JUNK/r2s_original2_user.conf >> configs/config_rk3328
           cd friendlywrt

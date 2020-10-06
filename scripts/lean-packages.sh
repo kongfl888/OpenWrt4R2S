@@ -110,8 +110,8 @@ chmod +x clash
 cd ../../../../../../../../
 
 # add appfilter
-git clone https://github.com/destan19/OpenAppFilter.git $wrtpackage/OpenAppFilter
-sed -i '/DEPENDS/d' $wrtpackage/OpenAppFilter/oaf/Makefile
+#git clone https://github.com/destan19/OpenAppFilter.git $wrtpackage/OpenAppFilter
+#sed -i '/DEPENDS/d' $wrtpackage/OpenAppFilter/oaf/Makefile
 
 # fullin - end
 fi

@@ -39,6 +39,9 @@ echo "CONFIG_IP_NF_TARGET_FULLCONENAT=y" >> kernel/arch/arm64/configs/nanopi-r2_
 sed -i '/CONFIG_NF_CONNTRACK_CHAIN_EVENTS/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
 echo "CONFIG_NF_CONNTRACK_CHAIN_EVENTS=y" >> kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
 
+# open mod oaf
+echo "CONFIG_OPEN_APP_FILTER=m" >> kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+
 zh_cntw=0
 
 if [ -e "configs/config_rk3328" ]; then

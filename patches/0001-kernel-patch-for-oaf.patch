@@ -1,0 +1,28 @@
+From b8ac0430c8db6a376dc820ee995cb71666829a59 Mon Sep 17 00:00:00 2001
+From: kongfl888 K <kongfl888@outlook.com>
+Date: Tue, 6 Oct 2020 20:32:02 +0800
+Subject: [PATCH] kernel patch for oaf
+
+Signed-off-by: kongfl888 K <kongfl888@outlook.com>
+---
+ net/netfilter/Kconfig | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/net/netfilter/Kconfig b/net/netfilter/Kconfig
+index 17f5c74..fb8bb5d 100644
+--- a/net/netfilter/Kconfig
++++ b/net/netfilter/Kconfig
+@@ -437,6 +437,10 @@ config NF_NAT_MASQUERADE
+ config NETFILTER_SYNPROXY
+ 	tristate
+ 
++config OPEN_APP_FILTER
++	tristate
++    depends on NF_CONNTRACK
++
+ endif # NF_CONNTRACK
+ 
+ config NF_TABLES
+-- 
+2.28.0.windows.1
+

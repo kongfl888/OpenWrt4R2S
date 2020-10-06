@@ -241,6 +241,14 @@ cp -rf luci-app-wrtbwmon/luci-app-wrtbwmon $wrtpackage
 git clone https://github.com/destan19/OpenAppFilter.git $wrtpackage/OpenAppFilter
 rm -rf $wrtpackage/OpenAppFilter/luci-app-oaf
 rm -rf $wrtpackage/OpenAppFilter/open-app-filter
+sed -i '/DEPENDS/d' $wrtpackage/OpenAppFilter/oaf/Makefile
+mkdir -p friendlywrt-rk3328/kernel/net/netfilter/oaf
+cp $wrtpackage/OpenAppFilter/oaf/src/* friendlywrt-rk3328/kernel/net/netfilter/oaf
+sed -i 's/obj-m/obj-$(CONFIG_OPEN_APP_FILTER)/' friendlywrt-rk3328/kernel/net/netfilter/oaf/Makefile
+echo 'obj-$(CONFIG_OPEN_APP_FILTER) += oaf/' >> friendlywrt-rk3328/kernel/net/netfilter/Makefile
+cd friendlywrt-rk3328/kernel
+git apply ../../patches/0001-kernel-patch-for-oaf.patch
+cd ../../
 
 # add msgkun
 git clone https://github.com/kongfl888/luci-app-msgkun.git $wrtpackage/luci-app-msgkun

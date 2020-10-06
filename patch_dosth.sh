@@ -26,11 +26,15 @@ else
     profile=0
 fi
 
+echo "" >> kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
 
 if [ `grep -c "CONFIG_BRIDGE_NETFILTER=y" kernel/arch/arm64/configs/nanopi-r2_linux_defconfig` -eq 0 ]; then
     sed -i '/CONFIG_BRIDGE_NETFILTER/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig >/dev/null 2>&1
     echo "CONFIG_BRIDGE_NETFILTER=m" >> kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
 fi
+# open ip fullconenat
+sed -i '/CONFIG_IP_NF_TARGET_FULLCONENAT/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
+echo "CONFIG_IP_NF_TARGET_FULLCONENAT=y" >> kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
 # open patch fullconenat
 sed -i '/CONFIG_NF_CONNTRACK_CHAIN_EVENTS/d' kernel/arch/arm64/configs/nanopi-r2_linux_defconfig
 echo "CONFIG_NF_CONNTRACK_CHAIN_EVENTS=y" >> kernel/arch/arm64/configs/nanopi-r2_linux_defconfig

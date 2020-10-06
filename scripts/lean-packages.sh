@@ -68,11 +68,11 @@ mv check-network $wrtpackage
 git clone -b master https://github.com/kongfl888/koptimalize.git $wrtpackage/koptimalize
 
 # add smartdns
-git clone -b master --single-branch https://github.com/pymumu/openwrt-smartdns.git
+git clone -b master --single-branch https://github.com/kongfl888/openwrt-smartdns.git
 git clone -b lede --single-branch https://github.com/pymumu/luci-app-smartdns.git
-mv luci-app-smartdns $wrtpackage
+mv -f luci-app-smartdns $wrtpackage
 mkdir -p $wrtpackage/net/smartdns
-mv openwrt-smartdns/* $wrtpackage/net/smartdns
+mv -f openwrt-smartdns/* $wrtpackage/net/smartdns
 sed -i 's/\"services\"/\"network\"/g' $wrtpackage/luci-app-smartdns/luasrc/controller/smartdns.lua
 sed -i 's/admin\/services\/smartdns/admin\/network\/smartdns/g' $wrtpackage/luci-app-smartdns/luasrc/model/cbi/smartdns/smartdns.lua
 sed -i 's/admin\/services\/smartdns/admin\/network\/smartdns/g' $wrtpackage/luci-app-smartdns/luasrc/model/cbi/smartdns/upstream.lua

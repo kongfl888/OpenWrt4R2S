@@ -140,13 +140,11 @@ wget -q https://raw.githubusercontent.com/kongfl888/ad-rules/master/lazy.txt
 mv -f lazy.txt $leanpack/adbyby/files/data/ || echo ""
 
 # get smartdns
-if [ "$profile" != "4" ]; then
-    rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/smartdns/ >/dev/null 2>&1 || echo ""
-    git clone -b master --single-branch https://github.com/pymumu/openwrt-smartdns.git
-    mkdir -p $wrtpackage/net/smartdns
-    rm -rf $wrtpackage/net/smartdns/*
-    mv -f openwrt-smartdns/* $wrtpackage/net/smartdns
-fi
+rm -rf friendlywrt-rk3328/friendlywrt/feeds/*/*/smartdns/ >/dev/null 2>&1 || echo ""
+git clone -b master --single-branch https://github.com/kongfl888/openwrt-smartdns.git
+rm -rf $wrtpackage/net/smartdns
+mkdir -p $wrtpackage/net/smartdns
+mv -f openwrt-smartdns/* $wrtpackage/net/smartdns
 if [ "$profile" == "4" ];then
     rm -rf $feedsluci/*/luci-app-smartdns/po
     sed -i 's/admin\/services/admin\/network/g' $feedsluci/*/luci-app-smartdns/root/usr/share/luci/menu.d/luci-app-smartdns.json || echo ""

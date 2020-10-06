@@ -361,7 +361,6 @@ case $profile in
     ;;
 4)
     sed -i 's/releases\/.*\/package/snapshots\/package/g' /etc/opkg/distfeeds.conf
-    echo "src/gz openwrt_core https://downloads.openwrt.org/snapshots/targets/rockchip/armv8/packages" >> /etc/opkg/distfeeds.conf
     echo "src/gz openwrt_packages https://downloads.openwrt.org/snapshots/packages/aarch64_cortex-a53/packages" >> /etc/opkg/distfeeds.conf
     ;;
 *)

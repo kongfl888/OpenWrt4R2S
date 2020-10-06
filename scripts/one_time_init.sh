@@ -342,7 +342,7 @@ sed -i '/openwrt_core/d' /etc/opkg/distfeeds.conf
 sed -i '/openwrt_freifunk/d' /etc/opkg/distfeeds.conf
 sed -i '/openwrt_helloworld/d' /etc/opkg/distfeeds.conf
 sed -i '/openwrt_packages/d' /etc/opkg/distfeeds.conf
-echo -ne "\n" >> /etc/opkg/distfeeds.conf
+echo "" >> /etc/opkg/distfeeds.conf
 case $profile in
 1)
     sed -i 's/releases\/.*\/package/releases\/19.07.1\/package/g' /etc/opkg/distfeeds.conf

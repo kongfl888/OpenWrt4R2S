@@ -38,7 +38,7 @@ sed -i '/openwrt_core/d' $filepath
 sed -i '/openwrt_freifunk/d' $filepath
 sed -i '/openwrt_helloworld/d' $filepath
 sed -i '/openwrt_packages/d' $filepath
-echo -ne "\n" >> $filepath
+echo "" >> $filepath
 case $profile in
 1)
     sed -i 's/releases\/.*\/package/releases\/19.07.1\/package/g' $filepath

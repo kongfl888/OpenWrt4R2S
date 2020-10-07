@@ -4,7 +4,14 @@ cd kernel/
 wget https://github.com/armbian/build/raw/master/patch/kernel/rockchip64-dev/RK3328-enable-1512mhz-opp.patch
 git apply RK3328-enable-1512mhz-opp.patch
 cd ../
+
 git clone -b snapshot --single-branch --depth=1 https://github.com/kongfl888/friendlywrt.git fwrt && cd fwrt/
+
+kernelver=`cat ./include/kernel-version.mk | grep "LINUX_VERSION-5.4" | cut -d"." -f3`
+if [ $kernelver -lt 70 ]; then
+    git remote add upkernel https://github.com/graysky2/openwrt.git && git fetch upkernel newk
+    git cherry-pick 758cd608b684412ef87be66e832cfbfa1a03ad1f
+fi
 
 # update lede
 cp -f include/kernel-version.mk ../friendlywrt/include/kernel-version.mk

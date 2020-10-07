@@ -85,6 +85,11 @@ git clone -b master https://github.com/kongfl888/luci-i18n-smartdns-zh-cn.git $w
 git clone -b master --single-branch https://github.com/kongfl888/luci-app-r2sflasher.git
 mv luci-app-r2sflasher $wrtpackage
 
+# add minieap
+git clone https://github.com/kongfl888/openwrt-minieap.git $wrtpackage/minieap
+git clone https://github.com/kongfl888/luci-app-minieap.git $wrtpackage/luci-app-minieap
+git clone https://github.com/ysc3839/luci-proto-minieap.git $wrtpackage/luci-proto-minieap
+
 if [ "$fullin" == "1" ]; then
 # add IPTV Helper
 git clone -b master --single-branch https://github.com/riverscn/openwrt-iptvhelper.git

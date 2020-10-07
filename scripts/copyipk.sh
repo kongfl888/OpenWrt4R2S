@@ -187,6 +187,8 @@ mvipks "kmod-ipt-" "kmod-ipt-*.ipk" "$bintargets" "$toDir"
 mvipks "kmod-" "kmod-*.ipk" "$bintargets" "$toDir"
 # brook
 mvipks "brook" "*brook*.ipk" "$binpackages" "$toDir"
+# minieap
+mvipks "minieap" "*minieap*.ipk" "$binpackages" "$toDir"
 
 if [ `find ./ipks/* -name "*.ipk" | grep ".ipk" -c` -eq 0 ]; then
     echo "1" > ./ipks/noipk

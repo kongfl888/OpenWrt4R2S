@@ -453,6 +453,13 @@ if [ -e "/etc/config/wrtbwmon" ]; then
     fi
 fi
 
+# disable minieap
+if [ -e "/etc/init.d/minieap" ]; then
+    /etc/init.d/minieap disable 2>/dev/null
+    DATE=`date +[%Y-%m-%d]%H:%M:%S`
+    echo $DATE" One time init Script: disable minieap" >> /tmp/one_time_init.log
+fi
+
 # rmmod oaf
 if [ "$profile" != "2" ]; then
 DATE=`date +[%Y-%m-%d]%H:%M:%S`

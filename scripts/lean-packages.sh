@@ -79,6 +79,7 @@ sed -i 's/admin\/services\/smartdns/admin\/network\/smartdns/g' $wrtpackage/luci
 sed -i 's/\"services\"/\"network\"/g' $wrtpackage/luci-app-smartdns/luasrc/view/smartdns/smartdns_status.htm
 rm -rf $leanpack/smartdns || echo ""
 rm -rf $leanpack/luci-app-smartdns || echo ""
+git clone -b master https://github.com/kongfl888/luci-i18n-smartdns-zh-cn.git $wrtpackage/luci-i18n-smartdns-zh-cn
 
 # add Luci-app-r2sflasher
 git clone -b master --single-branch https://github.com/kongfl888/luci-app-r2sflasher.git

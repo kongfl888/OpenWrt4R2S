@@ -378,7 +378,7 @@ sed -i "/check_signature/d" /etc/opkg.conf
 sed -i "/op.supes.top\/packages/d" /etc/opkg/customfeeds.conf
 sed -i "/openwrt_custom_lean/d" /etc/opkg/customfeeds.conf
 echo -ne "\n" >> /etc/opkg/customfeeds.conf
-echo "src/gz openwrt_custom_lean https://op.supes.top/packages/aarch64" >> /etc/opkg/customfeeds.conf
+echo "#src/gz openwrt_custom_lean https://op.supes.top/packages/aarch64" >> /etc/opkg/customfeeds.conf
 sed -i -r "/^$/d" /etc/opkg/customfeeds.conf
 
 # set coremark

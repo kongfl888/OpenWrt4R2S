@@ -34,7 +34,7 @@ docker也一样，通过官方源来获取最新的软件包。
 
 2020-9 开始逐渐移除显示输出和设备输入（其他同方案的盒子自己注意）
 
-校园802.1x认证拨号用户：有的固件自带了MiniEAP（默认禁止启动），但不一定通用，具体请查看：https://github.com/updateing/minieap/blob/master/README.md 。启用有两种方法，一种是通过网页APP，另一种是网络接口协议。
+校园802.1x认证拨号用户：有的固件自带了MiniEAP（默认禁止启动），但不一定通用，具体请查看：https://github.com/updateing/minieap/blob/master/README.md 。启用有两种方法，一种是通过网页APP，另一种是网络接口协议(lede)。你也可以自己命令行。
 
 **刷机并首次完成配置后建议你重启路由一次（重启姿势：网页端-系统-重启-点击执行）**
 http://openwrt  http://lede  http://friendlywrt 自己实际试试，零密码或password（首次启动，你得等dnsmasq配置完；其次，当所有的初始化完成之后openwrt可能还会自动重启网络一次。首次初始化这个过程有点长，你得等待，等待是必需的。如果你有疑问你可以自行了解一下openwrt的启动流程）

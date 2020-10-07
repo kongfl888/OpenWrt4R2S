@@ -323,6 +323,10 @@ if [ "$little" = "1" -o "$fullin" = "1" ]; then
 git clone -b master --single-branch https://github.com/jerrykuku/lua-maxminddb.git  $leanpack/lua-maxminddb
 git clone -b master --single-branch https://github.com/jerrykuku/luci-app-vssr.git  $leanpack/luci-app-vssr
 
+# add minieap
+git clone https://github.com/kongfl888/openwrt-minieap.git $wrtpackage/minieap
+git clone https://github.com/kongfl888/luci-app-minieap.git $wrtpackage/luci-app-minieap
+
 # little or big
 fi
 
